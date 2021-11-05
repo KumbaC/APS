@@ -53,7 +53,7 @@ framework by default. You can, however, replace it with any other library or
 custom styles.
 
 
-## Fotos del Sistema 
+## System photos
 System screen captures
 
 
