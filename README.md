@@ -1,4 +1,4 @@
-# CakePHP Application Skeleton
+# CakePHP Application de Atencion Primaria de Salúd
 
 ![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
