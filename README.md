@@ -54,6 +54,8 @@ custom styles.
 
 
 ## Fotos del Sistema 
+System screen captures
+
 ![Screenshot 2021-11-05 at 09-08-31 Persons - persons1-2 pdf](https://user-images.githubusercontent.com/67332538/140515448-ae6591be-ecb9-4c7c-82a1-3ace06d99a5e.png)
 ![Screenshot 2021-11-05 at 09-08-05 APS](https://user-images.githubusercontent.com/67332538/140515452-55a05749-956e-4b23-af73-d1714499d9f6.png)
 ![Screenshot 2021-11-05 at 09-07-56 APS](https://user-images.githubusercontent.com/67332538/140515454-467f411d-4e0f-4b0b-93bf-f3076cbf1236.png)
