@@ -51,3 +51,12 @@ Other environment agnostic settings can be changed in `config/app.php`.
 The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
 framework by default. You can, however, replace it with any other library or
 custom styles.
+![Screenshot 2021-11-05 at 09-08-31 Persons - persons1-2 pdf](https://user-images.githubusercontent.com/67332538/140515448-ae6591be-ecb9-4c7c-82a1-3ace06d99a5e.png)
+![Screenshot 2021-11-05 at 09-08-05 APS](https://user-images.githubusercontent.com/67332538/140515452-55a05749-956e-4b23-af73-d1714499d9f6.png)
+![Screenshot 2021-11-05 at 09-07-56 APS](https://user-images.githubusercontent.com/67332538/140515454-467f411d-4e0f-4b0b-93bf-f3076cbf1236.png)
+![Screenshot 2021-11-05 at 09-07-23 APS](https://user-images.githubusercontent.com/67332538/140515455-1fd5c20d-e978-4fc6-9f7a-4960406e0aa3.png)
+![Screenshot 2021-11-05 at 09-07-17 APS](https://user-images.githubusercontent.com/67332538/140515458-2673cd0d-99e9-4fb4-8e33-4765b1856715.png)
+![Screenshot 2021-11-05 at 09-07-07 APS](https://user-images.githubusercontent.com/67332538/140515459-c39970a6-e115-460a-a1fa-1d5c546a53de.png)
+![Screenshot 2021-11-05 at 09-06-58 APS](https://user-images.githubusercontent.com/67332538/140515461-686a6be1-1156-4192-bbf4-eadf9d2711d9.png)
+![Screenshot 2021-11-05 at 09-06-44 CakeLTE Admin Users](https://user-images.githubusercontent.com/67332538/140515465-fb688593-280a-46bc-a451-b19c08131043.png)
+
