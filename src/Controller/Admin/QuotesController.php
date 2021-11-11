@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use App\Model\Entity\Pathology;
-use App\Model\Table\PathologiesTable;
 
 /**
  * Quotes Controller
@@ -22,10 +20,20 @@ class QuotesController extends AppController
      */
     public function index()
     {
+
+        $key = $this->request->getQuery('key');
+            if($key){
+                    $query = $this->Quotes->find('all')->where(['Or' => ['persons.cedula like' => '%'. $key. '%', 'beneficiary.cedula like' => '%'. $key. '%']]);
+            }else{
+                   $query = $this->Quotes;
+
+            }
+
+
         $this->paginate = [
-            'contain' => ['Specialties', 'Diseases', 'Pathologies', 'Persons', 'StatusQuotes'],
+            'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
         ];
-        $quotes = $this->paginate($this->Quotes);
+        $quotes = $this->paginate($query, ['limit' => '10']);
 
         $this->set(compact('quotes'));
     }
@@ -40,7 +48,7 @@ class QuotesController extends AppController
     public function view($id = null)
     {
         $quote = $this->Quotes->get($id, [
-            'contain' => ['Specialties', 'Diseases', 'Pathologies', 'Persons', 'StatusQuotes'],
+            'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
         ]);
 
         $this->set(compact('quote'));
@@ -51,27 +59,10 @@ class QuotesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-
-   /*  public function getEspecialidadByPatologia() {
-        if ($this->request->is('ajax', 'post')) {
-         $idEspecialidad = $this->params['data']['idEspecialidad'];
-
-         $Patologia = new Pathology;
-         $Patologias = $Patologia->find('all', array(
-          'fields' => array('Pathology.id', 'Pathology.descripcion'),
-          'conditions'=>array('Pathology.specialty_id.' => $idEspecialidad)));
-
-         $this->RequestHandler->respondAs('json');
-         $this->autoRender = false;
-         echo json_encode ( $Patologias );
-        }
-       } */
-
-
     public function add($id = null)
     {
         $quote = $this->Quotes->newEmptyEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
             $quote->person_id = $id;
 
@@ -81,17 +72,43 @@ class QuotesController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
+
         }
 
-        $diseases = $this->Quotes->Diseases->find('list', ['limit' => 200]);
-        $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
+        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
+        $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
+        $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
+        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
-        $status = $this->Quotes->Status->find('list', ['limit' => 200]);
-        $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
-        $pathologies = $this->Quotes->Pathologies->find('list', ['limit' => 200]);
-
-        $this->set(compact('quote', 'specialties', 'diseases', 'pathologies', 'persons', 'statusQuotes', 'status'));
+        $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
+
+    /* Guardar consulta para los beneficiarios */
+    public function addb($id = null)
+    {
+        $quote = $this->Quotes->newEmptyEntity();
+        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
+            $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
+            $quote->beneficiary_id = $id;
+
+            if ($this->Quotes->save($quote)) {
+                $this->Flash->success(__('Consulta medica guardada con exito. '));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The quote could not be saved. Please, try again.'));
+
+        }
+
+        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
+        $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
+        $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
+        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
+        $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
+        $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
+    }
+
+
     /**
      * Edit method
      *
@@ -102,24 +119,23 @@ class QuotesController extends AppController
     public function edit($id = null)
     {
         $quote = $this->Quotes->get($id, [
-            'contain' => ['Specialties', 'Diseases', 'Pathologies', 'Persons', 'StatusQuotes'],
+            'contain' => ['Specialties', 'Doctors', 'Persons', 'StatusQuotes', 'Beneficiary'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('Consulta medica fue actualizada con exito'));
+                $this->Flash->success(__('Estatus de la consulta fue actualizado con exito '));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
         }
         $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
-        $diseases = $this->Quotes->Diseases->find('list', ['limit' => 200]);
-        $pathologies = $this->Quotes->Pathologies->find('list', ['limit' => 200]);
+        $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
+        $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
         $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
-
-        $this->set(compact('quote', 'specialties', 'diseases', 'pathologies', 'persons', 'statusQuotes'));
+        $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
 
     /**
@@ -134,7 +150,7 @@ class QuotesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $quote = $this->Quotes->get($id);
         if ($this->Quotes->delete($quote)) {
-            $this->Flash->success(__('Consulta medica eliminada.'));
+            $this->Flash->success(__('La consulta fue eliminada con exito.'));
         } else {
             $this->Flash->error(__('The quote could not be deleted. Please, try again.'));
         }

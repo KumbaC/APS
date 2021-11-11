@@ -49,15 +49,17 @@ foreach($persons as $person) {
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading font-weight-bold text-uppercase text-center"> <i class="fas fa-tools"></i>  <?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de Consultas'), ['action' => 'index'], ['class' => 'btn btn-danger font-weight-bold text-uppercase side-nav-item']) ?>
+            <h4 class="heading text-uppercase font-weight-bold text-center"> <i class="fas fa-tools"></i> <?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista de consultas'), ['action' => 'index'], ['class' => 'text-uppercase font-weight-bold btn btn-danger side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80 card mx-auto">
         <div class="quotes form content card-body">
             <?= $this->Form->create($quote) ?>
             <fieldset>
-                <legend class="text-uppercase font-weight-bold text-center"><i class="fas fa-notes-medical"></i> <?= __('Agregar una consulta') ?></legend>
+                <legend class="text-center text-uppercase font-weight-bold"> <i class="fas fa-notes-medical"></i> <?= __('Añadir consulta') ?></legend>
+
+
                 <div class="row">
                     <div class="col">
                   <?php  echo $this->Form->control('asunto', ['placeholder' => 'Agregar asunto']);  ?>
@@ -68,14 +70,12 @@ foreach($persons as $person) {
                   </div>
                 </div>
 
+                   <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidad', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'require' => true]); ?>
+                   <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'label' => 'Doctores', 'options' => [], 'empty' => 'Seleccione una doctor', 'required' => true]); ?>
+                   <!-- <?php  //echo $this->Form->control('beneficiary_id', ['id'=>'beneficiary','type' => 'hidden', 'empty' => true, 'required' => true]); ?> -->
 
-                  <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidades', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'require' => true]); ?>
 
-
-
-                  <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'options' => [], 'empty' => 'Seleccione una doctor', 'required' => true, 'label' => 'Doctores']); ?>
-
-                <div class="row">
+                   <div class="row">
                     <div class="col">
                   <?php  echo $this->Form->control('fecha', ['empty' => true, 'value' => $fecha]); ?>
                   </div>
@@ -84,10 +84,10 @@ foreach($persons as $person) {
                   </div>
                 </div>
 
-                  <?php  echo $this->Form->control('status_quote_id', ['options' => $statusQuotes, 'label' => 'Estatus']); ?>
 
-                  <br><br>
+                   <?php  echo $this->Form->control('status_quote_id', ['options' => $statusQuotes]); ?>
 
+                <br> <br>
             </fieldset>
             <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block']) ?>
             <?= $this->Form->end() ?>
@@ -118,7 +118,7 @@ $(document).ready(function(){
 
   });
 /* Persona a Beneficiario */
-  $('#person').change(function(){
+/*   $('#person').change(function(){
 
 var personId = $(this).val();
 
@@ -132,7 +132,7 @@ $.each(beneficiaryObject, function(key,value) {
    beneficiarySelect.append($("<option></option>").attr("value", key).text(value));
   });
 
-});
+}); */
 
 
 

@@ -15,34 +15,37 @@
     <div class="column-responsive column-80 card" style="margin-left: 15em;">
         <div class="doctors view content card-header">
           <h3 class="text-center"> <i class="fas fa-user-md"></i> Doctor </h3>
-            <table class="table table-bordered bg-danger">
+            <table class="table table-bordered" style="background: #8e0e00; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8e0e00, #1f1c18); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8e0e00, #1f1c18); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+">
                 <tr>
-                    <th class="text-uppercase"><?= __('Nombre') ?></th>
-                    <td class="font-weight-bold text-center"><?= h($doctor->nombre) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Nombre') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light"><?= h($doctor->nombre) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Apellido') ?></th>
-                    <td class="font-weight-bold text-center"><?= h($doctor->apellido) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Apellido') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light"><?= h($doctor->apellido) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Cedula') ?></th>
-                    <td class="font-weight-bold text-center">V-<?= h($doctor->cedula) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Cedula') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light">V-<?= h($doctor->cedula) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Email') ?></th>
-                    <td class="font-weight-bold text-center"><?= h($doctor->email) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Email') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light"><?= h($doctor->email) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Especialidad') ?></th>
-                    <td class="font-weight-bold text-center"><?= h($doctor->specialty->descripcion) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Especialidad') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light"><?= h($doctor->specialty->descripcion) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Telefono') ?></th>
-                    <td class="font-weight-bold text-center">+58 <?= h($doctor->telefono) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Telefono') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light">+58 <?= h($doctor->telefono) ?></td>
                 </tr>
                 <tr>
-                    <th class="text-uppercase"><?= __('Registrado') ?></th>
-                    <td class="font-weight-bold text-center"><?= h($doctor->created) ?></td>
+                    <th class="text-uppercase text-light"><?= __('Registrado') ?></th>
+                    <td class="h5 font-weight-bold text-center text-light"><?= h($doctor->created) ?></td>
                 </tr>
             </table>
         </div>

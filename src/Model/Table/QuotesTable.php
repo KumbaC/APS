@@ -12,8 +12,8 @@ use Cake\Validation\Validator;
  * Quotes Model
  *
  * @property \App\Model\Table\SpecialtiesTable&\Cake\ORM\Association\BelongsTo $Specialties
- * @property \App\Model\Table\DiseasesTable&\Cake\ORM\Association\BelongsTo $Diseases
- * @property \App\Model\Table\PathologiesTable&\Cake\ORM\Association\BelongsTo $Pathologies
+ * @property \App\Model\Table\DoctorsTable&\Cake\ORM\Association\BelongsTo $Doctors
+ * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\BelongsTo $Beneficiary
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  * @property \App\Model\Table\StatusQuotesTable&\Cake\ORM\Association\BelongsTo $StatusQuotes
  * @property \App\Model\Table\StatusTable&\Cake\ORM\Association\BelongsToMany $Status
@@ -55,11 +55,11 @@ class QuotesTable extends Table
         $this->belongsTo('Specialties', [
             'foreignKey' => 'specialty_id',
         ]);
-        $this->belongsTo('Diseases', [
-            'foreignKey' => 'disease_id',
+        $this->belongsTo('Doctors', [
+            'foreignKey' => 'doctor_id',
         ]);
-        $this->belongsTo('Pathologies', [
-            'foreignKey' => 'pathology_id',
+        $this->belongsTo('Beneficiary', [
+            'foreignKey' => 'beneficiary_id',
         ]);
         $this->belongsTo('Persons', [
             'foreignKey' => 'person_id',
@@ -67,11 +67,11 @@ class QuotesTable extends Table
         $this->belongsTo('StatusQuotes', [
             'foreignKey' => 'status_quote_id',
         ]);
-        $this->belongsToMany('Status', [
+       /*  $this->belongsToMany('Status', [
             'foreignKey' => 'quote_id',
             'targetForeignKey' => 'status_id',
             'joinTable' => 'status_quotes',
-        ]);
+        ]); */
     }
 
     /**
@@ -115,8 +115,8 @@ class QuotesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['specialty_id'], 'Specialties'), ['errorField' => 'specialty_id']);
-        $rules->add($rules->existsIn(['disease_id'], 'Diseases'), ['errorField' => 'disease_id']);
-        $rules->add($rules->existsIn(['pathology_id'], 'Pathologies'), ['errorField' => 'pathology_id']);
+        $rules->add($rules->existsIn(['doctor_id'], 'Doctors'), ['errorField' => 'doctor_id']);
+        $rules->add($rules->existsIn(['beneficiary_id'], 'Beneficiary'), ['errorField' => 'beneficiary_id']);
         $rules->add($rules->existsIn(['person_id'], 'Persons'), ['errorField' => 'person_id']);
         $rules->add($rules->existsIn(['status_quote_id'], 'StatusQuotes'), ['errorField' => 'status_quote_id']);
 

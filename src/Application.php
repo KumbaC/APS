@@ -137,10 +137,15 @@ class Application extends BaseApplication
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]));
+
+
        // $middlewareQueue->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
+
+
+
 
     public function getAuthorizationService(ServerRequestInterface $request)
     {

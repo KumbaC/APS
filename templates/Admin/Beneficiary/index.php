@@ -6,10 +6,10 @@
 ?>
 <div class="beneficiary index content">
    <!--  <//?= $this->Html->link(__('Añadir Beneficiario'), ['action' => 'add'], ['class' => 'button float-right']) ?> -->
-    <h3 class="text-uppercase font-weight-bold"><i class="fas fa-user-tie"></i><?= __('Beneficiarios') ?></h3>
+    <h3 class="text-uppercase font-weight-bold"><i class="fas fa-users"></i> <?= __('Beneficiarios') ?></h3>
     <br><br>
     <div class="table-responsive">
-        <table class="table table-bordered bg-dark">
+        <table class="table table-bordered table-dark">
             <thead class="thead-light">
                 <tr>
                     <th class="text-center font-weight-bold"><?= $this->Paginator->sort('id', 'ID') ?></th>
@@ -28,18 +28,19 @@
             <tbody>
                 <?php foreach ($beneficiary as $beneficiary): ?>
                 <tr>
-                    <td class="text-center font-weight-bold"><?= $this->Number->format($beneficiary->id) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($beneficiary->person->nombre),  ' ',    h($beneficiary->person->apellido)?></td>
-                    <td class="text-center font-weight-bold"><?= h($beneficiary->nombre) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($beneficiary->apellido) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($beneficiary->kin->descripcion) ?></td>
-                    <td class="text-center font-weight-bold">V-<?= h($beneficiary->cedula) ?></td>
-                    <td class="text-center font-weight-bold"><?= $this->Number->format($beneficiary->edad) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($beneficiary->gender->descripcion) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= $this->Number->format($beneficiary->id) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= h($beneficiary->person->nombre),  ' ',    h($beneficiary->person->apellido)?></td>
+                    <td class="text-light text-center font-weight-bold"><?= h($beneficiary->nombre) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= h($beneficiary->apellido) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= h($beneficiary->kin->descripcion) ?></td>
+                    <td class="text-light text-center font-weight-bold">V-<?= h($beneficiary->cedula) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= $this->Number->format($beneficiary->edad) ?></td>
+                    <td class="text-light text-center font-weight-bold"><?= h($beneficiary->gender->descripcion) ?></td>
                    <!--  <td class="text-center"><//?= h($beneficiary->modified) ?></td> -->
 
                     <td class="pagination text-center">
                         <?= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
+                        <?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'addb', $beneficiary->id],['class' => 'fas fa-hospital btn btn-warning']) ?>
                          <?= $this->Html->link(__(''), ['action' => 'edit', $beneficiary->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $beneficiary->id],['confirm' => __('¿Esta seguro que desea eliminar a {0} {1}?', $beneficiary->nombre, $beneficiary->apellido), 'class' => 'fas fa-trash-alt btn btn-warning']) ?>
                     </td>

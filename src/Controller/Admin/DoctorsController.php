@@ -55,11 +55,11 @@ class DoctorsController extends AppController
         if ($this->request->is('post')) {
             $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
             if ($this->Doctors->save($doctor)) {
-                $this->Flash->success(__('Se registro con exito un doctor. '));
+                $this->Flash->success(__('Se registro con exito al doctor. '));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The doctor could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo guardar al medico, inténtalo de nuevo.'));
         }
         $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200]);
         $this->set(compact('doctor', 'specialties'));

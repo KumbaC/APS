@@ -24,23 +24,8 @@
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
-/*
- * The default class to use for all routes
- *
- * The following route classes are supplied with CakePHP and are appropriate
- * to set as the default:
- *
- * - Route
- * - InflectedRoute
- * - DashedRoute
- *
- * If no call is made to `Router::defaultRouteClass()`, the class used is
- * `Route` (`Cake\Routing\Route\Route`)
- *
- * Note that `Route` does not do any inflections on URLs which will result in
- * inconsistently cased URLs when used with `:plugin`, `:controller` and
- * `:action` markers.
- */
+
+
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
@@ -50,6 +35,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, templates/Pages/home.php)...
      */
+
+
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     $builder->connect('/login', ['controller' => 'users', 'action' => 'login']);
@@ -106,7 +93,7 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
     });
 
     $routes->scope('/beneficiarios', function (\Cake\Routing\RouteBuilder $routes) {
-        $routes->setExtensions('pdf');
+        //$routes->setExtensions('pdf');
         $routes->connect('/view/*', ['controller' => 'Beneficiary', 'action' => 'view']);
         $routes->connect('/add', ['controller' => 'Beneficiary', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Beneficiary', 'action' => 'edit']);
@@ -120,6 +107,16 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
         $routes->connect('/add', ['controller' => 'Persons', 'action' => 'add']);
         $routes->connect('/edit/*', ['controller' => 'Persons', 'action' => 'edit']);
         $routes->connect('/delete/*', ['controller' => 'Persons', 'action' => 'delete']);
+        //$routes->fallbacks('InflectedRoute');
+    });
+
+    $routes->scope('/consultas', function (\Cake\Routing\RouteBuilder $routes) {
+        //$routes->setExtensions('pdf');
+        $routes->connect('/view/*', ['controller' => 'Quotes', 'action' => 'view']);
+        $routes->connect('/add/*', ['controller' => 'Quotes', 'action' => 'add']);
+        $routes->connect('/index', ['controller' => 'Quotes', 'action' => 'index']);
+        $routes->connect('/edit/*', ['controller' => 'Quotes', 'action' => 'edit']);
+        $routes->connect('/delete/*', ['controller' => 'Quotes', 'action' => 'delete']);
         //$routes->fallbacks('InflectedRoute');
     });
 

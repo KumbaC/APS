@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property string|null $asunto
  * @property string|null $nota
  * @property int|null $specialty_id
- * @property int|null $disease_id
- * @property int|null $pathology_id
+ * @property int|null $doctor_id
+ * @property int|null $beneficiary_id
  * @property \Cake\I18n\FrozenDate|null $fecha
  * @property \Cake\I18n\Time|null $hora
  * @property \Cake\I18n\FrozenTime|null $created
@@ -22,11 +22,11 @@ use Cake\ORM\Entity;
  * @property int|null $status_quote_id
  *
  * @property \App\Model\Entity\Specialty $specialty
- * @property \App\Model\Entity\Disease $disease
- * @property \App\Model\Entity\Pathology $pathology
+ * @property \App\Model\Entity\Doctor $doctor
+ * @property \App\Model\Entity\Beneficiary $beneficiary
  * @property \App\Model\Entity\Person $person
  * @property \App\Model\Entity\StatusQuote $status_quote
- * @property \App\Model\Entity\Status[] $status
+ *
  */
 class Quote extends Entity
 {
@@ -43,8 +43,8 @@ class Quote extends Entity
         'asunto' => true,
         'nota' => true,
         'specialty_id' => true,
-        'disease_id' => true,
-        'pathology_id' => true,
+        'doctor_id' => true,
+        'beneficiary_id' => true,
         'fecha' => true,
         'hora' => true,
         'created' => true,
@@ -52,10 +52,10 @@ class Quote extends Entity
         'person_id' => true,
         'status_quote_id' => true,
         'specialty' => true,
-        'disease' => true,
-        'pathology' => true,
+        'doctor' => true,
+        'beneficiary' => true,
         'person' => true,
         'status_quote' => true,
-        'status' => true,
+
     ];
 }

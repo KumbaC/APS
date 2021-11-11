@@ -52,6 +52,8 @@ class AppController extends Controller
 
         if ($this->request->getParam('prefix')) {
             if ($this->request->getParam('prefix') == 'admin') {
+                $this->viewBuilder()->setLayout('admin');
+                $this->loadComponent('Csrf');
                 $this->loadComponent('Auth', [
                     'authorize' => 'Controller',
                     'loginAction' => [
