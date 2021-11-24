@@ -83,7 +83,7 @@ Configure::write('CakePdf', [
         'bottom' => 10,
         'left' => 45,
         'right' => 20,
-        'top' => 40
+        'top' => 20
     ],
     'orientation' => 'landscape',
     'download' => true

@@ -3,6 +3,9 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Quote[]|\Cake\Collection\CollectionInterface $quotes
  */
+$session = $this->request->getSession();
+$session = $this->request->getAttribute('session');
+
 ?>
 <div class="quotes index content">
 
@@ -12,10 +15,10 @@
     <?= $this->Form->create(null,['type' => 'get']) ?>
     <div class="row">
         <div class="col-md-2">
-        <?php echo $this->Form->control('key', ['class' => 'mx-sm-3', 'label' => '',  'placeholder' => 'Buscar' ]); ?>
+        <?php echo $this->Form->control('key', ['label' => '',  'placeholder' => 'Buscar' ]); ?>
 
         </div>
-        <?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md ml-1', 'style' => 'margin-top: 21px;' ]) ?>
+        <?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md', 'style' => 'margin-top: 21px; margin-left: -12px;' ]) ?>
     </div>
 
     <?= $this->Form->end() ?>
@@ -62,11 +65,38 @@
                     <?php else: ?>
                         <td class="h5 font-weight-bold text-center text-uppercase"><span class="badge badge-danger"><?= h($quote->status_quote->descripcion) ?></span></td>
                     <?php endif; ?>
-                    <td class="pagination text-center">
+
+                    <?php if ($quote->status_quote->descripcion == 'Finalizada'): ?>
+                        <?php if (empty($quote->person->nombre)): ?>
+
+                        <td class="pagination text-center">
+                        <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?>
+                        <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id], ['class' => 'fas fa-file btn btn-warning']) ?>
+                        <?php else: ?>
+                        <td class="pagination text-center">
+                            <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?>
+                            <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id], ['class' => 'fas fa-file btn btn-warning']) ?>
+                        <?php endif; ?>
+
                         <?= $this->Html->link(__(''), ['action' => 'view', $quote->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
                         <?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
+
+                        <?php if ($session->read('Auth.User.role_id') == 1): ?>
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                        <?php endif; ?>
+
+                        </td>
+                    <?php else: ?>
+                        <td class="pagination text-center">
+                       <!--  <//?= //$this->Html->link(__(''), ['action' => 'view', $quote->person->id], ['class' => 'fas fa-eye btn btn-warning']) ?> -->
+                        <?= $this->Html->link(__(''), ['action' => 'view', $quote->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
+                        <?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
+
+                        <?php if ($session->read('Auth.User.role_id') == 1): ?>
+                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                        <?php endif; ?>
                     </td>
+                    <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

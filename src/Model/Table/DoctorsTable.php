@@ -12,6 +12,9 @@ use Cake\Validation\Validator;
  * Doctors Model
  *
  * @property \App\Model\Table\SpecialtiesTable&\Cake\ORM\Association\BelongsTo $Specialties
+ * @property \App\Model\Table\UsersInternalsTable&\Cake\ORM\Association\BelongsTo $UsersInternals
+ * @property \App\Model\Table\ClinicalHistoriesTable&\Cake\ORM\Association\HasMany $ClinicalHistories
+ * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\HasMany $Quotes
  *
  * @method \App\Model\Entity\Doctor newEmptyEntity()
  * @method \App\Model\Entity\Doctor newEntity(array $data, array $options = [])
@@ -42,7 +45,7 @@ class DoctorsTable extends Table
         parent::initialize($config);
 
         $this->setTable('doctors');
-        $this->setDisplayField('nombre');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -50,6 +53,15 @@ class DoctorsTable extends Table
         $this->belongsTo('Specialties', [
             'foreignKey' => 'specialty_id',
             'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('UsersInternals', [
+            'foreignKey' => 'user_internal_id',
+        ]);
+        $this->hasMany('ClinicalHistories', [
+            'foreignKey' => 'doctor_id',
+        ]);
+        $this->hasMany('Quotes', [
+            'foreignKey' => 'doctor_id',
         ]);
     }
 
@@ -78,7 +90,7 @@ class DoctorsTable extends Table
             ->allowEmptyString('cedula');
 
         $validator
-            ->numeric('telefono')
+            ->scalar('telefono')
             ->allowEmptyString('telefono');
 
         $validator
@@ -98,6 +110,7 @@ class DoctorsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['specialty_id'], 'Specialties'), ['errorField' => 'specialty_id']);
+        $rules->add($rules->existsIn(['user_internal_id'], 'UsersInternals'), ['errorField' => 'user_internal_id']);
 
         return $rules;
     }

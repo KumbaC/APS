@@ -111,13 +111,4 @@ class UsersInternalsTable extends Table
 
         return $rules;
     }
-
-    public function findAuth(\Cake\ORM\Query $query, array $options){
-
-        $query
-            ->select(['id', 'identification_card', 'email', 'network_user', 'full_name', 'role_id'])
-            ->where(['UsersInternals.active' => 1]);
-
-        return $query;
-    }
 }

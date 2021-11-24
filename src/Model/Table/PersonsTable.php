@@ -14,6 +14,13 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
  * @property \App\Model\Table\StatusTable&\Cake\ORM\Association\BelongsTo $Status
  * @property \App\Model\Table\CargosTable&\Cake\ORM\Association\BelongsTo $Cargos
+ * @property \App\Model\Table\UsersInternalsTable&\Cake\ORM\Association\BelongsTo $UsersInternals
+ * @property \App\Model\Table\UnitsTable&\Cake\ORM\Association\BelongsTo $Units
+ * @property \App\Model\Table\GendersTable&\Cake\ORM\Association\BelongsTo $Genders
+ * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\HasMany $Beneficiary
+ * @property \App\Model\Table\ClinicalHistoriesTable&\Cake\ORM\Association\HasMany $ClinicalHistories
+ * @property \App\Model\Table\PublicWorkersTable&\Cake\ORM\Association\HasMany $PublicWorkers
+ * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\HasMany $Quotes
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Person newEmptyEntity()
@@ -45,15 +52,13 @@ class PersonsTable extends Table
         parent::initialize($config);
 
         $this->setTable('persons');
-        $this->setDisplayField('cedula');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        //$this->addBehavior('Acl.Acl', ['controlled']);
 
         $this->belongsTo('Departments', [
             'foreignKey' => 'department_id',
-            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Status', [
             'foreignKey' => 'status_id',
@@ -61,17 +66,30 @@ class PersonsTable extends Table
         ]);
         $this->belongsTo('Cargos', [
             'foreignKey' => 'cargo_id',
-            'joinType' => 'INNER',
         ]);
-
+        $this->belongsTo('UsersInternals', [
+            'foreignKey' => 'user_internal_id',
+        ]);
+        $this->belongsTo('Units', [
+            'foreignKey' => 'unit_id',
+        ]);
+        $this->belongsTo('Genders', [
+            'foreignKey' => 'gender_id',
+        ]);
         $this->hasMany('Beneficiary', [
-            'foreignKey' => 'person_id', 'kin_id',
-            'dependent' => True,
+            'foreignKey' => 'person_id',
         ]);
-
+        $this->hasMany('ClinicalHistories', [
+            'foreignKey' => 'person_id',
+        ]);
+        $this->hasMany('PublicWorkers', [
+            'foreignKey' => 'person_id',
+        ]);
+        $this->hasMany('Quotes', [
+            'foreignKey' => 'person_id',
+        ]);
         $this->hasMany('Users', [
             'foreignKey' => 'person_id',
-            'dependent' => True,
         ]);
     }
 
@@ -107,6 +125,15 @@ class PersonsTable extends Table
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
 
+        $validator
+            ->integer('phone')
+            ->allowEmptyString('phone');
+
+        $validator
+            ->integer('edad')
+            ->requirePresence('edad', 'create')
+            ->notEmptyString('edad');
+
         return $validator;
     }
 
@@ -122,6 +149,9 @@ class PersonsTable extends Table
         $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
         $rules->add($rules->existsIn(['status_id'], 'Status'), ['errorField' => 'status_id']);
         $rules->add($rules->existsIn(['cargo_id'], 'Cargos'), ['errorField' => 'cargo_id']);
+        $rules->add($rules->existsIn(['user_internal_id'], 'UsersInternals'), ['errorField' => 'user_internal_id']);
+        $rules->add($rules->existsIn(['unit_id'], 'Units'), ['errorField' => 'unit_id']);
+        $rules->add($rules->existsIn(['gender_id'], 'Genders'), ['errorField' => 'gender_id']);
 
         return $rules;
     }

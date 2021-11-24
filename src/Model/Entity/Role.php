@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property string|null $descripcion
  *
  * @property \App\Model\Entity\User[] $users
+ * @property \App\Model\Entity\UsersInternal[] $users_internals
  */
 class Role extends Entity
 {
@@ -27,5 +28,6 @@ class Role extends Entity
     protected $_accessible = [
         'descripcion' => true,
         'users' => true,
+        'users_internals' => true,
     ];
 }

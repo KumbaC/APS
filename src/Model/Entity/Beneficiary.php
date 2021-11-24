@@ -17,19 +17,16 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property int $kin_id
+ * @property string|null $cedula
  *
  * @property \App\Model\Entity\Person $person
  * @property \App\Model\Entity\Gender $gender
  * @property \App\Model\Entity\Kin $kin
+ * @property \App\Model\Entity\ClinicalHistory[] $clinical_histories
+ * @property \App\Model\Entity\Quote[] $quotes
  */
 class Beneficiary extends Entity
 {
-    //ACL
-    /* public function parentNode() {
-        return null;
-    } */
-
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -48,9 +45,11 @@ class Beneficiary extends Entity
         'created' => true,
         'modified' => true,
         'kin_id' => true,
+        'cedula' => true,
         'person' => true,
         'gender' => true,
         'kin' => true,
-        'cedula' => true,
+        'clinical_histories' => true,
+        'quotes' => true,
     ];
 }

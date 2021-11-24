@@ -5,49 +5,44 @@
  * @var string[]|\Cake\Collection\CollectionInterface $departments
  * @var string[]|\Cake\Collection\CollectionInterface $status
  * @var string[]|\Cake\Collection\CollectionInterface $cargos
+ * @var string[]|\Cake\Collection\CollectionInterface $usersInternals
+ * @var string[]|\Cake\Collection\CollectionInterface $units
+ * @var string[]|\Cake\Collection\CollectionInterface $genders
  */
 ?>
 <div class="row">
     <aside class="column">
-
+        <div class="side-nav">
+            <h4 class="heading"><?= __('Actions') ?></h4>
+            <?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $person->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $person->id), 'class' => 'side-nav-item']
+            ) ?>
+            <?= $this->Html->link(__('List Persons'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        </div>
     </aside>
-    <div class="column-responsive column-80 mx-auto card">
-        <div class="card-body persons form content">
+    <div class="column-responsive column-80">
+        <div class="persons form content">
             <?= $this->Form->create($person) ?>
             <fieldset>
-                <legend class="text-center font-weight-bold text-uppercase"><i class="fas fa-user-tie"></i> <?= __('Actualizar Persona') ?></legend>
-             <div class="form-row">
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('cedula', ['type' => 'number']);?>
-              </div>
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('nombre'); ?>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('apellido'); ?>
-              </div>
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('email');?>
-              </div>
-            </div>
-
-              <div class="form-row">
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('department_id', ['options' => $departments, 'label' => 'Departamentos']); ?>
-              </div>
-              <div class="form-group col-md-6">
-              <?php echo $this->Form->control('cargo_id', ['options' => $cargos, 'label' => 'Cargos']); ?>
-
-              </div>
-              <div class="form-group col-md-12">
-              <?php echo $this->Form->control('status_id', ['options' => $status, 'label' => 'Estatus']);?>
-              </div>
-            </div>
-
+                <legend><?= __('Edit Person') ?></legend>
+                <?php
+                    echo $this->Form->control('cedula');
+                    echo $this->Form->control('nombre');
+                    echo $this->Form->control('apellido');
+                    echo $this->Form->control('email');
+                    echo $this->Form->control('department_id', ['options' => $departments, 'empty' => true]);
+                    echo $this->Form->control('status_id', ['options' => $status]);
+                    echo $this->Form->control('cargo_id', ['options' => $cargos, 'empty' => true]);
+                    echo $this->Form->control('user_internal_id', ['options' => $usersInternals, 'empty' => true]);
+                    echo $this->Form->control('unit_id', ['options' => $units, 'empty' => true]);
+                    echo $this->Form->control('phone');
+                    echo $this->Form->control('edad');
+                    echo $this->Form->control('gender_id', ['options' => $genders, 'empty' => true]);
+                ?>
             </fieldset>
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

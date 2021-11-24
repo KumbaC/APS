@@ -18,30 +18,35 @@ class PersonsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-
-    public function initialize(): void
+    public function index()
     {
-        parent::initialize();
-        $this->loadComponent('Paginator');
-    }
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){
 
 
-  public function index()
-    {
-            $key = $this->request->getQuery('key');
-            if($key){
-                    $query = $this->Persons->find('all')->where(['cedula like' => '%'. $key. '%']);
-            }else{
-                   $query = $this->Persons;
+        $key = $this->request->getQuery('key');
+        if($key){
+                $query = $this->Persons->find('all')->where(['persons.cedula like' => '%'. $key. '%']);
+        }else{
+               $query = $this->Persons;
 
-            }
+        }
+
 
         $this->paginate = [
-            'contain' => ['Departments', 'Status', 'Cargos'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders'],
         ];
+
         $persons = $this->paginate($query, ['limit' => '5']);
 
-        $this->set(compact('persons'), $persons);
+
+        $this->set(compact('persons'));
+    }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+      }
+
     }
 
     /**
@@ -53,19 +58,20 @@ class PersonsController extends AppController
      */
     public function view($id = null)
     {
-        $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'Users', 'Beneficiary'=>['Kins'] ],
-        ]);
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){
 
-        $this->viewBuilder()->setOptions([
-            'pdfConfig',
-             [
-                'orientation' => 'portrait',
-                'filename' => 'CarnetAPS_' . $id
-             ]
+        $person = $this->Persons->get($id, [
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary', 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
         ]);
 
         $this->set(compact('person'));
+
+    }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+      }
     }
 
     /**
@@ -78,9 +84,8 @@ class PersonsController extends AppController
         $person = $this->Persons->newEmptyEntity();
         if ($this->request->is('post')) {
             $person = $this->Persons->patchEntity($person, $this->request->getData());
-            //$person->user_id = $this->Auth->user('id');
             if ($this->Persons->save($person)) {
-                $this->Flash->success(__('Afiliado guardo con exito...'));
+                $this->Flash->success(__('The person has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -89,7 +94,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos'));
+        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $units = $this->Persons->Units->find('list', ['limit' => 200]);
+        $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
     }
 
     /**
@@ -107,7 +115,7 @@ class PersonsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $person = $this->Persons->patchEntity($person, $this->request->getData());
             if ($this->Persons->save($person)) {
-                $this->Flash->success(__('Los datos del afiliado fueron actualizados con exito.'));
+                $this->Flash->success(__('The person has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -116,7 +124,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos'));
+        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $units = $this->Persons->Units->find('list', ['limit' => 200]);
+        $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
     }
 
     /**
@@ -131,7 +142,7 @@ class PersonsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $person = $this->Persons->get($id);
         if ($this->Persons->delete($person)) {
-            $this->Flash->success(__('El afiliado fue eliminado con exito'));
+            $this->Flash->success(__('The person has been deleted.'));
         } else {
             $this->Flash->error(__('The person could not be deleted. Please, try again.'));
         }

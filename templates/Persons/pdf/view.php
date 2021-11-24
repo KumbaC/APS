@@ -31,9 +31,9 @@
 
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Cedula: V- <?= h($person->cedula) ?> </p>
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" > Oficina: <?= h($person->department->descripcion) ?> </p>
-
+        <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Unidad: <?= h($person->unit->descripcion) ?></p>
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Correo Electronico: <?= h($person->email) ?></p>
-        <p class="card-text"><small class="text-muted font-weight-bold"style="margin-top: -20px;" >Fecha de emisión: <?= h($fechaActual) ?></small></p>
+        <p class="card-text"><small class="text-muted font-weight-bold"style="margin-top: -100px;" >Fecha de emisión: <?= h($fechaActual) ?></small></p>
       </div>
 
     </div>

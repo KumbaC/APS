@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * PublicWorkers Model
  *
- * @property \App\Model\Table\PeopleTable&\Cake\ORM\Association\BelongsTo $People
+ * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  * @property \App\Model\Table\UsersInternalsTable&\Cake\ORM\Association\HasMany $UsersInternals
  *
  * @method \App\Model\Entity\PublicWorker newEmptyEntity()
@@ -44,7 +44,7 @@ class PublicWorkersTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('People', [
+        $this->belongsTo('Persons', [
             'foreignKey' => 'person_id',
         ]);
         $this->hasMany('UsersInternals', [
@@ -108,7 +108,7 @@ class PublicWorkersTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['identification_card']), ['errorField' => 'identification_card']);
-        $rules->add($rules->existsIn(['person_id'], 'People'), ['errorField' => 'person_id']);
+        $rules->add($rules->existsIn(['person_id'], 'Persons'), ['errorField' => 'person_id']);
 
         return $rules;
     }

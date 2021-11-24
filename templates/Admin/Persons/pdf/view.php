@@ -4,11 +4,14 @@
  * @var \App\Model\Entity\Beneficiary $beneficiary
  */
 
-$fechaActual = date('d/m/Y');
+  // Obteniendo la fecha actual del sistema con PHP
+  $fechaActual = date('d-m-Y');
+
+
 ?>
 <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:70px;']);?>
 
-
+<!-- ABRE |PARTE DELANTERA DEL CARNET AFILIADO| ABRE -->
 <h2 class="text-center font-weight-bold">CARNET ATENCIÓN PRIMARIA DE SALUD </h2>
 
 
@@ -27,8 +30,8 @@ $fechaActual = date('d/m/Y');
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Nombre: <?= h($person->nombre)?> <?= h($person->apellido) ?></p>
 
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Cedula: V- <?= h($person->cedula) ?> </p>
-        <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" > Oficina: <?= h($person->department->descripcion) ?> </p>
-
+        <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" > Departamento: <?= h($person->department->descripcion) ?> </p>
+        <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Unidad: <?= h($person->unit->descripcion) ?></p>
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Correo Electronico: <?= h($person->email) ?></p>
         <p class="card-text"><small class="text-muted font-weight-bold"style="margin-top: -20px;" >Fecha de emisión: <?= h($fechaActual) ?></small></p>
       </div>
@@ -36,8 +39,10 @@ $fechaActual = date('d/m/Y');
     </div>
   </div>
  </div>
+<!-- CIERRA |PARTE DELANTERA DEL CARNET AFILIADO| CIERRA -->
 
 
+<!-- ABRE |SI PERSONA POSEE UN BENEFICIARIO MUESTRA ESTO| ABRE  -->
  <?php if (!empty($person->beneficiary)) : ?>
     <div class="card rounded" style="max-width: 520px;  border:dashed; margin-left:32.8rem; margin-top:-16.3rem;">
     <div class="row no-gutters">
@@ -50,25 +55,16 @@ $fechaActual = date('d/m/Y');
     <tr>
       <th class="h50 font-weight-bolder text-uppercase"  style=" width: 50%; ">Nombre</th>
       <th class="h50 font-weight-bolder text-uppercase"  style="width: 50%;  ">Apellido</th>
-     <!--  <th class="h50 font-weight-bolder text-uppercase"style=" width: 50%; ">Cedula</th> -->
       <th class="h50 font-weight-bolder text-uppercase"style=" width: 50%; ">Parentesco</th>
-
     </tr>
-
-
   </thead>
-
-
  <?php foreach ($person->beneficiary as $beneficiary) : ?>
-
 
   <tbody>
     <tr>
-        <td class="h50 font-weight-bolder" style="width:30%;"><?= $beneficiary->nombre ?> </td>
-        <td class="h50 font-weight-bolder" style=" width: 30%;"><?=$beneficiary->apellido ?></td>
-        <!-- <td class="h50 font-weight-bolder" style="width: 30%; ">V-<//?= $beneficiary->cedula ?></td> -->
+        <td class="h50 font-weight-bolder" style="width:30%;"><?= $beneficiary->nombre ?></td>
+        <td class="h50 font-weight-bolder" style=" width: 30%;"><?=$beneficiary->apellido?></td>
         <td class="h50 font-weight-bolder" style="width: 30%; "><?= $beneficiary->kin->descripcion ?></td>
-
     </tr>
 
   </tbody>
@@ -81,8 +77,11 @@ $fechaActual = date('d/m/Y');
         </div>
     </div>
   </div>
+<!-- CIERRA|SI PERSONA POSEE UN BENEFICIARIO MUESTRA ESTO|CIERRA  -->
 
-<?php else:  ?>
+
+<!-- SI NO POSEE BENEFICIARIOS MUESTRA ESTA TARJETA -->
+  <?php else:  ?>
   <div class="card rounded" style="max-width: 520px;  border:dashed; margin-left:32.8rem; margin-top:-16.3rem;">
     <div class="row no-gutters">
     <div class="col-md-8">
@@ -110,9 +109,7 @@ $fechaActual = date('d/m/Y');
 </div>
 
 
-
-
-
 <?php endif; ?>
-
     </div>
+
+

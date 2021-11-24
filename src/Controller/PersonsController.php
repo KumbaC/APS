@@ -11,29 +11,31 @@ namespace App\Controller;
  */
 class PersonsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+    }
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-
-
-  public function index()
+    public function index()
     {
+
         $this->paginate = [
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders'],
             'conditions' => [
                 'Persons.user_internal_id' => $this->Auth->user('id'),
             ],
 
-            'contain' => ['Departments', 'Status', 'Cargos']
-
-
-
         ];
-        $persons = $this->Persons->find('all');/* ->where(['Users_internals.id' => $this->Auth->User('id')])->first(); */
 
-        $this->set(compact('persons'),  $this->paginate($persons, ['limit' => '10']));
-        //$this->Authorization->authorize($persons);
+        $persons = $this->paginate($this->Persons);
+
+        $this->set(compact('persons'));
     }
 
     /**
@@ -46,19 +48,10 @@ class PersonsController extends AppController
     public function view($id = null)
     {
         $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'Users', 'Beneficiary'=>['Kins'] ],
-        ]);
-
-        $this->viewBuilder()->setOptions([
-            'pdfConfig',
-             [
-                'orientation' => 'portrait',
-                'filename' => 'CarnetAPS_' . $id
-             ]
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary', 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
         ]);
 
         $this->set(compact('person'));
-        //$this->Authorization->authorize($persons);
     }
 
     /**
@@ -71,7 +64,6 @@ class PersonsController extends AppController
         $person = $this->Persons->newEmptyEntity();
         if ($this->request->is('post')) {
             $person = $this->Persons->patchEntity($person, $this->request->getData());
-            //$person->user_id = $this->Auth->user('id');
             if ($this->Persons->save($person)) {
                 $this->Flash->success(__('The person has been saved.'));
 
@@ -82,8 +74,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos'));
-        //$this->Authorization->authorize($person);
+        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $units = $this->Persons->Units->find('list', ['limit' => 200]);
+        $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
     }
 
     /**
@@ -110,8 +104,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos'));
-        //$this->Authorization->authorize($person);
+        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $units = $this->Persons->Units->find('list', ['limit' => 200]);
+        $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
     }
 
     /**
@@ -125,7 +121,6 @@ class PersonsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $person = $this->Persons->get($id);
-        $this->Authorization->authorize($person);
         if ($this->Persons->delete($person)) {
             $this->Flash->success(__('The person has been deleted.'));
         } else {

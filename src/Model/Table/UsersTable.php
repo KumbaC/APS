@@ -11,8 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\BelongsTo $Roles
+ * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
@@ -44,19 +44,16 @@ class UsersTable extends Table
 
         $this->setTable('users');
         $this->setDisplayField('id');
-
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-
-        $this->belongsTo('Persons', [
-            'foreignKey' => 'person_id',
-            'joinType' => 'INNER',
-        ]);
         $this->belongsTo('Roles', [
             'foreignKey' => 'role_id',
             'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Persons', [
+            'foreignKey' => 'person_id',
         ]);
     }
 
@@ -94,12 +91,10 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-
         $rules->add($rules->isUnique(['username']), ['errorField' => 'username']);
-        $rules->add($rules->existsIn(['person_id'], 'Persons'), ['errorField' => 'person_id']);
         $rules->add($rules->existsIn(['role_id'], 'Roles'), ['errorField' => 'role_id']);
+        $rules->add($rules->existsIn(['person_id'], 'Persons'), ['errorField' => 'person_id']);
 
         return $rules;
     }
-
 }

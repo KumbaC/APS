@@ -128,6 +128,10 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
 
     public function login()
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+
+
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -145,7 +149,7 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
         return $this->redirect($this->Auth->logout());
     }
 
-    public function register()
+   /*  public function register()
     {
         $user = $this->Users->newEntity($this->request->getData());
         $user->role_id = 1;
@@ -160,5 +164,5 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
 
         $this->set(compact('persons', 'roles'));
-    }
+    } */
 }

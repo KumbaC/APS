@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Roles Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
+ * @property \App\Model\Table\UsersInternalsTable&\Cake\ORM\Association\HasMany $UsersInternals
  *
  * @method \App\Model\Entity\Role newEmptyEntity()
  * @method \App\Model\Entity\Role newEntity(array $data, array $options = [])
@@ -40,10 +41,13 @@ class RolesTable extends Table
         parent::initialize($config);
 
         $this->setTable('roles');
-        $this->setDisplayField('descripcion');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Users', [
+            'foreignKey' => 'role_id',
+        ]);
+        $this->hasMany('UsersInternals', [
             'foreignKey' => 'role_id',
         ]);
     }

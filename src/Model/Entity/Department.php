@@ -9,10 +9,10 @@ use Cake\ORM\Entity;
  * Department Entity
  *
  * @property int $id
- * @property string|null $piso
  * @property string|null $descripcion
  *
  * @property \App\Model\Entity\Person[] $persons
+ * @property \App\Model\Entity\Unit[] $units
  */
 class Department extends Entity
 {
@@ -26,8 +26,8 @@ class Department extends Entity
      * @var array
      */
     protected $_accessible = [
-        'piso' => true,
         'descripcion' => true,
         'persons' => true,
+        'units' => true,
     ];
 }

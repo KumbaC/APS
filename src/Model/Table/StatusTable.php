@@ -13,6 +13,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\HasMany $Persons
  *
+ *
  * @method \App\Model\Entity\Status newEmptyEntity()
  * @method \App\Model\Entity\Status newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Status[] newEntities(array $data, array $options = [])
@@ -40,12 +41,13 @@ class StatusTable extends Table
         parent::initialize($config);
 
         $this->setTable('status');
-        $this->setDisplayField('descripcion');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Persons', [
             'foreignKey' => 'status_id',
         ]);
+
     }
 
     /**

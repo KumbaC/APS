@@ -22,18 +22,21 @@ class QuotesController extends AppController
     {
 
         $key = $this->request->getQuery('key');
-            if($key){
-                    $query = $this->Quotes->find('all')->where(['Or' => ['persons.cedula like' => '%'. $key. '%', 'beneficiary.cedula like' => '%'. $key. '%']]);
-            }else{
-                   $query = $this->Quotes;
+        if($key){
+                $query = $this->Quotes->find('all')->where(['beneficiary.cedula like' => '%'. $key. '%']);
+        }else{
+               $query = $this->Quotes;
 
-            }
+        }
 
 
         $this->paginate = [
             'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
+            'conditions' => [
+                'Doctors.user_internal_id' => $this->Auth->user('id'),
+            ],
         ];
-        $quotes = $this->paginate($query, ['limit' => '10']);
+        $quotes = $this->paginate($query, ['limit' => '5']);
 
         $this->set(compact('quotes'));
     }
@@ -60,54 +63,53 @@ class QuotesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add($id = null)
+
     {
         $quote = $this->Quotes->newEmptyEntity();
-        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
+        if ($this->request->is('post')) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
+
             $quote->person_id = $id;
 
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('Consulta medica guardada con exito. '));
+                $this->Flash->success(__('The quote has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
-
         }
-
-        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
+        $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
         $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
-        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
+        $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
+
         $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
 
-    /* Guardar consulta para los beneficiarios */
     public function addb($id = null)
     {
         $quote = $this->Quotes->newEmptyEntity();
-        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
+        if ($this->request->is('post')) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
+
             $quote->beneficiary_id = $id;
 
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('Consulta medica guardada con exito. '));
+                $this->Flash->success(__('The quote has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
-
         }
-
-        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
+        $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
         $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
-        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
+        $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
+
         $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
-
 
     /**
      * Edit method
@@ -119,12 +121,12 @@ class QuotesController extends AppController
     public function edit($id = null)
     {
         $quote = $this->Quotes->get($id, [
-            'contain' => ['Specialties', 'Doctors', 'Persons', 'StatusQuotes', 'Beneficiary'],
+            'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('Estatus de la consulta fue actualizado con exito '));
+                $this->Flash->success(__('The quote has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -135,6 +137,7 @@ class QuotesController extends AppController
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
         $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
+
         $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
 
@@ -150,7 +153,7 @@ class QuotesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $quote = $this->Quotes->get($id);
         if ($this->Quotes->delete($quote)) {
-            $this->Flash->success(__('La consulta fue eliminada con exito.'));
+            $this->Flash->success(__('The quote has been deleted.'));
         } else {
             $this->Flash->error(__('The quote could not be deleted. Please, try again.'));
         }

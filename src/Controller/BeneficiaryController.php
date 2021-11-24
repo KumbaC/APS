@@ -29,15 +29,26 @@ class BeneficiaryController extends AppController
 
     public function index()
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+
+        if ($session->read('Auth.User.role_id') == 2) {
+
+
         $this->paginate = [
             'conditions' => [
-                'Beneficiary.user_internal_id' => $this->Auth->user('id'),
+                'Beneficiary.person_id' => $this->Auth->user('id'),
             ],
             'contain' => ['Persons', 'Kins', 'Genders'],
         ];
         $beneficiary = $this->Beneficiary->find('all');
 
         $this->set(compact('beneficiary'), $this->paginate($beneficiary, ['limit' => '3']));
+     }else{
+
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Users', 'action' => 'login']);
+         }
     }
 
     /**
@@ -49,6 +60,11 @@ class BeneficiaryController extends AppController
      */
     public function view($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+
+        if ($session->read('Auth.User.role_id') == 2) {
+
         $beneficiary = $this->Beneficiary->get($id, [
 
             'conditions' => [
@@ -66,6 +82,11 @@ class BeneficiaryController extends AppController
              ]
         ]);
         $this->set(compact('beneficiary'));
+         }else{
+
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 
     /**
@@ -75,6 +96,11 @@ class BeneficiaryController extends AppController
      */
     public function add()
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+
+        if ($session->read('Auth.User.role_id') == 2) {
+
         $beneficiary = $this->Beneficiary->newEmptyEntity();
         if ($this->request->is('post')) {
             $beneficiary = $this->Beneficiary->patchEntity($beneficiary, $this->request->getData());
@@ -89,6 +115,12 @@ class BeneficiaryController extends AppController
         $kins = $this->Beneficiary->Kins->find('list', ['limit' => 200]);
         $genders = $this->Beneficiary->Genders->find('list', ['limit' => 200]);
         $this->set(compact('beneficiary', 'persons', 'kins', 'genders'));
+
+         }else{
+
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 
     /**
@@ -100,6 +132,11 @@ class BeneficiaryController extends AppController
      */
     public function edit($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+
+        if ($session->read('Auth.User.role_id') == 2) {
+
         $beneficiary = $this->Beneficiary->get($id, [
             'contain' => [],
         ]);
@@ -116,6 +153,12 @@ class BeneficiaryController extends AppController
         $kins = $this->Beneficiary->Kins->find('list', ['limit' => 200]);
         $genders = $this->Beneficiary->Genders->find('list', ['limit' => 200]);
         $this->set(compact('beneficiary', 'persons', 'kins', 'genders'));
+
+        }else{
+
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 
     /**
@@ -125,16 +168,25 @@ class BeneficiaryController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    /* public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $beneficiary = $this->Beneficiary->get($id);
-        if ($this->Beneficiary->delete($beneficiary)) {
-            $this->Flash->success(__('El beneficiario fue eliminado.'));
-        } else {
-            $this->Flash->error(__('The beneficiary could not be deleted. Please, try again.'));
-        }
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
 
-        return $this->redirect(['action' => 'index']);
-    }
+        if ($session->read('Auth.User.role_id') == 2) {
+            $this->request->allowMethod(['post', 'delete']);
+            $beneficiary = $this->Beneficiary->get($id);
+            if ($this->Beneficiary->delete($beneficiary)) {
+                $this->Flash->success(__('El beneficiario fue eliminado.'));
+            } else {
+                $this->Flash->error(__('The beneficiary could not be deleted. Please, try again.'));
+            }
+
+            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+    } */
+
 }

@@ -20,12 +20,22 @@ class DoctorsController extends AppController
      */
     public function index()
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
         $this->paginate = [
+
             'contain' => ['Specialties'],
         ];
+        $doctors = $this->Auth->user('id');
         $doctors = $this->paginate($this->Doctors);
 
         $this->set(compact('doctors'));
+
+        }else {
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -37,11 +47,20 @@ class DoctorsController extends AppController
      */
     public function view($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
+
         $doctor = $this->Doctors->get($id, [
             'contain' => ['Specialties'],
         ]);
 
         $this->set(compact('doctor'));
+
+      }else {
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -51,6 +70,10 @@ class DoctorsController extends AppController
      */
     public function add()
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
+
         $doctor = $this->Doctors->newEmptyEntity();
         if ($this->request->is('post')) {
             $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
@@ -63,6 +86,11 @@ class DoctorsController extends AppController
         }
         $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200]);
         $this->set(compact('doctor', 'specialties'));
+
+        }else {
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -74,6 +102,10 @@ class DoctorsController extends AppController
      */
     public function edit($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
+
         $doctor = $this->Doctors->get($id, [
             'contain' => [],
         ]);
@@ -88,6 +120,11 @@ class DoctorsController extends AppController
         }
         $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200]);
         $this->set(compact('doctor', 'specialties'));
+
+        }else {
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -99,6 +136,10 @@ class DoctorsController extends AppController
      */
     public function delete($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
+
         $this->request->allowMethod(['post', 'delete']);
         $doctor = $this->Doctors->get($id);
         if ($this->Doctors->delete($doctor)) {
@@ -108,5 +149,11 @@ class DoctorsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+
+        }else {
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
+
 }

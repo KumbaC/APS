@@ -13,7 +13,6 @@ use Cake\ORM\Entity;
  * @property int|null $specialty_id
  *
  * @property \App\Model\Entity\Specialty $specialty
- * @property \App\Model\Entity\Quote[] $quotes
  */
 class Pathology extends Entity
 {
@@ -30,6 +29,5 @@ class Pathology extends Entity
         'descripcion' => true,
         'specialty_id' => true,
         'specialty' => true,
-        'quotes' => true,
     ];
 }

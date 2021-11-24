@@ -14,6 +14,8 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  * @property \App\Model\Table\GendersTable&\Cake\ORM\Association\BelongsTo $Genders
  * @property \App\Model\Table\KinsTable&\Cake\ORM\Association\BelongsTo $Kins
+ * @property \App\Model\Table\ClinicalHistoriesTable&\Cake\ORM\Association\HasMany $ClinicalHistories
+ * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\HasMany $Quotes
  *
  * @method \App\Model\Entity\Beneficiary newEmptyEntity()
  * @method \App\Model\Entity\Beneficiary newEntity(array $data, array $options = [])
@@ -44,11 +46,10 @@ class BeneficiaryTable extends Table
         parent::initialize($config);
 
         $this->setTable('beneficiary');
-        $this->setDisplayField('nombre');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        //$this->addBehavior('Acl.Acl', ['controlled']);
 
         $this->belongsTo('Persons', [
             'foreignKey' => 'person_id',
@@ -61,6 +62,12 @@ class BeneficiaryTable extends Table
         $this->belongsTo('Kins', [
             'foreignKey' => 'kin_id',
             'joinType' => 'INNER',
+        ]);
+        $this->hasMany('ClinicalHistories', [
+            'foreignKey' => 'beneficiary_id',
+        ]);
+        $this->hasMany('Quotes', [
+            'foreignKey' => 'beneficiary_id',
         ]);
     }
 
@@ -88,6 +95,10 @@ class BeneficiaryTable extends Table
             ->integer('edad')
             ->requirePresence('edad', 'create')
             ->notEmptyString('edad');
+
+        $validator
+            ->scalar('cedula')
+            ->allowEmptyString('cedula');
 
         return $validator;
     }

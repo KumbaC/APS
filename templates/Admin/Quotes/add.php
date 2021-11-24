@@ -24,13 +24,13 @@ foreach($specialties as $specialty) {
 
 
    foreach($specialty->doctors as $doctor){
-       $doctors_list[$specialty->id][$doctor->id] = $doctor->nombre;
+       $doctors_list[$specialty->id][$doctor->id] = 'Dr.' . ' ' . $doctor->nombre . ' ' . $doctor->apellido;
 
    }
 }
 
 
-$person_list = [];
+ $person_list = [];
 $beneficiary_list = [];
 
 foreach($persons as $person) {
@@ -38,7 +38,7 @@ foreach($persons as $person) {
 
 
    foreach($person->beneficiary as $beneficiary){
-       $beneficiary_list[$person->id][$beneficiary->id] = [$beneficiary->nombre];
+       $beneficiary_list[$person->id][$beneficiary->id] = 'Dr.' . ' ' . $beneficiary->nombre . ' ' . $beneficiary->apellido;;
 
    }
 }

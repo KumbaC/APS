@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * Pathologies Model
  *
  * @property \App\Model\Table\SpecialtiesTable&\Cake\ORM\Association\BelongsTo $Specialties
- * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\HasMany $Quotes
  *
  * @method \App\Model\Entity\Pathology newEmptyEntity()
  * @method \App\Model\Entity\Pathology newEntity(array $data, array $options = [])
@@ -41,14 +40,11 @@ class PathologiesTable extends Table
         parent::initialize($config);
 
         $this->setTable('pathologies');
-        $this->setDisplayField('descripcion');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Specialties', [
             'foreignKey' => 'specialty_id',
-        ]);
-        $this->hasMany('Quotes', [
-            'foreignKey' => 'pathology_id',
         ]);
     }
 

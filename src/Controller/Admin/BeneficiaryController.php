@@ -11,8 +11,15 @@ use App\Controller\AppController;
  * @property \App\Model\Table\BeneficiaryTable $Beneficiary
  * @method \App\Model\Entity\Beneficiary[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class BeneficiaryController extends AppController
+
+
+
+
+
+    class BeneficiaryController extends AppController
 {
+
+
 
 
     /**
@@ -22,13 +29,30 @@ class BeneficiaryController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Persons', 'Kins', 'Genders'],
-        ];
-        $beneficiary = $this->Beneficiary->find('all');
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){
 
-        $this->set(compact('beneficiary'), $this->paginate($beneficiary, ['limit' => '5']));
+        $key = $this->request->getQuery('key');
+            if($key){
+                    $query = $this->Beneficiary->find('all')->where(['beneficiary.cedula like' => '%'. $key. '%']);
+            }else{
+                   $query = $this->Beneficiary;
+
+            }
+            $this->paginate = [
+                'contain' => ['Persons', 'Kins', 'Genders'],
+            ];
+
+            $beneficiary = $this->paginate($query, ['limit' => '5']);
+
+            $this->set(compact('beneficiary'), $beneficiary);
+
+    }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
     }
+}
 
     /**
      * View method
@@ -39,6 +63,9 @@ class BeneficiaryController extends AppController
      */
     public function view($id = null)
     {
+       /*  $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){ */
         $beneficiary = $this->Beneficiary->get($id, [
             'contain' => ['Persons', 'Kins', 'Genders'],
         ]);
@@ -50,6 +77,13 @@ class BeneficiaryController extends AppController
              ]
         ]);
         $this->set(compact('beneficiary'));
+
+   /*   }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+    } */
+
+
     }
 
     /**
@@ -59,6 +93,9 @@ class BeneficiaryController extends AppController
      */
     public function add($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){
         $beneficiary = $this->Beneficiary->newEmptyEntity();
         if ($this->request->is('post')) {
             $beneficiary = $this->Beneficiary->patchEntity($beneficiary, $this->request->getData());
@@ -74,6 +111,11 @@ class BeneficiaryController extends AppController
         $kins = $this->Beneficiary->Kins->find('list');
         $genders = $this->Beneficiary->Genders->find('list');
         $this->set(compact('beneficiary', 'persons', 'kins', 'genders'));
+
+     }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+     }
     }
 
     /**
@@ -85,6 +127,9 @@ class BeneficiaryController extends AppController
      */
     public function edit($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 1){
         $beneficiary = $this->Beneficiary->get($id, [
             'contain' => [],
         ]);
@@ -101,6 +146,11 @@ class BeneficiaryController extends AppController
         $kins = $this->Beneficiary->Kins->find('list', ['limit' => 200]);
         $genders = $this->Beneficiary->Genders->find('list', ['limit' => 200]);
         $this->set(compact('beneficiary', 'persons', 'kins', 'genders'));
+
+        }else{
+        $this->Flash->error(__('No tienes acceso para entrar.'));
+        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -112,15 +162,25 @@ class BeneficiaryController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $beneficiary = $this->Beneficiary->get($id);
-        if ($this->Beneficiary->delete($beneficiary)) {
-            $this->Flash->success(__('El beneficiario fue eliminado con exito.'));
-        } else {
-            $this->Flash->error(__('The beneficiary could not be deleted. Please, try again.'));
-        }
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 1) {
+            $this->request->allowMethod(['post', 'delete']);
+            $beneficiary = $this->Beneficiary->get($id);
+            if ($this->Beneficiary->delete($beneficiary)) {
+                $this->Flash->success(__('El beneficiario fue eliminado con exito.'));
+            } else {
+                $this->Flash->error(__('The beneficiary could not be deleted. Please, try again.'));
+            }
 
-        return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
+
 }
+
+

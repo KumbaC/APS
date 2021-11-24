@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Genders Model
  *
  * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\HasMany $Beneficiary
+ * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\HasMany $Persons
  *
  * @method \App\Model\Entity\Gender newEmptyEntity()
  * @method \App\Model\Entity\Gender newEntity(array $data, array $options = [])
@@ -44,6 +45,9 @@ class GendersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Beneficiary', [
+            'foreignKey' => 'gender_id',
+        ]);
+        $this->hasMany('Persons', [
             'foreignKey' => 'gender_id',
         ]);
     }

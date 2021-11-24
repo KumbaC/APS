@@ -24,7 +24,7 @@ foreach($specialties as $specialty) {
 
 
    foreach($specialty->doctors as $doctor){
-       $doctors_list[$specialty->id][$doctor->id] = $doctor->nombre;
+       $doctors_list[$specialty->id][$doctor->id] =  'Dr.' . ' ' . $doctor->nombre . ' ' . $doctor->apellido;
 
    }
 }
@@ -72,7 +72,7 @@ foreach($persons as $person) {
 
                    <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidad', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'require' => true]); ?>
                    <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'label' => 'Doctores', 'options' => [], 'empty' => 'Seleccione una doctor', 'required' => true]); ?>
-                   <!-- <?php  //echo $this->Form->control('beneficiary_id', ['id'=>'beneficiary','type' => 'hidden', 'empty' => true, 'required' => true]); ?> -->
+                    <?php  echo $this->Form->control('beneficiary_id', ['id'=>'beneficiary','type' => 'hidden', 'empty' => true, 'required' => true]); ?>
 
 
                    <div class="row">

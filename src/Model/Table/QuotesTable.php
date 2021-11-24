@@ -16,7 +16,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\BelongsTo $Beneficiary
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\BelongsTo $Persons
  * @property \App\Model\Table\StatusQuotesTable&\Cake\ORM\Association\BelongsTo $StatusQuotes
- * @property \App\Model\Table\StatusTable&\Cake\ORM\Association\BelongsToMany $Status
+ *
  *
  * @method \App\Model\Entity\Quote newEmptyEntity()
  * @method \App\Model\Entity\Quote newEntity(array $data, array $options = [])
@@ -67,11 +67,7 @@ class QuotesTable extends Table
         $this->belongsTo('StatusQuotes', [
             'foreignKey' => 'status_quote_id',
         ]);
-       /*  $this->belongsToMany('Status', [
-            'foreignKey' => 'quote_id',
-            'targetForeignKey' => 'status_id',
-            'joinTable' => 'status_quotes',
-        ]); */
+
     }
 
     /**

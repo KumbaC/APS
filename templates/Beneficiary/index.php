@@ -28,6 +28,9 @@
             <tbody>
                 <?php foreach ($beneficiary as $beneficiary): ?>
                 <tr>
+
+
+
                     <td class="text-center" ><?= $this->Number->format($beneficiary->id) ?></td>
                     <td class="text-center"><?= h($beneficiary->person->nombre) ?> <?= h($beneficiary->person->apellido) ?></td>
                     <td class="text-center"><?= h($beneficiary->nombre) ?></td>

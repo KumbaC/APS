@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Departments Model
  *
  * @property \App\Model\Table\PersonsTable&\Cake\ORM\Association\HasMany $Persons
+ * @property \App\Model\Table\UnitsTable&\Cake\ORM\Association\HasMany $Units
  *
  * @method \App\Model\Entity\Department newEmptyEntity()
  * @method \App\Model\Entity\Department newEntity(array $data, array $options = [])
@@ -46,6 +47,9 @@ class DepartmentsTable extends Table
         $this->hasMany('Persons', [
             'foreignKey' => 'department_id',
         ]);
+        $this->hasMany('Units', [
+            'foreignKey' => 'department_id',
+        ]);
     }
 
     /**
@@ -59,10 +63,6 @@ class DepartmentsTable extends Table
         $validator
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
-
-        $validator
-            ->scalar('piso')
-            ->allowEmptyString('piso');
 
         $validator
             ->scalar('descripcion')

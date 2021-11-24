@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property string|null $descripcion
  *
  * @property \App\Model\Entity\Beneficiary[] $beneficiary
+ * @property \App\Model\Entity\Person[] $persons
  */
 class Gender extends Entity
 {
@@ -27,5 +28,6 @@ class Gender extends Entity
     protected $_accessible = [
         'descripcion' => true,
         'beneficiary' => true,
+        'persons' => true,
     ];
 }
