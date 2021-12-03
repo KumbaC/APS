@@ -12,7 +12,7 @@
         <table class="table table-bordered bg-dark mt-4 rounded-top">
             <thead class="thead-info">
                 <tr>
-                    <th class="text-center"><?= h('ID') ?></th>
+
                     <th class="text-center"><?= h('Cedula') ?></th>
                     <th class="text-center"><?= h('Nombre') ?></th>
                     <th class="text-center"><?= h('Apellido') ?></th>
@@ -26,7 +26,7 @@
             <tbody>
                 <?php foreach ($persons as $person): ?>
                 <tr>
-                    <td class="text-center font-weight-bold"><?= $this->Number->format($person->id) ?></td>
+
                     <td class="text-center font-weight-bold">V-<?= h($person->cedula) ?></td>
                     <td class="text-center font-weight-bold"><?= h($person->nombre) ?></td>
                     <td class="text-center font-weight-bold"><?= h($person->apellido) ?></td>
@@ -34,8 +34,8 @@
                     <td class="text-center font-weight-bold"><?= h($person->department->descripcion)?></td>
                     <!-- <td class="text-center"><//?= h($person->status->descripcion) ?></td> -->
                     <td class="text-center font-weight-bold"><?= h($person->cargo->descripcion) ?></td>
-                    <td class="actions">
-                       <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'ml-3 fas fa-file-pdf btn btn-warning']) ?>
+                    <td class="text-center">
+                       <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning']) ?>
                         <!-- <//?= $this->Html->link(__('Editar'), ['action' => 'edit', $person->id]) ?>
                         <//?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $person->id], ['confirm' => __('Are you sure you want to delete # {0}?', $person->id)]) ?> -->
                     </td>

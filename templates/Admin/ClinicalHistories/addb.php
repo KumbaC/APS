@@ -26,7 +26,7 @@
             <?= $this->Form->create($clinicalHistory) ?>
             <fieldset>
 
-            <h3 class="text-uppercase font-weight-bold text-center">HISTORIA CLINICA </h3>
+            <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> HISTORIA CLINICA </h3>
                 <br>
 
                     <div class="row">

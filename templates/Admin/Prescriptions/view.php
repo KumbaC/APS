@@ -50,6 +50,12 @@
                     <th><?= __('Fecha') ?></th>
                     <td><?= h($prescription->fecha) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Sello') ?></th>
+                    <td> <?= $this->Html->image($prescription->doctor->sello, ['style' => 'height:50px; width:50px;']) ?></td>
+                </tr>
+
+
             </table>
         </div>
     </div>

@@ -79,13 +79,14 @@ use Cake\Utility\Security;
 
 Configure::write('CakePdf', [
     'engine' => 'CakePdf.WkHtmlToPdf',
-    'margin' => [
-        'bottom' => 10,
-        'left' => 45,
-        'right' => 20,
-        'top' => 20
+     'margin' => [
+        'bottom' => 0,
+        'left' => 0,
+        'right' => 0,
+        'top' => 40
     ],
-    'orientation' => 'landscape',
+    'pageSize' => 'A4',
+    'orientation' => 'portrait',
     'download' => true
 ]);
 

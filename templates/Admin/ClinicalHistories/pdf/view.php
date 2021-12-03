@@ -10,7 +10,7 @@ $fechaActual = date('d/m/Y');
 <!DOCTYPE html>
 
 <div class="card">
-    <div class="card-header mx-auto border border-dark rounded bg-white">
+    <div class="card-body rounded bg-white" style="border:dashed">
 
 
         <div class="img">
@@ -19,12 +19,12 @@ $fechaActual = date('d/m/Y');
 
         </div>
                   <p class="font-weight-bold text-right"> Fecha: <?= $fechaActual ?> </p>
-          <h3 class="text-uppercase font-weight-bold text-center" style="margin-top: -45px;">HISTORIA CLINICA</h3>
+          <h3 class="text-uppercase font-weight-bold text-center card-title" style="margin-top: -45px;">HISTORIA CLINICA</h3>
 
         <hr class="bg-dark">
-            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= h($clinicalHistory->person->cedula ). '000000' ?> &nbsp;   </h4>
+            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= ($clinicalHistory->person) ? '0000' .h($clinicalHistory->person->cedula) : '0000' . h($clinicalHistory->beneficiary->cedula) ?> &nbsp;   </h4>
 
-            <hr class="bg-dark">
+            <!-- <hr class="bg-dark"> -->
             <table>
 
                 <tr>
@@ -53,12 +53,12 @@ $fechaActual = date('d/m/Y');
                     <?php if (!empty($clinicalHistory->person)) : ?>
 
                         <th><?= __('Genero: ') ?></th>
-                        <td> <?= h($clinicalHistory->person->gender_id) ?></td>
+                        <td> <?= h($clinicalHistory->person->gender->descripcion) ?></td>
 
                      <?php else: ?>
 
                         <th><?= __('Genero: ') ?></th>
-                        <td> <?=  h($clinicalHistory->beneficiary->gender_id) ?></td>
+                        <td> <?=  h($clinicalHistory->beneficiary->gender->descripcion) ?></td>
 
                      <?php endif; ?>
 
@@ -71,15 +71,15 @@ $fechaActual = date('d/m/Y');
                     <td><?= h($clinicalHistory->blood_type->descripcion) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Doctor: ') ?></th>
-                    <td> <?= h($clinicalHistory->doctor->nombre), h($clinicalHistory->doctor->apellido) ?></td>
+                    <th><?= __('Doctor: ') ?> <?= h($clinicalHistory->doctor->nombre) ?> <?= h($clinicalHistory->doctor->apellido) ?></th>
+                    <td></td>
                 </tr>
 
             </table>
             <br>
             <hr class="bg-dark">
 
-            <div class="related">
+            <div class="related card" style="border:none; height:50px;">
                 <h5 class="text-uppercase font-weight-bold"><?= __('Diagnostico') ?></h5>
                 <?php if (!empty($clinicalHistory->diagnoses)) : ?>
                 <div class="table-responsive">
@@ -92,7 +92,7 @@ $fechaActual = date('d/m/Y');
                         <?php foreach ($clinicalHistory->diagnoses as $diagnoses) : ?>
                         <tr>
 
-                            <td><?= h($diagnoses->descripcion) ?></td>
+                            <td><li><?= h($diagnoses->descripcion) ?></li></td>
 
 
                         </tr>
@@ -128,33 +128,42 @@ $fechaActual = date('d/m/Y');
             </div>
 
 
+            <div class="" style="max-width: 520px; height:250px; width:290px; border:none; margin-left:38.8rem; margin-top:-280px;">
 
-            <h5 class="text-uppercase font-weight-bold" style="max-width: 520px; margin-left:38.8rem; margin-top:-16.3rem;"> Resultados fisicos </h5>
-                <table style="max-width: 520px; margin-left:38.8rem;">
+                <table>
                 <tr>
-                    <th><?= __('Peso') ?></th>
+                    <th>
+                      <h5 class="text-uppercase font-weight-bold"> Resultados fisicos </h5>
+                    </th>
+                </tr>
+
+
+                <tr>
+                    <th><?= __('Peso:') ?></th>
                     <td><?= h($clinicalHistory->peso) ?> kg</td>
                 </tr>
                 <tr>
-                    <th><?= __('Altura') ?></th>
-                    <td><?= h($clinicalHistory->altura) ?> mts</td>
+                    <th><?= __('Altura:') ?></th>
+                    <td> <?= h($clinicalHistory->altura) ?> mts</td>
                 </tr>
                 <tr>
-                    <th><?= __('FR') ?></th>
+                    <th><?= __('FR:') ?></th>
                     <td><?= h($clinicalHistory->fr) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('FC') ?></th>
+                    <th><?= __('FC:') ?></th>
                     <td><?= h($clinicalHistory->fc) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('TA') ?></th>
+                    <th><?= __('TA:') ?></th>
                     <td><?= h($clinicalHistory->ta) ?></td>
 
                 </tr>
             </table>
+            </div>
+
 <br>
-            <div class="related"  style="max-width: 520px; margin-left:38.8rem; margin-top: 0.4rem;">
+            <div class="card"  style="max-width: 520px; margin-left:38.8rem; margin-top: -3.0rem; border:none;">
                 <h5 class="font-weight-bold text-uppercase" ><?= __('Antecedentes ') ?></h5>
                 <?php if (!empty($clinicalHistory->medicals_antecedents)) : ?>
                 <div class="table-responsive">
@@ -200,35 +209,34 @@ $fechaActual = date('d/m/Y');
                </div>
 
                <br>
-               <div class="table-responsive mx-auto">
-               <table style="margin-left:18.8rem;">
-                        <tr>
+               <div class="mx-auto">
 
-                            <th class="text-center"><?= __('Firma del medico: ') ?></th>
 
-                        </tr>
 
-                        <tr>
+                            <p class="font-weight-bold" style="margin-left: 14rem; margin-top:140px;"><?= __('Firma del medico: ') ?></th>
 
-                            <td class="text-center">__________________________</td>
 
-                        </tr>
-                        </table>
 
-                        <table style="max-width: 520px; margin-left:34.8rem; margin-top: -53px;">
-                        <tr>
 
-                        <th class="text-center"><?= __('Sello: ') ?></th>
 
-                        </tr>
+                            <p class="text-center" style="max-width: 520px; margin-left: 1rem;"><?= $this->Html->image($clinicalHistory->doctor->firma, ['fullBase' => true, 'style' => 'height:115px; width:140px;']); ?></p>
 
-                        <tr>
 
-                        <td class="text-center">__________________________</td>
 
-                        </tr>
 
-                        </table>
+
+
+                        <p class="font-weight-bold" style="margin-left: 38rem; margin-top:-10rem;"><?= __('Sello: ') ?></p>
+
+
+
+
+
+                        <p style="max-width: 520px; margin-left:35.8rem;"><?= $this->Html->image($clinicalHistory->doctor->sello, ['fullBase' => true, 'style' => 'height:105px; width:125px;']); ?></p>
+
+
+
+
                 </div>
             </div>
 

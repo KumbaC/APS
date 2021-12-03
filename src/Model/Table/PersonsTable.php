@@ -71,13 +71,15 @@ class PersonsTable extends Table
             'foreignKey' => 'user_internal_id',
         ]);
         $this->belongsTo('Units', [
-            'foreignKey' => 'unit_id',
+            'foreignKey' => 'unit_id'
+
         ]);
         $this->belongsTo('Genders', [
             'foreignKey' => 'gender_id',
         ]);
         $this->hasMany('Beneficiary', [
-            'foreignKey' => 'person_id',
+            'foreignKey' => 'person_id', 'kin_id',
+            'dependent' => True,
         ]);
         $this->hasMany('ClinicalHistories', [
             'foreignKey' => 'person_id',

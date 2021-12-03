@@ -38,7 +38,7 @@ class ClinicalHistoriesController extends AppController
     public function view($id = null)
     {
         $clinicalHistory = $this->ClinicalHistories->get($id, [
-            'contain' => ['Persons', 'Beneficiary', 'BloodTypes', 'Doctors', 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
+            'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors', 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
         ]);
 
         $this->set(compact('clinicalHistory'));
@@ -49,7 +49,7 @@ class ClinicalHistoriesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id = null)
+    public function add($id, $idDoctor = null)
 
     {
         $clinicalHistory = $this->ClinicalHistories->newEmptyEntity();
@@ -58,10 +58,10 @@ class ClinicalHistoriesController extends AppController
 
             $clinicalHistory->person_id = $id;
 
-            //$clinicalHistory->doctor_id = $this->request->getData('doctor_id');
+            $clinicalHistory->doctor_id = $idDoctor;
 
             if ($this->ClinicalHistories->save($clinicalHistory)) {
-                $this->Flash->success(__('The clinical history has been saved.'));
+                $this->Flash->success(__('La historia clinica fue guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -77,17 +77,16 @@ class ClinicalHistoriesController extends AppController
         $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
     }
 
-    public function addb($id = null)
+    public function addb($id, $idDoctor = null)
 
     {
         $clinicalHistory = $this->ClinicalHistories->newEmptyEntity();
         if ($this->request->is('post')) {
             $clinicalHistory = $this->ClinicalHistories->patchEntity($clinicalHistory, $this->request->getData());
 
-
-            //$clinicalHistory->doctor_id =
-
             $clinicalHistory->beneficiary_id = $id;
+
+            $clinicalHistory->doctor_id = $idDoctor;
 
             if ($this->ClinicalHistories->save($clinicalHistory)) {
                 $this->Flash->success(__('The clinical history has been saved.'));
@@ -113,15 +112,19 @@ class ClinicalHistoriesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id)
     {
         $clinicalHistory = $this->ClinicalHistories->get($id, [
             'contain' => ['Diagnoses', 'Habits', 'MedicalsAntecedents'],
         ]);
+
+        //$clinicalHistory->beneficiary_id = $id;
+        //$clinicalHistory->doctor_id = $idDoctor;
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $clinicalHistory = $this->ClinicalHistories->patchEntity($clinicalHistory, $this->request->getData());
             if ($this->ClinicalHistories->save($clinicalHistory)) {
-                $this->Flash->success(__('The clinical history has been saved.'));
+                $this->Flash->success(__('La historia clinica fue actualizada con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }

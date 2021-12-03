@@ -23,13 +23,15 @@ class QuotesController extends AppController
 
         $key = $this->request->getQuery('key');
         if($key){
-                $query = $this->Quotes->find('all')->where(['beneficiary.cedula like' => '%'. $key. '%']);
+                $query = $this->Quotes->find('all')->where(['Or' => ['beneficiary.cedula like' => '%'. $key. '%', 'persons.cedula like' => '%'. $key. '%']]);
         }else{
                $query = $this->Quotes;
 
         }
 
-
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+    if ($session->read('Auth.User.role_id') == 3) {
         $this->paginate = [
             'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
             'conditions' => [
@@ -39,6 +41,15 @@ class QuotesController extends AppController
         $quotes = $this->paginate($query, ['limit' => '5']);
 
         $this->set(compact('quotes'));
+       }else{
+           $this->paginate = [
+            'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
+
+        ];
+           $quotes = $this->paginate($query, ['limit' => '5']);
+
+           $this->set(compact('quotes'));
+       }
     }
 
     /**
@@ -63,53 +74,54 @@ class QuotesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add($id = null)
-
     {
         $quote = $this->Quotes->newEmptyEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
-
             $quote->person_id = $id;
 
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('The quote has been saved.'));
+                $this->Flash->success(__('Consulta medica guardada con exito. '));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
+
         }
-        $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
+
+        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
         $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
-        $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
+        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
-
         $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
+
 
     public function addb($id = null)
     {
         $quote = $this->Quotes->newEmptyEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post', 'get', 'ajax', 'put','patch')) {
             $quote = $this->Quotes->patchEntity($quote, $this->request->getData());
-
             $quote->beneficiary_id = $id;
 
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('The quote has been saved.'));
+                $this->Flash->success(__('Consulta medica guardada con exito. '));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The quote could not be saved. Please, try again.'));
+
         }
-        $specialties = $this->Quotes->Specialties->find('list', ['limit' => 200]);
+
+        $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
         $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
-        $persons = $this->Quotes->Persons->find('list', ['limit' => 200]);
+        $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
-
         $this->set(compact('quote', 'specialties', 'doctors', 'beneficiary', 'persons', 'statusQuotes'));
     }
+
 
     /**
      * Edit method

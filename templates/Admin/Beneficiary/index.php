@@ -29,7 +29,7 @@ $session = $this->request->getAttribute('session');
         <table class="table table-bordered table-dark">
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('id', 'ID') ?></th>
+
                     <th class="text-center font-weight-bold"><?= $this->Paginator->sort('person_id', 'Titular') ?></th>
                     <th class="text-center font-weight-bold"><?= $this->Paginator->sort('nombre') ?></th>
                     <th class="text-center font-weight-bold"><?= $this->Paginator->sort('apellido') ?></th>
@@ -39,14 +39,16 @@ $session = $this->request->getAttribute('session');
                     <th class="text-center font-weight-bold"><?= $this->Paginator->sort('genero') ?></th>
                     <!-- <th class="text-center"><//?= $this->Paginator->sort('modified', 'Actualizado') ?></th> -->
 
-                    <th class="actions text-center"><?= __('Opciones') ?></th>
+                    <th class="text-center"><?= __('Añadir Consulta') ?></th>
+                    <th class="actions text-center"><?= __('Editar') ?></th>
+                    <th class="actions text-center"><?= __('Eliminar') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($beneficiary as $beneficiary): ?>
                 <tr>
 
-                    <td class="text-light text-center font-weight-bold"><?= $this->Number->format($beneficiary->id) ?></td>
+
                     <td class="text-light text-center font-weight-bold"><?= h($beneficiary->person->nombre),  ' ',    h($beneficiary->person->apellido)?></td>
                     <td class="text-light text-center font-weight-bold"><?= h($beneficiary->nombre) ?></td>
                     <td class="text-light text-center font-weight-bold"><?= h($beneficiary->apellido) ?></td>
@@ -57,20 +59,31 @@ $session = $this->request->getAttribute('session');
                    <!--  <td class="text-center"><//?= h($beneficiary->modified) ?></td> -->
 
 
-                    <td class="pagination text-center">
+
+                        <!-- <?php if ($session->read('Auth.User.role_id') == 1):?>
+                        <//?= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
+                        <?php endif; ?> -->
+                        <td class="text-center">
                         <?php if ($session->read('Auth.User.role_id') == 1):?>
-                        <?= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
-                        <?php endif; ?>
-                        <?php if ($session->read('Auth.User.role_id') == 1):?>
+
                         <?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'addb', $beneficiary->id],['class' => 'fas fa-hospital btn btn-warning']) ?>
+
                         <?php endif; ?>
+                        </td>
+                        <td class="text-center">
                         <?php if ($session->read('Auth.User.role_id') == 1):?>
+
                         <?= $this->Html->link(__(''), ['action' => 'edit', $beneficiary->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
+
                         <?php endif; ?>
+                        </td>
+
                         <?php if ($session->read('Auth.User.role_id') == 1):?>
+                            <td class="text-center">
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $beneficiary->id],['confirm' => __('¿Esta seguro que desea eliminar a {0} {1}?', $beneficiary->nombre, $beneficiary->apellido), 'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                            </td>
                         <?php endif; ?>
-                    </td>
+
 
 
                 </tr>

@@ -10,7 +10,6 @@
  * @var \Cake\Collection\CollectionInterface|string[] $status
  */
 
-use function PHPSTORM_META\type;
 
 $hora = time();
 $fecha = date('d-m-Y');

@@ -12,7 +12,7 @@
         <table class="table table-bordered bg-dark">
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center" ><?= $this->Paginator->sort('id', 'ID') ?></th>
+
                     <th class="text-center" ><?= $this->Paginator->sort('person_id', 'Afiliado') ?></th>
                     <th class="text-center" ><?= $this->Paginator->sort('nombre') ?></th>
                     <th class="text-center" ><?= $this->Paginator->sort('apellido') ?></th>
@@ -31,7 +31,7 @@
 
 
 
-                    <td class="text-center" ><?= $this->Number->format($beneficiary->id) ?></td>
+
                     <td class="text-center"><?= h($beneficiary->person->nombre) ?> <?= h($beneficiary->person->apellido) ?></td>
                     <td class="text-center"><?= h($beneficiary->nombre) ?></td>
                     <td class="text-center"><?= h($beneficiary->apellido) ?></td>

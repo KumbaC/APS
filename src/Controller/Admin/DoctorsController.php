@@ -23,12 +23,22 @@ class DoctorsController extends AppController
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
         if ($session->read('Auth.User.role_id') == 1) {
-        $this->paginate = [
+
+            $key = $this->request->getQuery('key');
+            if($key){
+                    $query = $this->Doctors->find('all')->where(['doctors.cedula like' => '%'. $key. '%']);
+            }else{
+                   $query = $this->Doctors;
+
+            }
+
+            $this->paginate = [
 
             'contain' => ['Specialties'],
         ];
+
         $doctors = $this->Auth->user('id');
-        $doctors = $this->paginate($this->Doctors);
+        $doctors = $this->paginate($query, ['limit' => '5']);
 
         $this->set(compact('doctors'));
 
@@ -77,6 +87,31 @@ class DoctorsController extends AppController
         $doctor = $this->Doctors->newEmptyEntity();
         if ($this->request->is('post')) {
             $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
+            if (!$doctor->getErrors()) {
+
+                $firma = $this->request->getData('firma_file');
+                $sello = $this->request->getData('sello_file');
+
+                $name = $firma->getClientFilename();
+                $names = $sello->getClientFilename();
+
+                $fileName = $firma->getClientFilename();
+                $fileNames = $sello->getClientFilename();
+
+                $targetPath = WWW_ROOT.'img'.DS.$fileName;
+                $targetPaths = WWW_ROOT.'img'.DS.$fileNames;
+
+                if ($name && $names) {
+                    $firma->moveTo($targetPath);
+                    $sello->moveTo($targetPaths);
+
+                    $doctor->firma = $name;
+                    $doctor->sello = $names;
+                }
+            }
+
+
+
             if ($this->Doctors->save($doctor)) {
                 $this->Flash->success(__('Se registro con exito al doctor. '));
 
@@ -111,6 +146,34 @@ class DoctorsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
+
+            if (!$doctor->getErrors()) {
+
+                $firma = $this->request->getData('firma_file');
+                $sello = $this->request->getData('sello_file');
+
+                $name = $firma->getClientFilename();
+                $names = $sello->getClientFilename();
+
+                $fileName = $firma->getClientFilename();
+                $fileNames = $sello->getClientFilename();
+
+                $targetPath = WWW_ROOT.'img'.DS.$fileName;
+                $targetPaths = WWW_ROOT.'img'.DS.$fileNames;
+
+                if ($name /* && $names */) {
+                    $firma->moveTo($targetPath);
+                    //$sello->moveTo($targetPaths);
+
+                    $doctor->firma = $name;
+                    //$doctor->sello = $names;
+                }elseif($names){
+                    $sello->moveTo($targetPaths);
+
+                    $doctor->sello = $names;
+                }
+            }
+
             if ($this->Doctors->save($doctor)) {
                 $this->Flash->success(__('Se actualizo con exito el registro del Doctor.'));
 

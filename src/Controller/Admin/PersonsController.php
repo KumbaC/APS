@@ -63,8 +63,19 @@ class PersonsController extends AppController
     if ($session->read('Auth.User.role_id') == 1){
 
         $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary', 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
         ]);
+
+        $this->viewBuilder()->setOptions([
+            'pdfConfig',
+             [
+
+                'orientation' => 'landscape',
+                'filename' => 'CarnetAPS_'.$person->nombre,
+
+             ]
+        ]);
+
 
         $this->set(compact('person'));
 
@@ -91,7 +102,7 @@ class PersonsController extends AppController
             }
             $this->Flash->error(__('The person could not be saved. Please, try again.'));
         }
-        $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
+        $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
         $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
@@ -121,7 +132,7 @@ class PersonsController extends AppController
             }
             $this->Flash->error(__('The person could not be saved. Please, try again.'));
         }
-        $departments = $this->Persons->Departments->find('list', ['limit' => 200]);
+        $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
         $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);

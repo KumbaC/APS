@@ -24,7 +24,7 @@
 
 
 
-                   <?php echo $this->Form->control('descripcion', ['label' => 'Recipe' ]); ?>
+                   <?php echo $this->Form->control('descripcion', ['label' => 'Recipe', 'placeholder' => 'Ejem: Atamel 50MG, Losartan 20MG' ]); ?>
                    <?php echo $this->Form->control('indicaciones', ['type' => 'textarea', 'label' => 'Indicaciones' ]); ?>
 
                    <?php //echo $this->Form->control('quote_id', ['options' => $quotes, 'empty' => true]); ?>

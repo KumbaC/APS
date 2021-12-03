@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\SpecialtiesTable&\Cake\ORM\Association\BelongsTo $Specialties
  * @property \App\Model\Table\UsersInternalsTable&\Cake\ORM\Association\BelongsTo $UsersInternals
  * @property \App\Model\Table\ClinicalHistoriesTable&\Cake\ORM\Association\HasMany $ClinicalHistories
+ * @property \App\Model\Table\PrescriptionsTable&\Cake\ORM\Association\HasMany $Prescriptions
  * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\HasMany $Quotes
  *
  * @method \App\Model\Entity\Doctor newEmptyEntity()
@@ -60,6 +61,9 @@ class DoctorsTable extends Table
         $this->hasMany('ClinicalHistories', [
             'foreignKey' => 'doctor_id',
         ]);
+        $this->hasMany('Prescriptions', [
+            'foreignKey' => 'doctor_id',
+        ]);
         $this->hasMany('Quotes', [
             'foreignKey' => 'doctor_id',
         ]);
@@ -94,8 +98,20 @@ class DoctorsTable extends Table
             ->allowEmptyString('telefono');
 
         $validator
+            ->scalar('telefono_secundario')
+            ->allowEmptyString('telefono_secundario');
+
+        $validator
             ->email('email')
             ->allowEmptyString('email');
+
+        $validator
+            ->scalar('firma')
+            ->allowEmptyString('firma');
+
+        $validator
+            ->scalar('sello')
+            ->allowEmptyString('sello');
 
         return $validator;
     }

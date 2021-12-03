@@ -13,15 +13,19 @@ use Cake\ORM\Entity;
  * @property string|null $apellido
  * @property string|null $cedula
  * @property string|null $telefono
+ * @property string|null $telefono_secundario
  * @property string|null $email
  * @property int $specialty_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property int|null $user_internal_id
+ * @property string|null $firma
+ * @property string|null $sello
  *
  * @property \App\Model\Entity\Specialty $specialty
  * @property \App\Model\Entity\UsersInternal $users_internal
  * @property \App\Model\Entity\ClinicalHistory[] $clinical_histories
+ * @property \App\Model\Entity\Prescription[] $prescriptions
  * @property \App\Model\Entity\Quote[] $quotes
  */
 class Doctor extends Entity
@@ -40,14 +44,18 @@ class Doctor extends Entity
         'apellido' => true,
         'cedula' => true,
         'telefono' => true,
+        'telefono_secundario' => true,
         'email' => true,
         'specialty_id' => true,
         'created' => true,
         'modified' => true,
         'user_internal_id' => true,
+        'firma' => true,
+        'sello' => true,
         'specialty' => true,
         'users_internal' => true,
         'clinical_histories' => true,
+        'prescriptions' => true,
         'quotes' => true,
     ];
 }

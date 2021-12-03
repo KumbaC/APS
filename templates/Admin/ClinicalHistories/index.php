@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ClinicalHistory[]|\Cake\Collection\CollectionInterface $clinicalHistories
  */
+$session = $this->request->getSession();
+$session = $this->request->getAttribute('session');
 ?>
 <div class="clinicalHistories index content">
 
@@ -12,17 +14,21 @@
         <table class="table table-dark table-bordered">
             <thead class="thead thead-light">
                 <tr>
-                    <th class="text-center"><?= $this->Paginator->sort('id', 'ID') ?></th>
+
                     <th class="text-center"><?= $this->Paginator->sort('person_id', 'Paciente') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('blood_type_id', 'Tipo de sangre') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('doctor_id', 'Doctor') ?></th>
-                    <th class="actions text-center"><?= __('Opciones') ?></th>
+                    <th class="actions text-center"><?= __('Imprimir') ?></th>
+                    <th class="actions text-center"><?= __('Editar') ?></th>
+                    <?php if ($session->read('Auth.User.role_id') == 1): ?>
+                    <th class="actions text-center"><?= __('Eliminar') ?></th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($clinicalHistories as $clinicalHistory): ?>
                 <tr>
-                    <td class="text-center font-weight-bold"><?= $this->Number->format($clinicalHistory->id) ?></td>
+
                     <?php if (empty($clinicalHistory->person->nombre)): ?>
                         <td class="text-center font-weight-bold"><?= $clinicalHistory->has('beneficiary') ? h($clinicalHistory->beneficiary->nombre .' '. $clinicalHistory->beneficiary->apellido) : '' ?></td>
                     <?php else: ?>
@@ -36,11 +42,14 @@
                     <?php endif; ?>
 
                     <td class="text-center font-weight-bold"><?= $clinicalHistory->has('doctor') ? h('Dr. '. ' ' . $clinicalHistory->doctor->nombre . $clinicalHistory->doctor->apellido ) : '' ?></td>
-                    <td class="pagination text-center">
-                        <?= $this->Html->link(__('Imprimir'), ['action' => 'view', $clinicalHistory->id, '_ext' => 'pdf'], ['class' => 'btn btn-warning']) ?>
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $clinicalHistory->id], ['class' => 'btn btn-warning']) ?>
-                        <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'btn btn-warning']) ?>
+                    <td class="text-center font-weight-bold">
+                        <?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id, '_ext' => 'pdf'], ['class' => 'far fa-file-pdf btn btn-warning']) ?>
                     </td>
+                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
+                    <?php if ($session->read('Auth.User.role_id') == 1): ?>
+                    <td class="text-center font-weight-bold"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning']) ?></td>
+
+                    <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

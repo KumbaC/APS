@@ -2,42 +2,50 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Doctor $doctor
- * @var string[]|\Cake\Collection\CollectionInterface $specialties
+ * @var \Cake\Collection\CollectionInterface|string[] $specialties
  */
+
+use function PHPSTORM_META\type;
+
 ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-
-            <!-- <//?= $this->Form->postLink(
-                __(''),
-                ['action' => 'Eliminar', $doctor->id],
-                ['confirm' => __('¿Estas seguro de eliminar al Dr. {0}?', $doctor->nombre), 'class' => 'fas fa-trash-alt btn btn-danger side-nav-item']
-            ) ?>
-            <//?= $this->Html->link(__('Lista de Doctores'), ['action' => 'index'], ['class' => 'btn btn-success side-nav-item']) ?> -->
+        <h4 class="heading text-uppercase text-center font-weight-bold">  <i class="fas fa-tools"></i> <?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista de Doctores'), ['action' => 'index'], ['class' => 'text-uppercase font-weight-bold btn btn-danger']) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80 card mx-auto">
+    <div class="column-responsive column-80 card mx-auto" style="width: 500px;">
         <div class="doctors form content card-body">
-            <?= $this->Form->create($doctor) ?>
+            <?= $this->Form->create($doctor, ['type' => 'file']) ?>
             <fieldset>
-                <legend class="text-center font-weight-bold text-uppercase"><i class="fas fa-briefcase-medical"></i> <?= __('Editar Doctor') ?></legend>
-                <div class="form-row">
+                <legend class="text-center font-weight-bold text-uppercase"><i class="fas fa-briefcase-medical"></i> <?= __('Agregar Doctor') ?></legend>
+                    <div class="form-row">
                     <div class="form-group col-md-6"><?php  echo $this->Form->control('nombre', ['placeholder' => 'Introduzca el nombre','required']);?></div>
                     <div class="form-group col-md-6"><?php  echo $this->Form->control('apellido', ['placeholder' => 'Introduzca el apellido', 'required']);?></div>
                     </div>
 
                     <div class="form-row">
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('cedula', ['placeholder' => 'V-', 'required']);?></div>
-                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['placeholder' => '+58 0212-000-000', 'required']);?></div>
-                    </div>
+                    <div class="form-group col-md-6"><?php  echo $this->Form->control('cedula', ['placeholder' => 'Introduzca su cedula', 'required', 'type' => 'number' , 'min' => '1']);?></div>
+                    <div class="form-group col-md-6"><?php  echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'Ingrese su correo', 'required', 'type' => 'email']);?></div>
+                     </div>
 
                     <div class="form-row">
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'Ingrese su correo']);?></div>
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('specialty_id', ['options' => $specialties, 'label' => 'Especialidad']);?></div>
+                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['required', 'type' => 'number', 'min' => '1']);?></div>
+                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono_secundario', ['required', 'type' => 'number', 'min' => '1']);?></div>
+
                     </div>
+
+                    <div class="form-group"><?php  echo $this->Form->control('specialty_id', ['options' => $specialties, 'label' => 'Especialidad']);?></div>
+
+                    <div class="form-row">
+                    <div class="form-group col-md-6"><?php  echo $this->Form->control('firma_file', ['label' => 'Firma Electronica', 'type' => 'file']);?></div>
+                    <div class="form-group col-md-6"><?php  echo $this->Form->control('sello_file', ['type' => 'file','label' => 'Sello:']);?></div>
+                    </div>
+
+
             </fieldset>
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-success btn-block']) ?>
+            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
