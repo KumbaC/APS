@@ -105,11 +105,11 @@ class PrescriptionsController extends AppController
             $prescription->doctor_id =  $idDoctor;
 
             if ($this->Prescriptions->save($prescription)) {
-                $this->Flash->success(__('The prescription has been saved.'));
+                $this->Flash->success(__('Recipe creado con exito, que tenga un buen dia.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'add' , $id, $idDoctor]);
             }
-            $this->Flash->error(__('The prescription could not be saved. Please, try again.'));
+            $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
         }
 
         $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
@@ -130,9 +130,9 @@ class PrescriptionsController extends AppController
             $prescription->doctor_id =  $idDoctor;
 
             if ($this->Prescriptions->save($prescription)) {
-                $this->Flash->success(__('El recipe fue guardado con exito, Agregue uno nuevo.'));
+                $this->Flash->success(__('El recipe fue guardado con exito, que tenga un buen dia.'));
 
-                //return $this->redirect(['action' => 'addb']);
+                return $this->redirect(['action' => 'addb',  $id, $idDoctor]);
             }
             $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
         }
@@ -162,11 +162,11 @@ class PrescriptionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $prescription = $this->Prescriptions->patchEntity($prescription, $this->request->getData());
             if ($this->Prescriptions->save($prescription)) {
-                $this->Flash->success(__('The prescription has been saved.'));
+                $this->Flash->success(__('El recipe se actualizo con exito. Que tenga un buen dia.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The prescription could not be saved. Please, try again.'));
+            $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
         }
         $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
         $beneficiary = $this->Prescriptions->Beneficiary->find('list', ['limit' => 200]);
@@ -188,9 +188,9 @@ class PrescriptionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $prescription = $this->Prescriptions->get($id);
         if ($this->Prescriptions->delete($prescription)) {
-            $this->Flash->success(__('The prescription has been deleted.'));
+            $this->Flash->success(__('El recipe fue eliminado con exito.'));
         } else {
-            $this->Flash->error(__('The prescription could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
         }
 
         return $this->redirect(['action' => 'index']);

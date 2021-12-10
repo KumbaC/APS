@@ -28,33 +28,37 @@
 
 
 <br> <br>
-    <div class="column-responsive column-80 card mx-auto col-md-4">
+    <div class="column-responsive column-80 card mx-auto col-md-5">
         <div class="clinicalHistories form content card-body">
             <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
             <fieldset>
 
             <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> HISTORIA CLINICA </h3>
                 <br>
-                   <!--  /* echo $this->Form->control('person_id', ['options' => $persons, 'empty' => true]);
-                    echo $this->Form->control('beneficiary_id', ['options' => $beneficiary, 'empty' => true]); */
-                    /* echo $this->Form->control('doctor_id', ['options' => $doctors, 'empty' => true]); */ -->
-                    <div class="row bloo">
+
+
+                <div class="row">
                         <div class="col">
-                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood','label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO', 'required']); ?>
+                    <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos (Opcional)', 'options' => $habits]); ?>
                     </div>
-                    <div class="col diag">
-                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses]); ?>
+                    <div class="col">
+                    <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos (Opcional)', 'options' => $medicalsAntecedents]); ?>
                     </div></div>
+
+
+                    <div class="row">
+                        <div class="col">
+                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO', 'class'=>'required', 'title'=>'Selecciona el tipo de sangre', 'style' => 'width:280px;']); ?>
+                    </div>
+                    <div class="col">
+                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses, 'title'=>'Selecciona el diagnostico']); ?>
+                    </div></div>
+
+
                     <div class="col-md-12">
                     <?php echo $this->Form->control('type_of_diagnosis', ['label' => 'Comentario de Diagnostico (Opcional)', 'id' => 'type_of_diagnosis', 'hidden' => 'false', 'type' => 'textarea',]); ?>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                    <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos', 'options' => $habits, 'required']); ?>
-                    </div>
-                    <div class="col">
-                    <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos', 'options' => $medicalsAntecedents, 'required']); ?>
-                    </div></div>
+
 
                 <hr class="font-weight-bold"> <br>
 
@@ -134,13 +138,14 @@ $("#antecedente").select2({
 })
 
 $("#diagnostico").select2({
-    tags: true,
-    //tokenSeparators: [',', ' '],
+    language: "es",
+    maximumSelectionLength: 3,
     placeholder: "Escriba su diagnostico",
     empty: "Escriba su diagnostico",
     theme: "classic",
     allowClear: true,
     width: 'resolve',
+
 
 
 })
@@ -187,6 +192,12 @@ var diagnostico = document.getElementById('diagnostico');
 
     });
 
+
+
+
+
+
+
 $('#form_historia').validate({
 
 rules: {
@@ -195,50 +206,53 @@ rules: {
     },
 
     diagnostico: {
-        required: true
+        required: true,
+
     },
 
     peso: {
-        required: true
+        required: true,
+        min:1,
+        max:600,
     },
 
     altura: {
-        required: true
+        required: true,
+        min:110,
     },
 
 
   },
+
+
 messages: {
     blood: {
         required: "Por favor seleccione un tipo de sangre"
     },
 
     diagnostico: {
-       required: "Por favor escriba el diagnostico"
+
+        required: "Por favor seleccione un diagnostico",
+
+
     },
 
     peso: {
-       required: "Por favor ingrese el peso"
+       required: "Por favor ingrese el peso",
+         min: "Peso invalido"
     },
 
     altura: {
-       required: "Por favor ingrese la estatura"
+       required: "Por favor ingrese la estatura",
+            min: "Altura invalida"
     },
 
 
   },
 
-errorPlacement: function(error, element) {
-    if(element.is('select')){
-        error.appendTo(element.parents('.diag'));
-    }else if(element.is('select')){
-        error.appendTo(element.parents('.bloo'));
-    }else{
-        error.insertAfter(element);
-    }
 
 
-},
+
 
 });
 

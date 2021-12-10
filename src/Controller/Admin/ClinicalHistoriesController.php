@@ -20,10 +20,18 @@ class ClinicalHistoriesController extends AppController
      */
     public function index()
     {
+        $key = $this->request->getQuery('key');
+            if($key){
+                    $query = $this->ClinicalHistories->find('all')->where(['Or' => ['persons.cedula like' => '%'. $key. '%', 'beneficiary.cedula like' => '%'. $key. '%']]);
+            }else{
+                   $query = $this->ClinicalHistories;
+
+            }
+
         $this->paginate = [
             'contain' => ['Persons', 'Beneficiary', 'BloodTypes', 'Doctors'],
         ];
-        $clinicalHistories = $this->paginate($this->ClinicalHistories);
+        $clinicalHistories = $this->paginate($query, ['limit' => '5']);
 
         $this->set(compact('clinicalHistories'));
     }
@@ -41,7 +49,24 @@ class ClinicalHistoriesController extends AppController
             'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors', 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
         ]);
 
+        $this->viewBuilder()->setOption(
+            'pdfConfig',
+            [
+                'orientation' => 'landscape',
+                'filename' => 'HistoriaClinica_' . $id,
+                'margin' => [
+                    'bottom' => 10,
+                    'left' => 50,
+                    'right' => 30,
+                    'top' => 3
+                ],
+            ]
+
+        );
+
         $this->set(compact('clinicalHistory'));
+
+
     }
 
     /**

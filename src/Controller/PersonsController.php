@@ -48,7 +48,16 @@ class PersonsController extends AppController
     public function view($id = null)
     {
         $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary', 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
+        ]);
+
+        $this->viewBuilder()->setOptions([
+            'pdfConfig',
+             [
+                'orientation' => 'landscape',
+                'filename' => 'CarnetAPS_'.$person->nombre,
+
+             ]
         ]);
 
         $this->set(compact('person'));

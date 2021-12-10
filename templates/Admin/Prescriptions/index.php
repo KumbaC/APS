@@ -7,7 +7,7 @@ $session = $this->request->getSession();
 $session = $this->request->getAttribute('session');
 ?>
 <div class="prescriptions index content">
-
+<br>
     <h3 class="text-uppercase font-weight-bold"><i class="fas fa-file-medical-alt"></i> <?= __('Recipes Medicos') ?></h3>
     <br>
     <!-- BUSCADOR -->

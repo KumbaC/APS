@@ -55,7 +55,7 @@ class DoctorsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+   /*  public function view($id = null)
     {
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
@@ -71,7 +71,7 @@ class DoctorsController extends AppController
         $this->Flash->error(__('No tienes acceso para entrar.'));
         $this->redirect(['controller' => 'Pages', 'action' => 'display']);
         }
-    }
+    } */
 
     /**
      * Add method

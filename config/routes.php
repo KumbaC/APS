@@ -46,20 +46,22 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
 // BENEFICIARIOS
 $routes->scope('/beneficiarios', function (\Cake\Routing\RouteBuilder $routes) {
-    $routes->setExtensions('pdf');
-    $routes->connect('/view/*', ['controller' => 'Beneficiary', 'action' => 'view']);
-    $routes->connect('/add', ['controller' => 'Beneficiary', 'action' => 'add']);
-    $routes->connect('/edit/*', ['controller' => 'Beneficiary', 'action' => 'edit']);
-    $routes->connect('/delete/*', ['controller' => 'Beneficiary', 'action' => 'delete']);
+    // $routes->setExtensions('pdf');
+     $routes->connect('/view/*', ['controller' => 'Beneficiary', 'action' => 'view']);
+     $routes->connect('/', ['controller' => 'Beneficiary', 'action' => 'index']);
+    //$routes->connect('/add', ['controller' => 'Beneficiary', 'action' => 'add']);
+    //$routes->connect('/edit/*', ['controller' => 'Beneficiary', 'action' => 'edit']);
+    //$routes->connect('/delete/*', ['controller' => 'Beneficiary', 'action' => 'delete']);
     //$routes->fallbacks('InflectedRoute');
 });
 // PERSONAS
 $routes->scope('/titulares', function (\Cake\Routing\RouteBuilder $routes) {
     $routes->setExtensions('pdf');
     $routes->connect('/view/*', ['controller' => 'Persons', 'action' => 'view']);
-    $routes->connect('/add', ['controller' => 'Persons', 'action' => 'add']);
-    $routes->connect('/edit/*', ['controller' => 'Persons', 'action' => 'edit']);
-    $routes->connect('/delete/*', ['controller' => 'Persons', 'action' => 'delete']);
+    $routes->connect('/', ['controller' => 'Persons', 'action' => 'index']);
+    //$routes->connect('/add', ['controller' => 'Persons', 'action' => 'add']);
+    //$routes->connect('/edit/*', ['controller' => 'Persons', 'action' => 'edit']);
+    //$routes->connect('/delete/*', ['controller' => 'Persons', 'action' => 'delete']);
    // $routes->fallbacks('InflectedRoute');
 });
 
@@ -85,7 +87,7 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
     $routes->scope('/doctores', function (\Cake\Routing\RouteBuilder $routes) {
         $routes->setExtensions('pdf');
         $routes->connect('/', ['controller' => 'doctors', 'action' => 'index']);
-        $routes->connect('/view/*', ['controller' => 'doctors', 'action' => 'view']);
+        //$routes->connect('/view/*', ['controller' => 'doctors', 'action' => 'view']);
         $routes->connect('/add', ['controller' => 'doctors', 'action' => 'add']);
         $routes->connect('/delete/*', ['controller' => 'doctors', 'action' => 'delete']);
         $routes->connect('/edit/*', ['controller' => 'doctors', 'action' => 'edit']);

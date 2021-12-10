@@ -45,6 +45,12 @@ foreach($persons as $person) {
 
 
 ?>
+<style>
+    .error{
+        color: red;
+    }
+</style>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -54,7 +60,7 @@ foreach($persons as $person) {
     </aside>
     <div class="column-responsive column-80 card mx-auto">
         <div class="quotes form content card-body">
-            <?= $this->Form->create($quote) ?>
+            <?= $this->Form->create($quote, ['id' => 'form_consu']) ?>
             <fieldset>
                 <legend class="text-center text-uppercase font-weight-bold"> <i class="fas fa-notes-medical"></i> <?= __('Añadir consulta') ?></legend>
 
@@ -76,15 +82,15 @@ foreach($persons as $person) {
 
                    <div class="row">
                     <div class="col">
-                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'value' => $fecha]); ?>
+                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'class' => 'required']); ?>
                   </div>
                   <div class="col">
-                  <?php  echo $this->Form->control('hora', ['empty' => true, 'value' => $hora]); ?>
+                  <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'class' => 'required', 'placeholder' => 'Ejemplo: 12:00']); ?>
                   </div>
                 </div>
 
 
-                   <?php  echo $this->Form->control('status_quote_id', ['options' => $statusQuotes]); ?>
+                   <?php  echo $this->Form->control('status_quote_id', ['label'=>'Estatus', 'options' => $statusQuotes]); ?>
 
                 <br> <br>
             </fieldset>
@@ -94,8 +100,9 @@ foreach($persons as $person) {
     </div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js" integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 
 var doctors = <?= json_encode($doctors_list);  ?>;
@@ -116,25 +123,75 @@ $(document).ready(function(){
     });
 
   });
-/* Persona a Beneficiario */
-/*   $('#person').change(function(){
 
-var personId = $(this).val();
-
-var beneficiaryObject = beneficiary[personId];
-
-$('#beneficiary option:gt(0)').remove();
-var beneficiarySelect = $('#beneficiary');
-$('#beneficiary').empty();
-$('#beneficiary').append('<option value="">Seleccione un beneficiario</option>');
-$.each(beneficiaryObject, function(key,value) {
-   beneficiarySelect.append($("<option></option>").attr("value", key).text(value));
-  });
-
-}); */
 
 
 
 });
+
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+
+
+
+$('#form_consu').validate({
+    rules: {
+      asunto: {
+        required: true,
+        minlength: 3
+      },
+      nota: {
+        required: true,
+        minlength: 3
+      },
+      specialty_id: {
+        required: true
+      },
+
+      doctor_id: {
+            required: true
+        },
+      status_quote_id: {
+            required: true
+        },
+        hora:
+        {
+            required: true,
+            time: true
+        }
+
+
+
+    },
+    messages: {
+        asunto: {
+            required: 'Este campo es obligatorio',
+            minlength: 'El mínimo de caracteres permitidos son 3'
+        },
+
+        status_quote_id: {
+            required: 'Este campo es obligatorio'
+        },
+        nota: {
+            required: 'Este campo es obligatorio',
+            minlength: 'El mínimo de caracteres permitidos son 3'
+        },
+        specialty_id: {
+            required: 'Este campo es obligatorio'
+        },
+        doctor_id: {
+            required: 'Este campo es obligatorio'
+        },
+        hora:{
+            required: 'Este campo es obligatorio',
+            time: 'Este campo debe contener una hora válida'
+        }
+
+    }
+  });
+
+
 
 </script>

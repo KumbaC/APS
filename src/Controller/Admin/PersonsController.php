@@ -96,11 +96,11 @@ class PersonsController extends AppController
         if ($this->request->is('post')) {
             $person = $this->Persons->patchEntity($person, $this->request->getData());
             if ($this->Persons->save($person)) {
-                $this->Flash->success(__('The person has been saved.'));
+                $this->Flash->success(__('Fue guardada la información del titular.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The person could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo guardar la información del titular.'));
         }
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
@@ -126,11 +126,11 @@ class PersonsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $person = $this->Persons->patchEntity($person, $this->request->getData());
             if ($this->Persons->save($person)) {
-                $this->Flash->success(__('The person has been saved.'));
+                $this->Flash->success(__('Fua actualizada la información del titular.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The person could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo guardar la información del titular, intenta mas tarde.'));
         }
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
@@ -153,9 +153,9 @@ class PersonsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $person = $this->Persons->get($id);
         if ($this->Persons->delete($person)) {
-            $this->Flash->success(__('The person has been deleted.'));
+            $this->Flash->success(__('El titular fue eliminado con exito.'));
         } else {
-            $this->Flash->error(__('The person could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se pudo eliminar el titular, intenta mas tarde.'));
         }
 
         return $this->redirect(['action' => 'index']);

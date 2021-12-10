@@ -9,7 +9,20 @@ $session = $this->request->getAttribute('session');
 <div class="clinicalHistories index content">
 
     <br>
+
     <h3 class="font-weight-bold text-uppercase"> <i class="fas fa-book-medical"></i>  <?= __('Historia Clinicas') ?></h3>
+    <br>
+    <?= $this->Form->create(null,['type' => 'get']) ?>
+    <div class="row">
+        <div class="col-md-2">
+        <?php echo $this->Form->control('key', ['label' => '',  'placeholder' => 'Buscar' ]); ?>
+
+        </div>
+        <?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md', 'style' => 'margin-top: 21px; margin-left: -12px;' ]) ?>
+    </div>
+
+    <?= $this->Form->end() ?>
+
     <div class="table-responsive">
         <table class="table table-dark table-bordered">
             <thead class="thead thead-light">

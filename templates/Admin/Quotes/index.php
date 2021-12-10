@@ -8,7 +8,7 @@ $session = $this->request->getAttribute('session');
 
 ?>
 <div class="quotes index content">
-
+<br>
     <h3 class="text-uppercase font-weight-bold ml-2"><i class="fas fa-notes-medical"></i>  <?= __('Consultas') ?></h3>
     <br>
 
@@ -35,7 +35,7 @@ $session = $this->request->getAttribute('session');
                     <th class="text-center"><?= h('Especialidad') ?></th>
                     <th class="text-center"><?= h('Doctor') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('fecha') ?></th>
-                    <th class="text-center"><?= h('hora') ?></th>
+                    <th class="text-center"><?= h('Hora') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('status_quote_id', 'Estatus') ?></th>
 
 
@@ -52,15 +52,15 @@ $session = $this->request->getAttribute('session');
                     <td class="text-center font-weight-bold"><?= h($quote->nota) ?></td>
 
                     <?php if (empty($quote->person->nombre)): ?>
-                    <td class="text-center font-weight-bold"><?= $quote->has('beneficiary') ? $this->Html->link([$quote->beneficiary->nombre, '  ', $quote->beneficiary->apellido],  ['controller' => 'Beneficiary', 'action' => 'view', $quote->beneficiary->id]) : '' ?></td>
+                    <td class="text-center font-weight-bold"><?= h($quote->beneficiary->nombre), ' ',   h($quote->beneficiary->apellido) ?></td>
 
                     <?php else: ?>
-                    <td class="text-center font-weight-bold"><?= $quote->has('person') ? $this->Html->link([ $quote->person->nombre, '   ', $quote->person->apellido], ['controller' => 'Persons', 'action' => 'view', $quote->person->id]) : '' ?></td>
+                    <td class="text-center font-weight-bold"><?=  h($quote->person->nombre), ' ',   h($quote->person->apellido) ?></td>
 
                     <?php endif; ?>
 
                     <td class="text-center font-weight-bold"><?= h($quote->specialty->descripcion) ?></td>
-                    <td class="text-center font-weight-bold"><?=  $quote->has('doctor') ? $this->Html->link(['Dr. ', $quote->doctor->nombre, '  ', $quote->doctor->apellido],  ['controller' => 'Doctors', 'action' => 'view', $quote->doctor->id]) : ''  ?></td>
+                    <td class="text-center font-weight-bold">Dr. <?= h($quote->doctor->nombre), '  ', h($quote->doctor->apellido)?></td>
                     <td class="text-center font-weight-bold"><?= h($quote->fecha) ?></td>
                     <td class="text-center font-weight-bold"><?= h($quote->hora) ?></td>
 

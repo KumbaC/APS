@@ -11,6 +11,13 @@
  * @var \Cake\Collection\CollectionInterface|string[] $medicalsAntecedents
  */
 ?>
+<style>
+ .error{
+    color:red;
+ }
+
+</style>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -21,52 +28,58 @@
 
 
 <br> <br>
-    <div class="column-responsive column-80 card mx-auto col-md-4">
+    <div class="column-responsive column-80 card mx-auto col-md-5">
         <div class="clinicalHistories form content card-body">
-            <?= $this->Form->create($clinicalHistory) ?>
+            <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
             <fieldset>
 
             <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> HISTORIA CLINICA </h3>
                 <br>
 
-                    <div class="row">
+
+                <div class="row">
                         <div class="col">
-                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood','label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO' ]); ?>
+                    <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos (Opcional)', 'options' => $habits]); ?>
                     </div>
                     <div class="col">
-                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses]); ?>
+                    <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos (Opcional)', 'options' => $medicalsAntecedents]); ?>
                     </div></div>
+
+
+                    <div class="row">
+                        <div class="col">
+                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO', 'class'=>'required', 'title'=>'Selecciona el tipo de sangre', 'style' => 'width:280px;']); ?>
+                    </div>
+                    <div class="col">
+                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses, 'title'=>'Selecciona el diagnostico']); ?>
+                    </div></div>
+
+
                     <div class="col-md-12">
-                    <?php echo $this->Form->control('type_of_diagnosis', ['type' => 'textarea', 'label' => 'Comentario de Diagnostico (Opcional)',]); ?>
+                    <?php echo $this->Form->control('type_of_diagnosis', ['label' => 'Comentario de Diagnostico (Opcional)', 'id' => 'type_of_diagnosis', 'hidden' => 'false', 'type' => 'textarea',]); ?>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                    <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos', 'options' => $habits]); ?>
-                    </div>
-                    <div class="col">
-                    <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos', 'options' => $medicalsAntecedents]); ?>
-                    </div></div>
+
 
                 <hr class="font-weight-bold"> <br>
 
                 <h4 class="text-uppercase font-weight-bold text-center">Examen Fisico</h4>
                     <div class="row">
                         <div class="col-md-6">
-                   <?php echo $this->Form->control('peso', ['label' => 'Peso', 'placeholder' => '60 kg']); ?>
+                   <?php echo $this->Form->control('peso', ['id' => 'Peso', 'label' => 'Peso', 'placeholder' => '60 kg', 'required']); ?>
                    </div>
                    <div class="col">
-                   <?php echo $this->Form->control('altura', ['label' => 'Altura', 'placeholder' => '1,70 mt']); ?>
+                   <?php echo $this->Form->control('altura', ['id' => 'Altura', 'label' => 'Altura', 'placeholder' => '1,70 mt', 'required']); ?>
                    </div></div>
 
                    <div class="row">
                         <div class="col">
-                   <?php echo $this->Form->control('fr', ['label' => 'FR']); ?>
+                   <?php echo $this->Form->control('fr', ['id' => 'FR', 'label' => 'FR', ]); ?>
                    </div>
                    <div class="col">
-                   <?php echo $this->Form->control('fc', ['label' => 'FC']); ?>
+                   <?php echo $this->Form->control('fc', ['id' => 'FC','label' => 'FC', ]); ?>
                    </div></div>
 
-                   <?php echo $this->Form->control('ta', ['label' => 'TA']); ?>
+                   <?php echo $this->Form->control('ta', ['id' => 'TA', 'label' => 'TA' , ]); ?>
 
             </fieldset>
             <?= $this->Form->button(__('Guardar Historia Medica'), ['class' => 'btn btn-primary btn-block']) ?>
@@ -75,14 +88,16 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 $("#habitos").select2({
     tags: true,
     tokenSeparators: [',', ' '],
     placeholder: "Seleccione los habitos",
-    color: '#2E4C6D',
+    theme: "classic",
+    allowClear: true,
     width: 'resolve',
 
     createTag: function (params) {
@@ -104,6 +119,9 @@ $("#antecedente").select2({
     tags: true,
     tokenSeparators: [',', ' '],
     placeholder: "Seleccione los antecedentes medicos",
+    theme: "classic",
+    allowClear: true,
+    width: 'resolve',
 
     createAntecedente: function (params) {
     // Don't offset to create a tag if there is no @ symbol
@@ -120,9 +138,15 @@ $("#antecedente").select2({
 })
 
 $("#diagnostico").select2({
-    tags: true,
-    tokenSeparators: [',', ' '],
-    placeholder: "Seleccione su diagnostico",
+    language: "es",
+    maximumSelectionLength: 3,
+    placeholder: "Escriba su diagnostico",
+    empty: "Escriba su diagnostico",
+    theme: "classic",
+    allowClear: true,
+    width: 'resolve',
+
+
 
 })
 
@@ -133,4 +157,105 @@ $("#blood").select2({
     theme: "classic",
     background: '#2E4C6D',
 })
+
+var type_diagnostico = document.getElementById('type_of_diagnosis');
+var diagnostico = document.getElementById('diagnostico');
+
+    $('#diagnostico').change(function(){
+        //var diagnostico = $('#diagnostico').val();
+
+
+       if($('#diagnostico').val()){
+        //type_diagnostico.hidden = true;
+         type_diagnostico.hidden = true;
+         diagnostico.required = true;
+
+       }else if(diagnostico.value == ''){
+        type_diagnostico.hidden = false;
+        type_diagnostico.required = true;
+        diagnostico.hidden = true;
+       }
+
+    });
+
+    $('#type_of_diagnosis').change(function(){
+     if($('#type_of_diagnosis').data()){
+
+            diagnostico.disabled = true;
+
+       }
+        else if($('#type_of_diagnosis').data(null)){
+            diagnostico.disabled = false;
+            type_diagnostico.disabled = true;
+
+       }
+
+    });
+
+
+
+
+
+
+
+$('#form_historia').validate({
+
+rules: {
+    blood: {
+        required: true
+    },
+
+    diagnostico: {
+        required: true,
+
+    },
+
+    peso: {
+        required: true,
+        min:1,
+        max:600,
+    },
+
+    altura: {
+        required: true,
+        min:110,
+    },
+
+
+  },
+
+
+messages: {
+    blood: {
+        required: "Por favor seleccione un tipo de sangre"
+    },
+
+    diagnostico: {
+
+        required: "Por favor seleccione un diagnostico",
+
+
+    },
+
+    peso: {
+       required: "Por favor ingrese el peso",
+         min: "Peso invalido"
+    },
+
+    altura: {
+       required: "Por favor ingrese la estatura",
+            min: "Altura invalida"
+    },
+
+
+  },
+
+
+
+
+
+});
+
+
+
 </script>

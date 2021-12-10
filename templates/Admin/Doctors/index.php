@@ -54,7 +54,7 @@
                     <td class="text-light text-center font-weight-bold"><?= h($doctor->created) ?></td>
                     <!-- <td><//?= h($doctor->modified) ?></td> -->
                     <td class="pagination">
-                        <?= $this->Html->link(__(''), ['action' => 'view', $doctor->id], ['class' => 'fas fa-eye btn btn-warning']) ?>
+                        <!-- <//?= $this->Html->link(__(''), ['action' => 'view', $doctor->id], ['class' => 'fas fa-eye btn btn-warning']) ?> -->
                         <?= $this->Html->link(__(''), ['action' => 'edit', $doctor->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $doctor->id], ['confirm' => __('¿Estas seguro de eliminar al Dr. {0} {1}?', $doctor->nombre, $doctor->apellido), 'class' => 'fas fa-trash-alt btn btn-warning']) ?>
                     </td>

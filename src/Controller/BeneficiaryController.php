@@ -37,7 +37,7 @@ class BeneficiaryController extends AppController
 
         $this->paginate = [
             'conditions' => [
-                'Beneficiary.person_id' => $this->Auth->user('id'),
+                 'Persons.user_internal_id' => $this->Auth->user('id'),
             ],
             'contain' => ['Persons', 'Kins', 'Genders'],
         ];
@@ -68,8 +68,8 @@ class BeneficiaryController extends AppController
         $beneficiary = $this->Beneficiary->get($id, [
 
             'conditions' => [
-                'Beneficiary.user_internal_id' => $this->Auth->user('id'),
-            ],
+                'Persons.user_internal_id' => $this->Auth->user('id'),
+           ],
 
             'contain' => ['Persons', 'Kins', 'Genders'],
 
@@ -94,7 +94,7 @@ class BeneficiaryController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+  /*   public function add()
     {
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
@@ -122,7 +122,7 @@ class BeneficiaryController extends AppController
         $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
-
+ */
     /**
      * Edit method
      *
@@ -130,7 +130,7 @@ class BeneficiaryController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    /* public function edit($id = null)
     {
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
@@ -159,7 +159,7 @@ class BeneficiaryController extends AppController
         $this->Flash->error(__('No tienes acceso para entrar.'));
         $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
-    }
+    } */
 
     /**
      * Delete method

@@ -5,15 +5,22 @@
  */
 $fechaActual = date('d/m/Y');
 
+$session = $this->request->getSession();
+$session = $this->request->getAttribute('session');
+
+$doctor = $session->read('Auth.User.id');
+
+
+
 ?>
 
 <!DOCTYPE html>
 
 <div class="card">
-    <div class="card-body rounded bg-white" style="border:dashed">
+    <div class="card-body rounded bg-white" style="border:solid;">
 
 
-        <div class="img">
+        <div class="">
 
         <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:70px;', 'class' => 'card']);?>
 
@@ -22,18 +29,18 @@ $fechaActual = date('d/m/Y');
           <h3 class="text-uppercase font-weight-bold text-center card-title" style="margin-top: -45px;">HISTORIA CLINICA</h3>
 
         <hr class="bg-dark">
-            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= ($clinicalHistory->person) ? '0000' .h($clinicalHistory->person->cedula) : '0000' . h($clinicalHistory->beneficiary->cedula) ?> &nbsp;   </h4>
+            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= ($clinicalHistory->person) ? 'T-000'.$doctor .h($clinicalHistory->person->cedula) : 'B-000'.$doctor . h($clinicalHistory->beneficiary->cedula) ?> &nbsp;   </h4>
 
             <!-- <hr class="bg-dark"> -->
-            <table>
+            <table style="width: 300px;">
 
                 <tr>
                     <th><?= __('Paciente: ') ?></th>
                     <?php if (!empty($clinicalHistory->person)) : ?>
-                    <td><?= h($clinicalHistory->person->nombre), h($clinicalHistory->person->apellido) ?></td>
+                    <td><?= h($clinicalHistory->person->nombre), ' ',  h($clinicalHistory->person->apellido) ?></td>
 
                     <?php else: ?>
-                    <td><?= h($clinicalHistory->beneficiary->nombre), h($clinicalHistory->beneficiary->apellido) ?></td>
+                    <td><?= h($clinicalHistory->beneficiary->nombre), ' ',  h($clinicalHistory->beneficiary->apellido) ?></td>
                     <?php endif; ?>
 
                 </tr>
@@ -71,8 +78,9 @@ $fechaActual = date('d/m/Y');
                     <td><?= h($clinicalHistory->blood_type->descripcion) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Doctor: ') ?> <?= h($clinicalHistory->doctor->nombre) ?> <?= h($clinicalHistory->doctor->apellido) ?></th>
-                    <td></td>
+                    <th><?= __('Doctor: ') ?></th>
+                    <td><?= h($clinicalHistory->doctor->nombre) ?> <?= h($clinicalHistory->doctor->apellido) ?></td>
+
                 </tr>
 
             </table>
@@ -209,30 +217,30 @@ $fechaActual = date('d/m/Y');
                </div>
 
                <br>
-               <div class="mx-auto">
+               <div class="mx-auto" style="margin-top:240px; height:200px;">
 
 
 
-                            <p class="font-weight-bold" style="margin-left: 14rem; margin-top:140px;"><?= __('Firma del medico: ') ?></th>
-
-
-
-
-
-                            <p class="text-center" style="max-width: 520px; margin-left: 1rem;"><?= $this->Html->image($clinicalHistory->doctor->firma, ['fullBase' => true, 'style' => 'height:115px; width:140px;']); ?></p>
+                            <p class="font-weight-bold" style="margin-left: 14rem; margin-top:-200px;"><?= __('Firma del medico: ') ?></th>
 
 
 
 
 
-
-                        <p class="font-weight-bold" style="margin-left: 38rem; margin-top:-10rem;"><?= __('Sello: ') ?></p>
-
+                            <p class="text-center" style="max-width: 520px; margin-left: 1rem; margin-top:-100px;"><?= $this->Html->image($clinicalHistory->doctor->firma, ['fullBase' => true, 'style' => 'height:115px; width:140px;']); ?></p>
 
 
 
 
-                        <p style="max-width: 520px; margin-left:35.8rem;"><?= $this->Html->image($clinicalHistory->doctor->sello, ['fullBase' => true, 'style' => 'height:105px; width:125px;']); ?></p>
+
+
+                            <p class="font-weight-bold" style="margin-left: 38rem; margin-top:-11rem;"><?= __('Sello: ') ?></p>
+
+
+
+
+
+                             <p style="max-width: 520px; margin-left:35.8rem;"><?= $this->Html->image($clinicalHistory->doctor->sello, ['fullBase' => true, 'style' => 'height:105px; width:125px;']); ?></p>
 
 
 

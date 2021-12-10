@@ -26,6 +26,13 @@ foreach($departments as $department) {
 
 
 ?>
+<style>
+.error{
+    color: red;
+}
+
+
+</style>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -36,23 +43,23 @@ foreach($departments as $department) {
     <br>
     <div class="card mx-auto" style="width: 600px;">
         <div class="card-body">
-            <?= $this->Form->create($person) ?>
+            <?= $this->Form->create($person, ['id' => 'form_person']) ?>
             <fieldset>
                 <legend class="text-uppercase font-weight-bold text-center"><?= __('Agregar un titular') ?></legend>
                 <div class="form-row">
                     <div class="col">
-                 <?php   echo $this->Form->control('cedula', ['type' => 'number', 'placeholder' => 'Introduzca la cedula del titular']);   ?>
+                 <?php   echo $this->Form->control('cedula', ['type' => 'number', 'placeholder' => 'Introduzca la cedula del titular', 'class' => 'required']);   ?>
                  </div>
                  <div class="col">
-                 <?php   echo $this->Form->control('nombre', ['placeholder' => 'Introduzca el nombre del titular']);   ?>
+                 <?php   echo $this->Form->control('nombre', ['placeholder' => 'Introduzca el nombre del titular', 'class' => 'required']);   ?>
                  </div></div>
 
                  <div class="form-row">
                  <div class="col">
-                 <?php   echo $this->Form->control('apellido', ['placeholder' => 'Introduzca el nombre del titular']); ?>
+                 <?php   echo $this->Form->control('apellido', ['placeholder' => 'Introduzca el nombre del titular', 'class' => 'required']); ?>
                  </div>
                  <div class="col">
-                 <?php   echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'ejemplo@sudeaseg.gob.ve']); ?>
+                 <?php   echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'ejemplo@sudeaseg.gob.ve', 'class' => 'required']); ?>
                  </div></div>
 
                  <div class="form-row">
@@ -61,23 +68,23 @@ foreach($departments as $department) {
 
                 </div>
                  <div class="">
-                 <?php   echo $this->Form->control('unit_id', ['id' => 'unidad', 'label' => 'Unidades', 'options' => [], 'empty' => true, 'style' => 'width: 270px;']); ?>
+                 <?php   echo $this->Form->control('unit_id', ['id' => 'unidad', 'label' => 'Unidades', 'options' => [], 'empty' => 'SELECCIONAR LA UNIDAD', 'style' => 'width: 270px;']); ?>
                  </div></div>
 
                  <div class="form-row">
                     <div class="col">
-                 <?php   echo $this->Form->control('cargo_id', ['options' => $cargos, 'empty' => 'SIN CARGO']); ?>
+                 <?php   echo $this->Form->control('cargo_id', ['options' => $cargos, 'empty' => 'SIN CARGO', 'class' => 'required']); ?>
                  </div>
                  <div class="col">
-                 <?php   echo $this->Form->control('gender_id', ['label' => 'Genero', 'options' => $genders, 'empty' => 'No identificado']); ?>
+                 <?php   echo $this->Form->control('gender_id', ['label' => 'Genero', 'options' => $genders, 'empty' => 'No identificado', 'class' => 'required']); ?>
                  </div></div>
 
                  <div class="form-row">
                      <div class="col">
-                 <?php   echo $this->Form->control('phone', ['label' => 'Telefono', 'placeholder' => '+58 000-000-0']); ?>
+                 <?php   echo $this->Form->control('phone', ['label' => 'Telefono', 'placeholder' => '', 'class' => 'required', 'type' => 'tel']); ?>
                  </div>
                  <div class="col">
-                 <?php   echo $this->Form->control('edad', ['placeholder' => 'Por favor ingrese su edad']); ?>
+                 <?php   echo $this->Form->control('edad', ['placeholder' => 'Por favor ingrese su edad', 'class' => 'required']); ?>
                  </div></div>
 
 
@@ -90,7 +97,9 @@ foreach($departments as $department) {
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script>
+
 
 
 var units = <?= json_encode($units_list);  ?>;
@@ -105,7 +114,7 @@ $(document).ready(function(){
   $('#unidad option:gt(0)').remove();
   var departamentoSelect = $('#unidad');
   $('#unidad').empty();
-  $('#unidad').append('<option value="">SELECCIONE LA UNIDAD</option>');
+  $('#unidad').append('<option value="">SELECCIONAR LA UNIDAD</option>');
   $.each(unitObject, function(key,value) {
      departamentoSelect.append($("<option></option>").attr("value", key).text(value));
     });
@@ -113,5 +122,110 @@ $(document).ready(function(){
   });
 
 });
+
+
+$('#form_person').validate({
+
+        rules: {
+            cedula: {
+                required: true,
+                number: true,
+                minlength: 6,
+                maxlength: 8,
+                number:true,
+
+            },
+            nombre: {
+                required: true,
+                minlength: 3,
+                maxlength: 50,
+
+            },
+            apellido: {
+                required: true,
+                minlength: 3,
+                maxlength: 50
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            department_id: {
+                required: true
+            },
+            /* unit_id: {
+                required: true
+            }, */
+            cargo_id: {
+                required: true
+            },
+            gender_id: {
+                required: true
+            },
+            phone:{
+                required: true,
+                number:true,
+                min:11
+            },
+            edad:{
+                required: true,
+                min:0,
+                max:105,
+                number:true
+            }
+
+        },
+
+        messages: {
+                cedula: {
+                    required: "Por favor ingrese la cedula del titular",
+                    number: "Por favor ingrese solo numeros",
+                    minlength: "Por favor ingrese una cedula valida",
+                    number: 'Ingrese solo numeros',
+
+                },
+                nombre: {
+                    required: "Por favor ingrese el nombre del titular",
+                    minlength: "Por favor ingrese un nombre valido",
+                    maxlength: "Por favor ingrese un nombre valido",
+
+                },
+                apellido: {
+                    required: "Por favor ingrese el apellido del titular",
+                    minlength: "Por favor ingrese un apellido valido",
+                    maxlength: "Por favor ingrese un apellido valido",
+                },
+                email: {
+                    required: "Por favor ingrese el correo electronico",
+                    email: "Por favor ingrese un correo electronico valido",
+                },
+                department_id: {
+                    required: "Por favor seleccione un departamento",
+                },
+               /*  unit_id: {
+                    required: "Por favor seleccione una unidad",
+                }, */
+                cargo_id: {
+                    required: "Por favor seleccione un cargo",
+                },
+                gender_id: {
+                    required: 'Por favor seleccione su genero',
+                },
+                phone:{
+                    required: 'Ingrese el numero de telefono',
+                    number: 'Ingrese solo numeros',
+                    min: 'Ingrese un numero de telefono de valido'
+                },
+                edad:{
+                    required: 'Ingrese la edad del titular',
+                    min: 'Por favor ingrese una edad valida',
+                    max: 'Por favor ingrese una edad valida',
+                    number: 'Ingrese solo numeros'
+                }
+            }
+
+        });
+
+
 
 </script>
