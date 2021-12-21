@@ -60,7 +60,7 @@ $session = $this->request->getAttribute('session');
                     </td>
                     <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
                     <?php if ($session->read('Auth.User.role_id') == 1): ?>
-                    <td class="text-center font-weight-bold"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning elimi_historia']) ?></td>
 
                     <?php endif; ?>
                 </tr>
@@ -70,12 +70,53 @@ $session = $this->request->getAttribute('session');
     </div>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?//= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('' . __('Anterior')) ?>
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__('Siguiente') . '') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?//= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
 
     </div>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(".elimi_historia").attr("onclick", "").unbind("click"); //remove function onclick button
+
+$(document).on('click', '.elimi_historia', function () {
+    let delete_form = $(this).parent().find('form');
+    swal.fire({
+        title: "¿Desea eliminar la historia clínica?",
+        text: "Una vez eliminado, no se podra recuperar la historia.",
+        icon: "warning",
+        confirmButtonText: 'Si, eliminar',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+            if (result.value) {
+
+                swal.fire(
+                    'Eliminado!',
+                    'La historia clínica ha sido eliminada.',
+                    'success'
+                )
+                delete_form.submit();
+
+            }else{
+
+                    swal.fire(
+                    'Cancelado',
+                    'La historia clínica no ha sido eliminada.',
+                    'error'
+                )
+
+            }
+        });
+});
+
+</script>

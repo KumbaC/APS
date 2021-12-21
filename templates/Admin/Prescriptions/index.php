@@ -62,7 +62,7 @@ $session = $this->request->getAttribute('session');
                     <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $prescription->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
 
                     <?php if ($session->read('Auth.User.role_id') == 1): ?> <td class="text-center font-weight-bold">
-                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $prescription->id], ['confirm' => __('Are you sure you want to delete # {0}?', $prescription->id), 'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $prescription->id], ['confirm' => __('Are you sure you want to delete # {0}?', $prescription->id), 'class' => 'fas fa-trash-alt btn btn-warning elimi_recipe']) ?>
 
                     </td>
                     <?php endif; ?>
@@ -82,3 +82,44 @@ $session = $this->request->getAttribute('session');
 
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(".elimi_recipe").attr("onclick", "").unbind("click"); //remove function onclick button
+
+$(document).on('click', '.elimi_recipe', function () {
+    let delete_form = $(this).parent().find('form');
+    swal.fire({
+        title: "¿Desea eliminar el recipe medico?",
+        text: "Una vez eliminado, no se podra recuperar el recipe.",
+        icon: "warning",
+        confirmButtonText: 'Si, eliminar',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+            if (result.value) {
+
+                /* swal.fire(
+                    '¡Eliminado!',
+                    'El recipe ha sido eliminado.',
+                    'success'
+                ) */
+                delete_form.submit();
+
+            }else{
+
+                    swal.fire(
+                    'Cancelado',
+                    'La eliminación del recipe ha sido cancelada.',
+                    'error'
+                )
+
+            }
+        });
+});
+
+</script>
+

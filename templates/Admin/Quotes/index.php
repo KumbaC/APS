@@ -90,7 +90,7 @@ $session = $this->request->getAttribute('session');
                             <?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
 
                         <?php if ($session->read('Auth.User.role_id') == 1): ?>
-                             <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                             <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning elimi_consulta']) ?>
                         <?php endif; ?>
 
                         </td>
@@ -113,7 +113,7 @@ $session = $this->request->getAttribute('session');
 
                         <?php if ($session->read('Auth.User.role_id') == 1): ?>
 
-                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning elimi_consulta']) ?>
 
                         <?php endif; ?>
                         </td>
@@ -135,3 +135,43 @@ $session = $this->request->getAttribute('session');
 
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(".elimi_consulta").attr("onclick", "").unbind("click"); //remove function onclick button
+
+$(document).on('click', '.elimi_consulta', function () {
+    let delete_form = $(this).parent().find('form');
+    swal.fire({
+        title: "¿Desea eliminar la consulta medica?",
+        text: "Una vez eliminada, no se podra recuperar la consulta.",
+        icon: "warning",
+        confirmButtonText: 'Si, eliminar',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+            if (result.value) {
+
+                /* swal.fire(
+                    '¡Eliminado!',
+                    'El recipe ha sido eliminado.',
+                    'success'
+                ) */
+                delete_form.submit();
+
+            }else{
+
+                    swal.fire(
+                    'Cancelado',
+                    'La eliminación de la consulta ha sido cancelada.',
+                    'error'
+                )
+
+            }
+        });
+});
+
+</script>

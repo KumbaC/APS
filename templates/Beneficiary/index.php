@@ -32,13 +32,13 @@
 
 
 
-                    <td class="text-center"><?= h($beneficiary->person->nombre) ?> <?= h($beneficiary->person->apellido) ?></td>
-                    <td class="text-center"><?= h($beneficiary->nombre) ?></td>
-                    <td class="text-center"><?= h($beneficiary->apellido) ?></td>
-                    <td class="text-center">V- <?= h($beneficiary->cedula) ?></td>
-                    <td class="text-center"><?= $this->Number->format($beneficiary->edad) ?></td>
-                    <td class="text-center"><?=  h($beneficiary->kin->descripcion) ?></td>
-                    <td class="text-center"><?= h($beneficiary->gender->descripcion) ?></td>
+                    <td class="text-center font-weight-bold"><?= h($beneficiary->person->nombre) ?> <?= h($beneficiary->person->apellido) ?></td>
+                    <td class="text-center font-weight-bold"><?= h($beneficiary->nombre) ?></td>
+                    <td class="text-center font-weight-bold"><?= h($beneficiary->apellido) ?></td>
+                    <td class="text-center font-weight-bold">V- <?= h($beneficiary->cedula) ?></td>
+                    <td class="text-center font-weight-bold"><?= $this->Number->format($beneficiary->edad) ?></td>
+                    <td class="text-center font-weight-bold"><?=  h($beneficiary->kin->descripcion) ?></td>
+                    <td class="text-center font-weight-bold"><?= h($beneficiary->gender->descripcion) ?></td>
 
                     <td class="actions">
                        <?= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class'  => 'ml-2 fas fa-eye btn btn-warning']) ?>

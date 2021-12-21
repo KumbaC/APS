@@ -80,7 +80,7 @@ $session = $this->request->getAttribute('session');
 
                         <?php if ($session->read('Auth.User.role_id') == 1):?>
                             <td class="text-center">
-                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $beneficiary->id],['confirm' => __('¿Esta seguro que desea eliminar a {0} {1}?', $beneficiary->nombre, $beneficiary->apellido), 'class' => 'fas fa-trash-alt btn btn-warning']) ?>
+                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $beneficiary->id],['confirm' => __('¿Esta seguro que desea eliminar a {0} {1}?', $beneficiary->nombre, $beneficiary->apellido), 'class' => 'fas fa-trash-alt btn btn-warning elimi_beneficiario']) ?>
                             </td>
                         <?php endif; ?>
 
@@ -105,3 +105,45 @@ $session = $this->request->getAttribute('session');
     </div>
 
 </div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(".elimi_beneficiario").attr("onclick", "").unbind("click"); //remove function onclick button
+
+$(document).on('click', '.elimi_beneficiario', function () {
+    let delete_form = $(this).parent().find('form');
+    swal.fire({
+        title: "¿Desea eliminar al beneficiario?",
+        text: "Una vez eliminado/a, no se podra recuperar a este beneficiario.",
+        icon: "warning",
+        confirmButtonText: 'Si, eliminar',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+            if (result.value) {
+
+                /* swal.fire(
+                    '¡Eliminado!',
+                    'El recipe ha sido eliminado.',
+                    'success'
+                ) */
+                delete_form.submit();
+
+            }else{
+
+                    swal.fire(
+                    'Cancelado',
+                    'La eliminación del beneficiario ha sido cancelada.',
+                    'error'
+                )
+
+            }
+        });
+});
+
+</script>

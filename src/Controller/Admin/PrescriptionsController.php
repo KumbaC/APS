@@ -86,6 +86,20 @@ class PrescriptionsController extends AppController
             'contain' => ['Persons', 'Beneficiary', 'Doctors', 'Quotes', 'ClinicalHistories'],
         ]);
 
+        $this->viewBuilder()->setOption(
+            'pdfConfig',
+            [
+                'orientation' => 'landscape',
+                'filename' => 'RecipeMedico_' . $id,
+                'margin' => [
+                    'bottom' => 0,
+                    'left' => 50,
+                    'right' => 0,
+                    'top' => 4
+                ],
+            ]
+        );
+
         $this->set(compact('prescription'));
     }
 

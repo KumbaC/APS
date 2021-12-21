@@ -8,7 +8,7 @@
 
     <h3 class="text-uppercase font-weight-bold"> <i class="fas fa-user-tie"></i> <?= __('Titulares') ?></h3>
 
-<?= $this->Html->link((''), ['action' => 'add'], ['class' => 'btn btn-warning fas fa-user-plus float-right text-xl text-dark', 'style' => 'margin-top: 30px;']) ?>
+<?= $this->Html->link((''), ['action' => 'add'], ['class' => 'btn btn-warning fas fa-user-plus float-right text-xl', 'style' => 'margin-top: 30px; border-radius:50px;']) ?>
 <br><br>
 
 
@@ -59,7 +59,7 @@
                     <td class="text-center font-weight-bold"> <?= $this->Html->link(__('+'), ['controller' => 'beneficiary', 'action' => 'add', $person->id], ['class' => 'fas fa-user btn btn-warning']) ?> </td> &nbsp;
                     <td class="text-center font-weight-bold"><?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'add', $person->id], ['class' => 'fas fa-hospital btn btn-warning']) ?></td> &nbsp;
                     <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $person->id], ['class' => 'fas fa-edit btn btn-warning']) ?> </td> &nbsp;
-                    <td class="text-center font-weight-bold"><?= $this->Form->postLink(__(''), ['action' => 'delete', $person->id],  ['confirm' => __('¿Esta seguro de borrar a {0} {1}?', $person->nombre, $person->apellido), 'class' => 'fas fa-trash-alt btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold"><?= $this->Form->postLink(__(''), ['action' => 'delete', $person->id],  ['confirm' => __('¿Esta seguro de borrar a {0} {1}?', $person->nombre, $person->apellido), 'class' => 'fas fa-trash-alt btn btn-warning elimi_persona']) ?></td>
 
 
                 </tr>
@@ -78,3 +78,44 @@
 
     </div>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(".elimi_persona").attr("onclick", "").unbind("click"); //remove function onclick button
+
+$(document).on('click', '.elimi_persona', function () {
+    let delete_form = $(this).parent().find('form');
+    swal.fire({
+        title: "¿Desea eliminar al titular?",
+        text: "Una vez eliminado/a, no se podra recuperar a este titular.",
+        icon: "warning",
+        confirmButtonText: 'Si, eliminar',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+            if (result.value) {
+
+                /* swal.fire(
+                    '¡Eliminado!',
+                    'El recipe ha sido eliminado.',
+                    'success'
+                ) */
+                delete_form.submit();
+
+            }else{
+
+                    swal.fire(
+                    'Cancelado',
+                    'La eliminación del titular ha sido cancelada.',
+                    'error'
+                )
+
+            }
+        });
+});
+
+</script>

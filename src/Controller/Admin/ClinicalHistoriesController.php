@@ -52,13 +52,13 @@ class ClinicalHistoriesController extends AppController
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
-                'orientation' => 'landscape',
+                'orientation' => 'portrait',
                 'filename' => 'HistoriaClinica_' . $id,
                 'margin' => [
-                    'bottom' => 10,
-                    'left' => 50,
-                    'right' => 30,
-                    'top' => 3
+                    'bottom' => 0,
+                    'left' => 7,
+                    'right' => 7,
+                    'top' => 8
                 ],
             ]
 
@@ -77,6 +77,14 @@ class ClinicalHistoriesController extends AppController
     public function add($id, $idDoctor = null)
 
     {
+
+        $habit = $this->ClinicalHistories->Habits->newEmptyEntity();
+        if ($this->request->is('post')) {
+
+            $habit = $this->ClinicalHistories->Habits->patchEntity($habit, $this->request->getData());
+            $this->ClinicalHistories->Habits->save($habit);
+        }
+
         $clinicalHistory = $this->ClinicalHistories->newEmptyEntity();
         if ($this->request->is('post')) {
             $clinicalHistory = $this->ClinicalHistories->patchEntity($clinicalHistory, $this->request->getData());
@@ -84,6 +92,7 @@ class ClinicalHistoriesController extends AppController
             $clinicalHistory->person_id = $id;
 
             $clinicalHistory->doctor_id = $idDoctor;
+
 
             if ($this->ClinicalHistories->save($clinicalHistory)) {
                 $this->Flash->success(__('La historia clinica fue guardada.'));
@@ -99,7 +108,7 @@ class ClinicalHistoriesController extends AppController
         $diagnoses = $this->ClinicalHistories->Diagnoses->find('list');
         $habits = $this->ClinicalHistories->Habits->find('list', ['limit' => 200]);
         $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list');
-        $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
+        $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents', 'habit'));
     }
 
     public function addb($id, $idDoctor = null)
@@ -159,9 +168,9 @@ class ClinicalHistoriesController extends AppController
         $beneficiary = $this->ClinicalHistories->Beneficiary->find('list', ['limit' => 200]);
         $bloodTypes = $this->ClinicalHistories->BloodTypes->find('list', ['limit' => 200]);
         $doctors = $this->ClinicalHistories->Doctors->find('list', ['limit' => 200]);
-        $diagnoses = $this->ClinicalHistories->Diagnoses->find('list', ['limit' => 200]);
+        $diagnoses = $this->ClinicalHistories->Diagnoses->find('list');
         $habits = $this->ClinicalHistories->Habits->find('list', ['limit' => 200]);
-        $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list', ['limit' => 200]);
+        $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list');
         $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
     }
 
@@ -184,4 +193,10 @@ class ClinicalHistoriesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+   /* */
+
+
+
 }

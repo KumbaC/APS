@@ -11,7 +11,7 @@
             <h3>
                 <p class="h4 text-center font-weight-bold text-uppercase"> <i class="fas fa-users"></i> Beneficiario</p>
 
-            <table class="table table-hover bg-warning">
+            <table class="table table-hover bg-danger">
                  <tr>
                     <th><?= __('Titular') ?></th>
                     <td>&nbsp;<?= h($beneficiary->person->nombre) ?> <?=  h($beneficiary->person->apellido) ?></td>

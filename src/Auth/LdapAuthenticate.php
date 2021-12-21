@@ -249,12 +249,12 @@ class LdapAuthenticate extends BaseAuthenticate
                 if (!empty($extendedError)) {
                     foreach ($this->_config['errors'] as $error => $errorMessage) {
                         if (strpos($extendedError, $error) !== false) {
-                            $messages[] = [
+                            /* $messages[] = [
                                 'message' => $errorMessage,
                                 'key' => $this->_config['flash']['key'],
                                 'element' => $this->_config['flash']['element'],
                                 'params' => $this->_config['flash']['params'],
-                            ];
+                            ]; */
                         }
                     }
                 }
@@ -264,7 +264,7 @@ class LdapAuthenticate extends BaseAuthenticate
 
         if (!empty($messages)) {
             $controller = $this->_registry->getController();
-            $controller->request->session()->write('Flash.' . $this->_config['flash']['key'], $messages);
+            //$controller->request->session()->write('Flash.' . $this->_config['flash']['key'], $messages);
         }
 
         return false;

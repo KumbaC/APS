@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property int|null $beneficiary_id
  * @property int|null $blood_type_id
  * @property int|null $doctor_id
+ * @property int $expediente
  *
  * @property \App\Model\Entity\Person $person
  * @property \App\Model\Entity\Beneficiary $beneficiary
@@ -51,5 +52,6 @@ class ClinicalHistory extends Entity
         'fr' => true,
         'fc' => true,
         'ta' => true,
+        'expediente' => true,
     ];
 }

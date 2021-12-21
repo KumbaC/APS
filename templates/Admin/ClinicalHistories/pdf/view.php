@@ -17,7 +17,7 @@ $doctor = $session->read('Auth.User.id');
 <!DOCTYPE html>
 
 <div class="card">
-    <div class="card-body rounded bg-white" style="border:solid;">
+    <div class="card-body rounded bg-white" style="border:solid; height:70rem;">
 
 
         <div class="">
@@ -29,7 +29,7 @@ $doctor = $session->read('Auth.User.id');
           <h3 class="text-uppercase font-weight-bold text-center card-title" style="margin-top: -45px;">HISTORIA CLINICA</h3>
 
         <hr class="bg-dark">
-            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= ($clinicalHistory->person) ? 'T-000'.$doctor .h($clinicalHistory->person->cedula) : 'B-000'.$doctor . h($clinicalHistory->beneficiary->cedula) ?> &nbsp;   </h4>
+            <h4 class="font-weight-bold text-uppercase">Numero de expediente: <?= ($clinicalHistory->person) ? 'T-000'. h($clinicalHistory->expediente) : 'B-000'. h($clinicalHistory->expediente) ?> &nbsp;   </h4>
 
             <!-- <hr class="bg-dark"> -->
             <table style="width: 300px;">
@@ -100,7 +100,7 @@ $doctor = $session->read('Auth.User.id');
                         <?php foreach ($clinicalHistory->diagnoses as $diagnoses) : ?>
                         <tr>
 
-                            <td><li><?= h($diagnoses->descripcion) ?></li></td>
+                            <td style="width:400px;"><li><?= h($diagnoses->descripcion) ?></li></td>
 
 
                         </tr>
@@ -132,9 +132,23 @@ $doctor = $session->read('Auth.User.id');
 
                     </table>
                 </div>
-                <?php endif; ?>
-            </div>
+                <?php else: ?>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
 
+                            <th><?= __('') ?></th>
+
+                        </tr>
+                        <tr>
+                            <td class="text-uppercase"> El doctor aún no le da un diagnostico a la historia. </td>
+                        </tr>
+
+                    </table>
+                    </div>
+                <?php endif; ?>
+
+            </div>
 
             <div class="" style="max-width: 520px; height:250px; width:290px; border:none; margin-left:38.8rem; margin-top:-280px;">
 
@@ -190,8 +204,24 @@ $doctor = $session->read('Auth.User.id');
                         <?php endforeach; ?>
                     </table>
                 </div>
+
+                <?php else:  ?>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+
+                            <th><?= __('') ?></th>
+
+                        </tr>
+
+                        <tr>
+                            <td class="text-uppercase"> El paciente no posee antecedentes medicos. </td>
+                        </tr>
+                    </table>
+                    </div>
                 <?php endif; ?>
-            </div>
+                </div>
+
 <br><br>
 <hr class="bg-dark">
 <div class="related">
@@ -207,43 +237,87 @@ $doctor = $session->read('Auth.User.id');
                         <?php foreach ($clinicalHistory->habits as $habits) : ?>
                         <tr>
 
-                            <td><?= h($habits->descripcion) ?></td>
+
+                            <td style="width:400px;"><?= h($habits->descripcion) ?></td>
+
 
                         </tr>
                         <?php endforeach; ?>
+                        </table>
+                        </div>
+                        <?php else : ?>
+                     <div class="table-responsive">
+                          <table>
+                        <tr>
+
+                            <th><?= __('') ?></th>
+
+                        </tr>
+                            <tr>
+
+                            <td style="width:400px;"> EL PACIENTE NO TIENE HABITOS.</td>
+                            </tr>
                     </table>
                 </div>
                 <?php endif; ?>
-               </div>
 
                <br>
-               <div class="mx-auto" style="margin-top:240px; height:200px;">
+                    <hr class="bg-dark">
+
+               <div class="mx-auto" style="margin-top:200px;">
 
 
+                    <table class="table" style="border: none;">
+                        <thead>
+                        <tr>
 
-                            <p class="font-weight-bold" style="margin-left: 14rem; margin-top:-200px;"><?= __('Firma del medico: ') ?></th>
+                                <th class="text-center" style="border: none;"> <?= __('Firma del medico: ') ?> </th>
 
+                                <th class="text-center" style="border: none;"><?= __('Sello: ') ?> </th>
 
-
-
-
-                            <p class="text-center" style="max-width: 520px; margin-left: 1rem; margin-top:-100px;"><?= $this->Html->image($clinicalHistory->doctor->firma, ['fullBase' => true, 'style' => 'height:115px; width:140px;']); ?></p>
-
-
-
-
-
-
-                            <p class="font-weight-bold" style="margin-left: 38rem; margin-top:-11rem;"><?= __('Sello: ') ?></p>
+                        </tr>
 
 
 
 
 
-                             <p style="max-width: 520px; margin-left:35.8rem;"><?= $this->Html->image($clinicalHistory->doctor->sello, ['fullBase' => true, 'style' => 'height:105px; width:125px;']); ?></p>
+
+                        </thead>
+
+                        <tbody>
+
+
+                        <tr>
+
+                                <td class="text-center" style="border: none;"> <?= $this->Html->image($clinicalHistory->doctor->firma, ['fullBase' => true, 'style' => 'height:115px; width:140px;']); ?> </td>
 
 
 
+
+
+                        <td class="text-center" style="border: none;"> <?= $this->Html->image($clinicalHistory->doctor->sello, ['fullBase' => true, 'style' => 'height:105px; width:125px;']); ?> </td>
+
+                        </tr>
+                        </tbody>
+
+
+                            <!-- <p class="text-center" style="max-width: 520px; margin-left: 1rem; margin-top:-100px;"></p>
+
+
+
+
+
+
+                            <p class="font-weight-bold" style="margin-left: 38rem; margin-top:-11rem;"></p>
+
+
+
+
+
+                             <p style="max-width: 520px; margin-left:35.8rem;"></p> -->
+
+
+                    </table>
 
                 </div>
             </div>

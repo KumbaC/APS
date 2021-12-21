@@ -51,14 +51,19 @@ class PersonsController extends AppController
             'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
         ]);
 
-        $this->viewBuilder()->setOptions([
+        $this->viewBuilder()->setOption(
             'pdfConfig',
-             [
-                'orientation' => 'landscape',
-                'filename' => 'CarnetAPS_'.$person->nombre,
-
-             ]
-        ]);
+            [
+                'orientation' => 'portrait',
+                'filename' => 'CarnetAPS_' . $person->nombre. $person->apellido,
+                'margin' => [
+                    'bottom' => 2,
+                    'left' => 15,
+                    'right' => 15,
+                    'top' => 30
+                ],
+            ]
+        );
 
         $this->set(compact('person'));
     }

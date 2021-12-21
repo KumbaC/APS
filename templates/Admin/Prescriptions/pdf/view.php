@@ -6,7 +6,7 @@
 ?>
 
 
-<div class="card" style="width: 32rem; height:50rem; border:solid;">
+<div class="card" style="width: 32rem; height:58rem; border:solid;">
   <div class="card-body">
     <aside class="">
     <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:65px; position:relative;']);?>
@@ -60,11 +60,11 @@
 
                         <br>
                         <?php  ?>
-                    <p class="font-weight-bold text-uppercase" style="margin-left: 300px; margin-top:150px;"><?= __('Sello: ') ?></p>
-                    <p  class="h4 text-center" style="margin-left: 200px;"><?= $this->Html->image($prescription->doctor->sello, ['fullBase' => true, 'style' => 'height:80px; width:80px;']) ?> </p>
+                    <p class="font-weight-bold text-uppercase" style="margin-left: 340px; margin-top:230px;"><?= __('Sello: ') ?></p>
+                    <p  class="h4 text-center" style="margin-left: 280px;"><?= $this->Html->image($prescription->doctor->sello, ['fullBase' => true, 'style' => 'height:80px; width:80px;']) ?> </p>
 
 
-                    <p class="font-weight-bold text-uppercase" style="margin-top:-120px; margin-left:30px;"><?= __('Firma del medico: ') ?></p>
+                    <p class="font-weight-bold text-uppercase" style="margin-top:-126px; margin-left:30px;"><?= __('Firma del medico: ') ?></p>
                     <p  class="h4" style="margin-top:-5px;"> <?= $this->Html->image($prescription->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:50px; height:50px; width:120px;']); ?> </p>
 
 
@@ -76,7 +76,7 @@
 
 <!-- INDICACIONES -->
 
-<div class="card" style="width: 32rem; height:50rem; border:solid; margin-left:32.2em; margin-top:-50em;">
+<div class="card" style="width: 32rem; height:58rem; border:solid; margin-left:32.2em; margin-top:-60.8em;">
   <div class="card-body">
     <aside class="">
     <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:65px; position:relative;']);?>
@@ -135,7 +135,7 @@
 
 
   </div>
-                    <p class="font-weight-bold text-uppercase" style="margin-left: 360px; padding-top:80px;"><?= __('Sello: ') ?></p>
+                    <p class="font-weight-bold text-uppercase" style="margin-left: 360px; padding-top:200px;"><?= __('Sello: ') ?></p>
                     <picture  class="h4 text-center" style="margin-left: 350px;"><?= $this->Html->image($prescription->doctor->sello, ['fullBase' => true, 'style' => 'height:80px; width:80px;']) ?> </picture>
 
 

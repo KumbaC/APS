@@ -114,6 +114,10 @@ class ClinicalHistoriesTable extends Table
             ->scalar('ta')
             ->allowEmptyString('ta');
 
+            $validator
+            ->integer('expediente')
+            ->allowEmptyString('expediente', null, 'create', 'update');
+
         return $validator;
     }
 
