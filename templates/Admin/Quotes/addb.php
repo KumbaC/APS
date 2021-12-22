@@ -10,6 +10,7 @@
  * @var \Cake\Collection\CollectionInterface|string[] $status
  */
 
+use function PHPSTORM_META\type;
 
 $hora = time();
 $fecha = date('d-m-Y');
@@ -23,13 +24,13 @@ foreach($specialties as $specialty) {
 
 
    foreach($specialty->doctors as $doctor){
-       $doctors_list[$specialty->id][$doctor->id] =  'Dr.' . ' ' . $doctor->nombre . ' ' . $doctor->apellido;
+       $doctors_list[$specialty->id][$doctor->id] = 'Dr.' . ' ' . $doctor->nombre . ' ' . $doctor->apellido;
 
    }
 }
 
 
-$person_list = [];
+ $person_list = [];
 $beneficiary_list = [];
 
 foreach($persons as $person) {
@@ -37,72 +38,76 @@ foreach($persons as $person) {
 
 
    foreach($person->beneficiary as $beneficiary){
-       $beneficiary_list[$person->id][$beneficiary->id] = [$beneficiary->nombre];
+       $beneficiary_list[$person->id][$beneficiary->id] = 'Dr.' . ' ' . $beneficiary->nombre . ' ' . $beneficiary->apellido;;
 
    }
 }
 
-
-
 ?>
 <style>
     .error{
-        color: red;
+        color:red;
     }
 </style>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" rel="stylesheet" />
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading text-uppercase font-weight-bold text-center"> <i class="fas fa-tools"></i> <?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de consultas'), ['action' => 'index'], ['class' => 'text-uppercase font-weight-bold btn btn-danger side-nav-item']) ?>
+            <h4 class="heading font-weight-bold text-uppercase text-center"> <i class="fas fa-tools"></i>  <?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista de Consultas'), ['action' => 'index'], ['class' => 'btn btn-danger font-weight-bold text-uppercase side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80 card mx-auto">
         <div class="quotes form content card-body">
             <?= $this->Form->create($quote, ['id' => 'form_consu']) ?>
             <fieldset>
-                <legend class="text-center text-uppercase font-weight-bold"> <i class="fas fa-notes-medical"></i> <?= __('Añadir consulta') ?></legend>
-
-
+                <legend class="text-uppercase font-weight-bold text-center"><i class="fas fa-notes-medical"></i> <?= __('Agregar una consulta') ?></legend>
                 <div class="row">
                     <div class="col">
-                  <?php  echo $this->Form->control('asunto', ['placeholder' => 'Agregar asunto']);  ?>
+                  <?php  echo $this->Form->control('asunto', ['placeholder' => 'Agregar asunto', 'class' => 'required']);  ?>
                   </div>
 
                   <div class="col">
-                  <?php  echo $this->Form->control('nota', ['placeholder' => 'Agregar una nota']); ?>
-                  </div>
-                </div>
-
-                   <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidad', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'require' => true]); ?>
-                   <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'label' => 'Doctores', 'options' => [], 'empty' => 'Seleccione una doctor', 'required' => true]); ?>
-                    <?php  echo $this->Form->control('beneficiary_id', ['id'=>'beneficiary','type' => 'hidden', 'empty' => true, 'required' => true]); ?>
-
-
-                   <div class="row">
-                    <div class="col">
-                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'class' => 'required']); ?>
-                  </div>
-                  <div class="col">
-                  <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'class' => 'required', 'placeholder' => 'Ejemplo: 12:00']); ?>
+                  <?php  echo $this->Form->control('nota', ['placeholder' => 'Agregar una nota', 'class' => 'required']); ?>
                   </div>
                 </div>
 
 
-                   <?php  echo $this->Form->control('status_quote_id', ['label'=>'Estatus', 'options' => $statusQuotes]); ?>
+                  <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidades', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'class' => 'required']); ?>
 
-                <br> <br>
+
+
+                  <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'options' => [], 'empty' => 'Seleccione una doctor', 'label' => 'Doctores']); ?>
+
+                <div class="row">
+                  <div class="col">
+                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'title' => 'Por favor ingrese la fecha',  'class' => 'required',  'type' => 'text', 'placeholder' => '00/00/21']); ?>
+                  </div>
+
+                  <div class="col">
+                  <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'placeholder' => 'Ejemplo: 00:00']); ?>
+                  </div>
+                </div>
+
+                <div class="col-md-14">
+                  <?php  echo $this->Form->control('status_quote_id', ['options' => $statusQuotes, 'label' => 'Estatus']); ?>
+                </div>
+                  <br><br>
+
             </fieldset>
-            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'data-action' => 'save']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js" integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
 
 var doctors = <?= json_encode($doctors_list);  ?>;
@@ -123,8 +128,22 @@ $(document).ready(function(){
     });
 
   });
+/* Persona a Beneficiario */
+  $('#person').change(function(){
 
+var personId = $(this).val();
 
+var beneficiaryObject = beneficiary[personId];
+
+$('#beneficiary option:gt(0)').remove();
+var beneficiarySelect = $('#beneficiary');
+$('#beneficiary').empty();
+$('#beneficiary').append('<option value="">Seleccione un beneficiario</option>');
+$.each(beneficiaryObject, function(key,value) {
+   beneficiarySelect.append($("<option></option>").attr("value", key).text(value));
+  });
+
+});
 
 
 });
@@ -135,9 +154,21 @@ jQuery.validator.setDefaults({
 });
 
 
+jQuery.validator.addMethod("dateVE", function(value, element) {
+	return this.optional(element) || /^\d\d\d\d?[\.\/\-]\d\d?[\.\/\-]\d\d?$/.test(value);
+}, "Vul hier een geldige datum in.");
 
-$('#form_consu').validate({
-    rules: {
+
+
+$('form#form_consu').validate({
+    submitHandler: function() {
+
+alert('Form Submitted!');
+// $(form).ajaxSubmit();
+
+
+},
+     rules: {
       asunto: {
         required: true,
         minlength: 3
@@ -156,10 +187,13 @@ $('#form_consu').validate({
       status_quote_id: {
             required: true
         },
-        hora:
-        {
+        hora:{
             required: true,
             time: true
+        },
+        fecha:{
+            required: true,
+            dateVE: true
         }
 
 
@@ -184,14 +218,39 @@ $('#form_consu').validate({
         doctor_id: {
             required: 'Este campo es obligatorio'
         },
-        hora:{
+         hora:{
             required: 'Este campo es obligatorio',
-            time: 'Este campo debe contener una hora válida'
+            time: 'Este campo debe ser una hora válida'
+        },
+        fecha:{
+            required: 'Este campo es obligatorio',
+            dateVE: 'Introduzca una fecha válida'
         }
 
+
     }
+
+
+
+
   });
 
+   $('[name="fecha"]')
+    .datepicker({
+      format: "yyyy-mm-dd",
+
+    }),
+    $('[name="hora"]').datetimepicker({
+          datepicker: false,
+          format: 'H:i'
+        });
 
 
+   /*   $('[data-action=save]').click(function(e){
+        e.stopPropagation();
+        $('form#form_consu').submit();
+
+
+
+     }); */
 </script>

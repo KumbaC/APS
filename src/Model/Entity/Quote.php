@@ -26,7 +26,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Beneficiary $beneficiary
  * @property \App\Model\Entity\Person $person
  * @property \App\Model\Entity\StatusQuote $status_quote
- *
+ * @property \App\Model\Entity\Prescription[] $prescriptions
+ * @property \App\Model\Entity\Status[] $status
  */
 class Quote extends Entity
 {
@@ -56,6 +57,7 @@ class Quote extends Entity
         'beneficiary' => true,
         'person' => true,
         'status_quote' => true,
-
+        'prescriptions' => true,
+        'status' => true,
     ];
 }

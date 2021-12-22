@@ -90,7 +90,7 @@ class QuotesController extends AppController
         }
 
         $specialties =  $this->Quotes->Specialties->find('all')->contain(['Doctors']);
-        $doctors = $this->Quotes->Doctors->find('list', ['limit' => 200]);
+        $doctors = $this->Quotes->Doctors->find('list');
         $beneficiary = $this->Quotes->Beneficiary->find('list', ['limit' => 200]);
         $persons = $this->Quotes->Persons->find('all')->contain(['Beneficiary']);
         $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
