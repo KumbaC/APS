@@ -24,7 +24,7 @@
         <table class="table table-dark table-bordered">
             <thead class="thead thead-light">
                 <tr>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('id', 'ID') ?></th>
+
                     <th class="font-weight-bold">DESCRIPCIÓN</th>
                     <th class="actions text-center"><?= __('OPCIONES') ?></th>
                 </tr>
@@ -32,7 +32,7 @@
             <tbody>
                 <?php foreach ($diagnoses as $diagnosis): ?>
                 <tr>
-                    <td class="font-weight-bold text-center"><?= $this->Number->format($diagnosis->id) ?></td>
+
                     <td class="font-weight-bold"><?= h($diagnosis->descripcion) ?></td>
                     <td class="pagination text-center">
 

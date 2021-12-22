@@ -96,7 +96,7 @@ foreach($persons as $person) {
                   <br><br>
 
             </fieldset>
-            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'data-action' => 'save']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'type' => 'submit']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
@@ -148,9 +148,31 @@ $.each(beneficiaryObject, function(key,value) {
 
 });
 
+    $('[name="fecha"]')
+    .datepicker({
+      format: "yyyy-mm-dd",
+
+    }),
+    $('[name="hora"]').datetimepicker({
+          datepicker: false,
+          format: 'H:i'
+        });
+
+
+    $('[data-action=save]').click(function(e){
+        e.stopPropagation();
+        $('form#form_consu').submit();
+
+     });
+
+
+
+
+
 jQuery.validator.setDefaults({
-  debug: true,
-  success: "valid"
+  debug: false,
+  success: "valid",
+  //onsubmit: false
 });
 
 
@@ -160,14 +182,9 @@ jQuery.validator.addMethod("dateVE", function(value, element) {
 
 
 
+
 $('form#form_consu').validate({
-    submitHandler: function() {
 
-alert('Form Submitted!');
-// $(form).ajaxSubmit();
-
-
-},
      rules: {
       asunto: {
         required: true,
@@ -234,23 +251,4 @@ alert('Form Submitted!');
 
 
   });
-
-   $('[name="fecha"]')
-    .datepicker({
-      format: "yyyy-mm-dd",
-
-    }),
-    $('[name="hora"]').datetimepicker({
-          datepicker: false,
-          format: 'H:i'
-        });
-
-
-   /*   $('[data-action=save]').click(function(e){
-        e.stopPropagation();
-        $('form#form_consu').submit();
-
-
-
-     }); */
 </script>
