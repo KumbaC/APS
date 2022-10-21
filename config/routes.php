@@ -35,8 +35,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    $builder->connect('/login', ['controller' => 'users', 'action' => 'login']);
-    $builder->connect('/logout', ['controller' => 'users', 'action' => 'logout']);
+    $builder->connect('/ingresar', ['controller' => 'users', 'action' => 'login']);
+    $builder->connect('/salir', ['controller' => 'users', 'action' => 'logout']);
 
     $builder->connect('/', ['controller' => 'pages', 'action' => 'display']);
 
@@ -65,18 +65,30 @@ $routes->scope('/titulares', function (\Cake\Routing\RouteBuilder $routes) {
    // $routes->fallbacks('InflectedRoute');
 });
 
+// CONSULTAS
+$routes->scope('/consultas', function (\Cake\Routing\RouteBuilder $routes) {
+    //$routes->setExtensions('pdf');
+    $routes->connect('/', ['controller' => 'Quotes', 'action' => 'indexmi']);
+    $routes->connect('/beneficiarios', ['controller' => 'Quotes', 'action' => 'index']);
+    $routes->connect('/crear_beneficiarios', ['controller' => 'Quotes', 'action' => 'addb']);
+    $routes->connect('/crear', ['controller' => 'Quotes', 'action' => 'add']);
+    //$routes->connect('/add', ['controller' => 'Persons', 'action' => 'add']);
+    //$routes->connect('/edit/*', ['controller' => 'Persons', 'action' => 'edit']);
+    //$routes->connect('/delete/*', ['controller' => 'Persons', 'action' => 'delete']);
+   // $routes->fallbacks('InflectedRoute');
+});
 
 
 
 
-//ADMINISTRACIÓN
+//ADMINISTRADOR
 
 
 $routes->prefix('admin', function (RouteBuilder $routes) {
 
         $routes->connect('/', ['controller' => 'pages', 'action' => 'display']);
-        $routes->connect('/login', ['controller' => 'users', 'action' => 'login']);
-        $routes->connect('/logout', ['controller' => 'users', 'action' => 'logout']);
+        $routes->connect('/ingresar', ['controller' => 'users', 'action' => 'login']);
+        $routes->connect('/salir', ['controller' => 'users', 'action' => 'logout']);
         $routes->fallbacks('InflectedRoute');
 
 
@@ -97,12 +109,20 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
         //$routes->fallbacks('InflectedRoute');
     });
 
+    $routes->scope('/registro_doctor', function (\Cake\Routing\RouteBuilder $routes) {
+        //$routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'UsersDoctors', 'action' => 'index']);
+        $routes->connect('/crear', ['controller' => 'UsersDoctors', 'action' => 'add']);
+        $routes->connect('/delete/*', ['controller' => 'UsersDoctors', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'UsersDoctors', 'action' => 'edit']);
+
+    });
 
 
     $routes->scope('/beneficiarios', function (\Cake\Routing\RouteBuilder $routes) {
         //$routes->setExtensions('pdf');
         $routes->connect('/view/*', ['controller' => 'Beneficiary', 'action' => 'view']);
-        $routes->connect('/crear', ['controller' => 'Beneficiary', 'action' => 'add']);
+        $routes->connect('/crear/*', ['controller' => 'Beneficiary', 'action' => 'add']);
         $routes->connect('/', ['controller' => 'Beneficiary', 'action' => 'index']);
         $routes->connect('/editar/*', ['controller' => 'Beneficiary', 'action' => 'edit']);
         $routes->connect('/delete/*', ['controller' => 'Beneficiary', 'action' => 'delete']);
@@ -123,22 +143,24 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
 
     $routes->scope('/consultas', function (\Cake\Routing\RouteBuilder $routes) {
         //$routes->setExtensions('pdf');
-        $routes->connect('/view/*', ['controller' => 'Quotes', 'action' => 'view']);
-        $routes->connect('/add/*', ['controller' => 'Quotes', 'action' => 'add']);
+        $routes->connect('/ver/*', ['controller' => 'Quotes', 'action' => 'view']);
+        $routes->connect('/crear/*', ['controller' => 'Quotes', 'action' => 'add']);
         $routes->connect('/', ['controller' => 'Quotes', 'action' => 'index']);
-        $routes->connect('/edit/*', ['controller' => 'Quotes', 'action' => 'edit']);
-        $routes->connect('/delete/*', ['controller' => 'Quotes', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'Quotes', 'action' => 'edit']);
+        $routes->connect('/estatus/*', ['controller' => 'Quotes', 'action' => 'status']);
+        $routes->connect('/eliminar/*', ['controller' => 'Quotes', 'action' => 'delete']);
+
         //$routes->fallbacks('InflectedRoute');
     });
 
-    $routes->scope('/historia', function (\Cake\Routing\RouteBuilder $routes) {
+    $routes->scope('/informe', function (\Cake\Routing\RouteBuilder $routes) {
         $routes->setExtensions('pdf');
-        $routes->connect('/view/*', ['controller' => 'ClinicalHistories', 'action' => 'view']);
-        $routes->connect('/add/*', ['controller' => 'ClinicalHistories', 'action' => 'add']);
-        $routes->connect('/addb/*', ['controller' => 'ClinicalHistories', 'action' => 'addb']);
+        $routes->connect('/imprimir/*', ['controller' => 'ClinicalHistories', 'action' => 'view']);
+        $routes->connect('/crear/*', ['controller' => 'ClinicalHistories', 'action' => 'add']);
+        $routes->connect('/crear_beneficiario/*', ['controller' => 'ClinicalHistories', 'action' => 'addb']);
         $routes->connect('/', ['controller' => 'ClinicalHistories', 'action' => 'index']);
-        $routes->connect('/edit/*', ['controller' => 'ClinicalHistories', 'action' => 'edit']);
-        $routes->connect('/delete/*', ['controller' => 'ClinicalHistories', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'ClinicalHistories', 'action' => 'edit']);
+        $routes->connect('/eliminar/*', ['controller' => 'ClinicalHistories', 'action' => 'delete']);
         //$routes->fallbacks('InflectedRoute');
     });
 
@@ -159,7 +181,7 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
         $routes->connect('/', ['controller' => 'diagnoses', 'action' => 'index']);
         //$routes->connect('/view/*', ['controller' => 'doctors', 'action' => 'view']);
         $routes->connect('/crear', ['controller' => 'diagnoses', 'action' => 'add']);
-        $routes->connect('/delete/*', ['controller' => 'diagnoses', 'action' => 'delete']);
+        $routes->connect('/eliminar/*', ['controller' => 'diagnoses', 'action' => 'delete']);
         $routes->connect('/editar/*', ['controller' => 'diagnoses', 'action' => 'edit']);
         //$routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
         //$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
@@ -174,11 +196,19 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
         $routes->connect('/crear', ['controller' => 'habits', 'action' => 'add']);
         $routes->connect('/delete/*', ['controller' => 'habits', 'action' => 'delete']);
         $routes->connect('/editar/*', ['controller' => 'habits', 'action' => 'edit']);
-        //$routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
-        //$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-        //$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-        //$routes->fallbacks('InflectedRoute');
+
     });
+
+    $routes->scope('/recipe', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'Preescriptions', 'action' => 'index']);
+        $routes->connect('/imprimir/*', ['controller' => 'Preescriptions', 'action' => 'view']);
+        $routes->connect('/crear', ['controller' => 'Preescriptions', 'action' => 'add']);
+        $routes->connect('/delete/*', ['controller' => 'Preescriptions', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'Preescriptions', 'action' => 'edit']);
+
+    });
+
     $routes->scope('/antecedentes_medicos', function (\Cake\Routing\RouteBuilder $routes) {
         $routes->setExtensions('pdf');
         $routes->connect('/', ['controller' => 'MedicalsAntecedents', 'action' => 'index']);
@@ -191,6 +221,86 @@ $routes->prefix('admin', function (RouteBuilder $routes) {
         //$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
         //$routes->fallbacks('InflectedRoute');
     });
+    $routes->scope('/laboratorio', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'Laboratories', 'action' => 'index']);
+        $routes->connect('/crear', ['controller' => 'Laboratories', 'action' => 'add']);
+        $routes->connect('/eliminar/*', ['controller' => 'Laboratories', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'Laboratories', 'action' => 'edit']);
+        $routes->connect('/imprimir/*', ['controller' => 'Laboratories', 'action' => 'view']);
+        //$routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
+        //$routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+        //$routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        //$routes->fallbacks('InflectedRoute');
+    });
+
+
+});
+
+//DOCTOR
+
+
+$routes->prefix('doctor', function (RouteBuilder $routes) {
+
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'prefix' => 'doctor']);
+    $routes->connect('/ingresar', ['controller' => 'UsersDoctors', 'action' => 'login', 'prefix' => 'doctor']);
+    $routes->connect('/salir', ['controller' => 'UsersDoctors', 'action' => 'logout', 'prefix' => 'doctor']);
+    $routes->fallbacks('InflectedRoute');
+
+
+    $routes->scope('/doctores', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'doctors', 'action' => 'index', 'prefix' => 'doctor']);
+        $routes->connect('/crear', ['controller' => 'doctors', 'action' => 'add', 'prefix' => 'doctor']);
+        $routes->connect('/delete/*', ['controller' => 'doctors', 'action' => 'delete', 'prefix' => 'doctor']);
+        $routes->connect('/editar/*', ['controller' => 'doctors', 'action' => 'edit', 'prefix' => 'doctor']);
+        
+    });
+
+    $routes->scope('/consultas', function (\Cake\Routing\RouteBuilder $routes) {
+        //$routes->setExtensions('pdf');
+        $routes->connect('/ver/*', ['controller' => 'Quotes', 'action' => 'view']);
+        $routes->connect('/crear/*', ['controller' => 'Quotes', 'action' => 'add']);
+        $routes->connect('/', ['controller' => 'Quotes', 'action' => 'index']);
+        $routes->connect('/editar/*', ['controller' => 'Quotes', 'action' => 'edit']);
+        $routes->connect('/estatus/*', ['controller' => 'Quotes', 'action' => 'status']);
+        $routes->connect('/eliminar/*', ['controller' => 'Quotes', 'action' => 'delete']);
+
+        //$routes->fallbacks('InflectedRoute');
+    });
+
+    $routes->scope('/informe', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/imprimir/*', ['controller' => 'ClinicalHistories', 'action' => 'view']);
+        $routes->connect('/crear/*', ['controller' => 'ClinicalHistories', 'action' => 'add']);
+        $routes->connect('/crear_beneficiario/*', ['controller' => 'ClinicalHistories', 'action' => 'addb']);
+        $routes->connect('/', ['controller' => 'ClinicalHistories', 'action' => 'index']);
+        $routes->connect('/editar/*', ['controller' => 'ClinicalHistories', 'action' => 'edit']);
+        $routes->connect('/eliminar/*', ['controller' => 'ClinicalHistories', 'action' => 'delete']);
+        //$routes->fallbacks('InflectedRoute');
+    });
+
+    $routes->scope('/laboratorio', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'Laboratories', 'action' => 'index']);
+        $routes->connect('/crear', ['controller' => 'Laboratories', 'action' => 'add']);
+        $routes->connect('/eliminar/*', ['controller' => 'Laboratories', 'action' => 'delete']);
+        $routes->connect('/editar/*', ['controller' => 'Laboratories', 'action' => 'edit']);
+        $routes->connect('/imprimir/*', ['controller' => 'Laboratories', 'action' => 'view']);
+        
+    });
+
+    $routes->scope('/recipe', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'Preescriptions', 'action' => 'index', 'prefix' => 'doctor']);
+        $routes->connect('/imprimir/*', ['controller' => 'Preescriptions', 'action' => 'view', 'prefix' => 'doctor']);
+        $routes->connect('/crear', ['controller' => 'Preescriptions', 'action' => 'add', 'prefix' => 'doctor']);
+        $routes->connect('/delete/*', ['controller' => 'Preescriptions', 'action' => 'delete', 'prefix' => 'doctor']);
+        $routes->connect('/editar/*', ['controller' => 'Preescriptions', 'action' => 'edit', 'prefix' => 'doctor']);
+
+    });
+
+
 
 
 });

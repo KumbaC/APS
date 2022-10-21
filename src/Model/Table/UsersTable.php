@@ -46,14 +46,18 @@ class UsersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
-
+        $this->belongsTo('PublicWorkers', [
+            'foreignKey' => 'public_worker_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Roles', [
             'foreignKey' => 'role_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Persons', [
-            'foreignKey' => 'person_id',
+        
+        $this->hasMany('Persons', [
+            'foreignKey' => 'user_id',
+            	
         ]);
     }
 

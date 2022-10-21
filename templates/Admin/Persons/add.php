@@ -123,6 +123,11 @@ $(document).ready(function(){
 
 });
 
+/* METODO PARA SOLO CARACTERERS MAYUSUCULAS */
+$.validator.addMethod("noC", function(value, element) {
+   return this.optional(element) || /[A-Z]/.test(value); 
+}, "You are not permitted to input more than three uppercase letters in a row!");
+
 
 $('#form_person').validate({
 
@@ -139,12 +144,14 @@ $('#form_person').validate({
                 required: true,
                 minlength: 3,
                 maxlength: 50,
+                noC: true,
 
             },
             apellido: {
                 required: true,
                 minlength: 3,
-                maxlength: 50
+                maxlength: 50,
+                noC: true,
             },
             email: {
                 required: true,
@@ -188,12 +195,14 @@ $('#form_person').validate({
                     required: "Por favor ingrese el nombre del titular",
                     minlength: "Por favor ingrese un nombre valido",
                     maxlength: "Por favor ingrese un nombre valido",
+                    noC: "Solo caracteres en mayusculas"
 
                 },
                 apellido: {
                     required: "Por favor ingrese el apellido del titular",
                     minlength: "Por favor ingrese un apellido valido",
                     maxlength: "Por favor ingrese un apellido valido",
+                    noC: "Solo caracteres en mayusculas"
                 },
                 email: {
                     required: "Por favor ingrese el correo electronico",
@@ -221,7 +230,7 @@ $('#form_person').validate({
                     min: 'Por favor ingrese una edad valida',
                     max: 'Por favor ingrese una edad valida',
                     number: 'Ingrese solo numeros'
-                }
+                },
             }
 
         });

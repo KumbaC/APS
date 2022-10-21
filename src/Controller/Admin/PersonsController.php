@@ -20,25 +20,18 @@ class PersonsController extends AppController
      */
     public function index()
     {
-        $session = $this->request->getSession();
-        $session = $this->request->getAttribute('session');
+    $session = $this->request->getSession();
+    $session = $this->request->getAttribute('session');
     if ($session->read('Auth.User.role_id') == 1){
 
+        $persons = $this->Persons->find()->contain(['Departments', 'Status', 'Cargos', 'Units', 'Genders']);
 
-        $key = $this->request->getQuery('key');
-        if($key){
-                $query = $this->Persons->find('all')->where(['persons.cedula like' => '%'. $key. '%']);
-        }else{
-               $query = $this->Persons;
-
-        }
-
-
-        $this->paginate = [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders'],
+      /*   $this->paginate = [
+            //,
+            'contain' => [],
         ];
-
-        $persons = $this->paginate($query, ['limit' => '5']);
+ */
+        //$persons = $this->paginate($query);
 
 
         $this->set(compact('persons'));
@@ -63,16 +56,22 @@ class PersonsController extends AppController
     if ($session->read('Auth.User.role_id') == 1){
 
         $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes'],
         ]);
-
+        $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOptions([
             'pdfConfig',
              [
-
                 'orientation' => 'landscape',
-                'filename' => 'CarnetAPS_'.$person->nombre,
-
+                //'download' => true,
+                //'title' => 'Carnet APS',
+                //'filename' => 'Carnet' . $person->nombre. $person->apellido,
+                /* 'margin' => [
+                    'bottom' => 0,
+                    'left' => 8,
+                    'right' => 5,
+                    'top' => 25
+                ], */
              ]
         ]);
 
@@ -105,10 +104,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $users = $this->Persons->Users->find('list', ['limit' => 200]);
         $units = $this->Persons->Units->find('list', ['limit' => 200]);
         $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'users', 'units', 'genders'));
     }
 
     /**
@@ -135,10 +134,10 @@ class PersonsController extends AppController
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
         $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $usersInternals = $this->Persons->UsersInternals->find('list', ['limit' => 200]);
+        $users = $this->Persons->Users->find('list', ['limit' => 200]);
         $units = $this->Persons->Units->find('list', ['limit' => 200]);
         $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
-        $this->set(compact('person', 'departments', 'status', 'cargos', 'usersInternals', 'units', 'genders'));
+        $this->set(compact('person', 'departments', 'status', 'cargos', 'users', 'units', 'genders'));
     }
 
     /**

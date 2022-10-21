@@ -8,12 +8,17 @@
  * @var \Cake\Collection\CollectionInterface|string[] $quotes
  * @var \Cake\Collection\CollectionInterface|string[] $clinicalHistories
  */
+$fecha = date('Y-m-d');
 ?>
+
 <style>
-    .error{
-        color: red;
-    }
+   .error{
+    color:red;
+   }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/summernote/summernote-bs4.css') ?>
+
 
 <div class="row">
     <aside class="column">
@@ -30,11 +35,12 @@
 
 
 
-                   <?php echo $this->Form->control('descripcion', ['label' => 'Recipe' ]); ?>
-                   <?php echo $this->Form->control('indicaciones', ['type' => 'textarea', 'label' => 'Indicaciones' ]); ?>
+                   <?php echo $this->Form->control('descripcion', ['label' => 'Recipe', 'type' => 'textarea', 'id' => 'descripcion', 'placeholder' => 'Ejem: Atamel 50MG, Losartan 20MG' ]); ?>
+                   <?php echo $this->Form->control('indicaciones', ['type' => 'textarea', 'id' => 'indiciaciones', 'label' => 'Indicaciones' ]); ?>
+
                    <?php //echo $this->Form->control('quote_id', ['options' => $quotes, 'empty' => true]); ?>
                    <?php //echo $this->Form->control('clinic_history_id', ['options' => $clinicalHistories, 'empty' => true]);  ?>
-                   <?php echo $this->Form->control('fecha', ['label' => 'Fecha del recipe', 'title' => 'Por favor ingrese una fecha']); ?>
+                   <?php echo $this->Form->control('fecha', ['label' => 'Fecha del recipe','type' => 'hidden', 'value' => $fecha]); ?>
 
             </fieldset>
             <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block' ]) ?>
@@ -42,9 +48,46 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery-validation/jquery.validate.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery-validation/additional-methods.min.js') ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/summernote-bs4.js") ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/lang/summernote-es-ES.js") ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
+
+/* $('[name="fecha"]')
+    .datepicker({
+      format: "yyyy-mm-dd",
+
+}), */
+
+
+/* jQuery.validator.addMethod("dateVE", function(value, element) {
+	return this.optional(element) || /^\d\d\d\d?[\.\/\-]\d\d?[\.\/\-]\d\d?$/.test(value);
+}, "Vul hier een geldige datum in."); */
+
+$(function () {
+    // Summernote
+    $('#descripcion').summernote({ lang: 'es-ES' })
+
+
+    $(document).ready(function() {
+  $('#descripcion').summernote();
+});
+
+$('#indiciaciones').summernote({ lang: 'es-ES' })
+
+
+$(document).ready(function() {
+$('#indiciaciones').summernote();
+});
+  }),
+
+
+
 $('#form_recipe').validate({
    rules: {
        descripcion: {
@@ -56,6 +99,7 @@ $('#form_recipe').validate({
               minlength: 5,
               maxlength: 300
          },
+
 
 
        },
@@ -70,6 +114,7 @@ $('#form_recipe').validate({
             minlength: "La indicacion debe tener al menos 5 caracteres",
             maxlength: "La indicacion debe tener maximo 300 caracteres"
         },
+
 
     },
 

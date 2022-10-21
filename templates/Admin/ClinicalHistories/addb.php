@@ -22,7 +22,7 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading text-uppercase font-weight-bold text-center"><?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de Historia Clinicas'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item']) ?>
+            <?= $this->Html->link(__('Lista de Informes Medicos'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item']) ?>
         </div>
     </aside>
 
@@ -33,14 +33,14 @@
             <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
             <fieldset>
 
-            <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> HISTORIA CLINICA </h3>
+            <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> INFORME MEDICO </h3>
                 <br>
 
 
                 <div class="row">
                         <div class="col">
                     <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos (Opcional)', 'options' => $habits, 'json_decode' => true]); ?>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="margin-top:-20px;">+</button>
                     </div>
 
 
@@ -50,7 +50,7 @@
 
                     <div class="col">
                     <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos (Opcional)', 'options' => $medicalsAntecedents]); ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAntecedentes" data-whatever="@mdo">+</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAntecedentes" data-whatever="@mdo" style="margin-top:-20px;">+</button>
                     </div></div>
 
 
@@ -62,13 +62,13 @@
 
                     <div class="row">
                         <div class="col">
-                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO', 'class'=>'required', 'title'=>'Selecciona el tipo de sangre', 'style' => 'width:280px;']); ?>
+                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO','style' => 'width:280px;']); ?>
                     </div>
 
 
                     <div class="col">
                     <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses, 'title'=>'Seleccione un diagnostico', 'class' => 'required']); ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDiagnoses" data-whatever="@mdo">+</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDiagnoses" data-whatever="@mdo" style="margin-top:-20px;">+</button>
                     </div></div>
 
 
@@ -86,7 +86,7 @@
                    <?php echo $this->Form->control('peso', ['id' => 'Peso', 'label' => 'Peso', 'placeholder' => '60 kg', 'required']); ?>
                    </div>
                    <div class="col">
-                   <?php echo $this->Form->control('altura', ['id' => 'Altura', 'label' => 'Altura', 'placeholder' => '1,70 mt', 'required']); ?>
+                   <?php echo $this->Form->control('altura', ['id' => 'Altura', 'label' => 'Altura', 'placeholder' => '1.70 m', 'required']); ?>
                    </div></div>
 
                    <div class="row">
@@ -99,6 +99,11 @@
 
                    <?php echo $this->Form->control('ta', ['id' => 'TA', 'label' => 'TA' , ]); ?>
 
+                        <!-- < ?php $imc_c = ?> -->
+            
+                    <?php echo $this->Form->control('imc', ['id' => 'IMC', 'label' => 'IMC', 'class' => 'disabled', 'readonly']); ?>
+
+                    <?php echo $this->Form->control('lpm', ['id' => 'LPM', 'label' => 'LPM' , ]); ?>
             </fieldset>
             <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'type'=>'submit']) ?>
             <?= $this->Form->end() ?>
@@ -307,17 +312,17 @@ $("#blood").select2({
 
 $('form#form_historia').validate({
 
-submitHandler: function() {
+//submitHandler: function() {
 
-alert('Form Submitted!');
+//alert('Form Submitted!');
 // $(form).ajaxSubmit();
 
 
-},
+//},
 rules: {
-    blood: {
+   /*  blood: {
         required: true
-    },
+    }, */
 
     diagnostico: {
         required: true,
@@ -332,7 +337,8 @@ rules: {
 
     altura: {
         required: true,
-        min:110,
+        number:true,
+        digits: false
     },
 
 
@@ -340,9 +346,9 @@ rules: {
 
 
 messages: {
-    blood: {
+    /* blood: {
         required: "Por favor seleccione un tipo de sangre"
-    },
+    }, */
 
     diagnostico: {
 
@@ -352,13 +358,15 @@ messages: {
     },
 
     peso: {
-       required: "Por favor ingrese el peso",
+         required: "Por favor ingrese el peso",
          min: "Peso invalido"
     },
 
     altura: {
-       required: "Por favor ingrese la estatura",
-            min: "Altura invalida"
+            required: "Por favor ingrese la estatura",
+            number:  "Por favor, solo datos numericos",
+            digits: 'Por favor ingrese digitos'
+            
     },
 
 
@@ -379,6 +387,36 @@ messages: {
 
 
 //});
+
+
+/* CALCULO DE IMC */
+	kg = document.getElementById("Peso");
+	m = document.getElementById("Altura");
+	imc = document.getElementById("IMC");
+	lectura = document.getElementById("IMC");
+    fr = document.getElementById('FR');
+    
+    m.onchange = function(){
+		if(kg.value!="" && m.value!=""){
+			imcx = (kg.value / (m.value* m.value));
+			imc.value = imcx.toFixed(2);
+		}else{
+            imc.value = 'Por favor llene el campo peso.'
+        }
+
+	};
+
+    kg.onchange = function(){
+		if(kg.value!="" && m.value!=""){
+			imcx = (kg.value / (m.value* m.value));
+			imc.value = imcx.toFixed(2);
+		}else{
+            imc.value = 'Por favor llene el campo altura.'
+        }
+
+	};
+/* CALCULO DE IMC */
+
 
 
 

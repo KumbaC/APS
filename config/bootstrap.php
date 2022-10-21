@@ -78,16 +78,18 @@ use Cake\Utility\Security;
  */
 
 Configure::write('CakePdf', [
+    'binary' => '/usr/bin/wkhtmltopdf',
     'engine' => 'CakePdf.WkHtmlToPdf',
-      'margin' => [
-        'bottom' => 0,
-        'left' => 50,
-        'right' => 0,
-        'top' => 2
-    ],
-    'pageSize' => 'A4',
+    'pageSize' => 'A5',
     'orientation' => 'landscape',
-    'download' => true
+    'download' => true,
+    'options' => [
+        'isRemoteEnabled' => true,
+    ],
+    
+    
+    
+    
 ]);
 
 try {

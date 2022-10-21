@@ -6,33 +6,27 @@
 $session = $this->request->getSession();
 $session = $this->request->getAttribute('session');
 ?>
+<!-- DataTables -->
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
 <div class="prescriptions index content">
 <br>
     <h3 class="text-uppercase font-weight-bold"><i class="fas fa-file-medical-alt"></i> <?= __('Recipes Medicos') ?></h3>
     <br>
-    <!-- BUSCADOR -->
-    <?= $this->Form->create(null,['type' => 'get']) ?>
-    <div class="row">
-        <div class="col-md-2">
-        <?php echo $this->Form->control('key', ['class' => '', 'label' => '',  'placeholder' => 'Buscar' ]); ?>
-
-        </div>
-        <?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md', 'style' => 'margin-top: 21px; margin-left: -12px;' ]) ?>
-    </div>
-
-    <?= $this->Form->end() ?>
-    <!-- BUSCADOR -->
 
 
-    <div class="table-responsive">
-        <table class="table table-dark table-bordered">
+
+    <div class="card bg-dark table-responsive">
+        <table class="table table-dark table-bordered" id="receta" style="border-radius: 15px 15px 15px 15px !important;">
             <thead class="thead thead-light">
                 <tr>
 
-                    <th class="text-center"><?= $this->Paginator->sort('person_id', 'Paciente') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('descripcion', 'Receta') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('doctor_id') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('fecha') ?></th>
+                    <th class="text-center"><?= h('Paciente') ?></th>
+                    <th class="text-center"><?= h('Receta') ?></th>
+                    <th class="text-center"><?= h('Doctor') ?></th>
+                    <th class="text-center"><?= h('Fecha') ?></th>
                     <th class="actions text-center"><?= __('Imprimir') ?></th>
                     <th class="actions text-center"><?= __('Editar') ?></th>
                     <?php if ($session->read('Auth.User.role_id') == 1): ?>
@@ -51,7 +45,7 @@ $session = $this->request->getAttribute('session');
                         <td class="text-center font-weight-bold"><?= h($prescription->beneficiary->nombre) ?> <?= h($prescription->beneficiary->apellido) ?></td>
                     <?php endif; ?>
 
-                    <td class="text-center font-weight-bold"><?= h($prescription->descripcion) ?></td>
+                    <td class="text-center font-weight-bold"><?= ($prescription->descripcion) ?></td>
 
                     <td class="text-center font-weight-bold">Dr. <?= h($prescription->doctor->nombre) ?> <?= h($prescription->doctor->apellido) ?></td>
 
@@ -71,19 +65,23 @@ $session = $this->request->getAttribute('session');
             </tbody>
         </table>
     </div>
-    <div class="paginator">
+ <!--    <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev(' ' . __('Anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('Siguiente') . ' ') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?//= $this->Paginator->first('<< ' . __('first')) ?>
+            <?//= $this->Paginator->prev(' ' . __('Anterior')) ?>
+            <?//= $this->Paginator->numbers() ?>
+            <?//= $this->Paginator->next(__('Siguiente') . ' ') ?>
+            <?//= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
 
-    </div>
+    </div> -->
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables/jquery.dataTables.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
 <script>
 $(".elimi_recipe").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -121,5 +119,20 @@ $(document).on('click', '.elimi_recipe', function () {
         });
 });
 
+ $('#receta').DataTable({
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+    },
+    'sort': {
+        'column': '4',
+        'language': 'Spanish',
+        'iSortAscending': true,
+        'iSortCol': 0,
+        'iSortingCols': 1,
+        'bSortable': true,
+        'bSort': true,
+    },
+
+});
 </script>
 

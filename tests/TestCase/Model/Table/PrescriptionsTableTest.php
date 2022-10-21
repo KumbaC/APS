@@ -16,7 +16,7 @@ class PrescriptionsTableTest extends TestCase
      *
      * @var \App\Model\Table\PrescriptionsTable
      */
-    protected $Prescriptions;
+    protected $prescriptions;
 
     /**
      * Fixtures

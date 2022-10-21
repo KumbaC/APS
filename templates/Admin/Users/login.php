@@ -7,6 +7,7 @@
 
 <div class="card">
   <div class="card-body login-card-body">
+  <p class="login-box-msg font-weight-bold"> <?= $this->html->image('logo2.png', ['style'=>'height:140px; width:280px; margin-left:-30px;']) ?></p>
     <p class="login-box-msg font-weight-bold"><?= __('ADMINISTRADOR') ?></p>
 
     <?= $this->Form->create() ?>
@@ -14,36 +15,55 @@
     <?= $this->Form->control('username', [
       'required' => true,
       'label' => false,
-      'placeholder' => __('username'),
-      'append' => '<i class="fas fa-user"></i>'
+      'placeholder' => __('Usuario'),
+      'append' => '<i class="fas fa-user-tie"></i>'
     ]) ?>
 
     <?= $this->Form->control('password', [
       'required' => true,
       'label' => false,
-      'placeholder' => __('contraseña'),
+      'placeholder' => __('Contraseña'),
       'append' => '<i class="fas fa-lock"></i>'
     ]) ?>
 
-    <div class="row">
-      <!-- /.col -->
-      <div class="ml-2">
-        <?= $this->Form->control(__('Iniciar sesión'), ['type'=>'submit', 'class'=>'btn btn-primary']) ?>
-      </div>
-      <!-- /.col -->
-    </div>
-
+<!-- /.col -->
+<div class="social-auth-links text-center mb-3">
+            
+            <?= $this->Form->control(__('Iniciar Sesión'), ['type'=>'submit', 'class'=>'btn btn-primary btn-block font-weight-bolder']) ?>
+                
+            </div>
+    
+   
     <?= $this->Form->end() ?>
 
+    <div class="row d-flex justify-content-center">
+      <!-- /.col -->
+      
 
-    <!-- /.social-auth-links -->
+      <button class="btn btn-secondary btn-sm disabled">
+       <a class="fas fa-user-tie text-white" style="margin-left:8px; font-size:17px;" href="<?= $this->Url->build(['prefix' => 'Admin', 'controller'=>'Users', 'action'=>'login']) ?>">
+        <small class="text-sm font-weight-bolder" style="font-family: Arial;">Administrador</small>
+      </a>
+       <!-- <p class="text-dark" style="font-size:12px; font-style:initial;">Doctores</p> -->
+      </button>
 
-    <!-- <p class="mb-1">
-      <//?= $this->Html->link(__('Olvide mi contraseña'), '#') ?>
-    </p>
-    <p class="mb-0">
-      <//?= $this->Html->link(__('Registrarme'), ['action' => 'register']) ?>
-    </p> -->
+      <button class="btn btn-primary btn-sm">
+       <a class="fas fa-user-nurse text-white" style="margin-left:8px; font-size:17px;" href="<?= $this->Url->build(['prefix' => 'Doctor', 'controller'=>'UsersDoctors', 'action'=>'login']) ?>">
+        <small class="text-sm font-weight-bolder" style="font-family: Arial;">Medicos</small>
+      </a>
+       <!-- <p class="text-dark" style="font-size:12px; font-style:initial;">Doctores</p> -->
+      </button>
+
+      <button class="btn btn-primary btn-sm">
+       <a class="fas fa-user text-white" style="margin-left:8px; font-size:17px;" href="<?= $this->Url->build(['prefix' => false, 'controller'=>'Users', 'action'=>'login']) ?>">
+        <small class="text-sm font-weight-bolder" style="font-family: Arial;">Titular</small>
+       </a>
+       <!-- <p class="text-dark" style="font-size:12px; font-style:initial;">Administrador</p> -->
+      </button>
+
+     
+    </div>
+  
   </div>
-  <!-- /.login-card-body -->
+ 
 </div>

@@ -2,62 +2,109 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Doctor $doctor
- * @var \Cake\Collection\CollectionInterface|string[] $specialties
+ * @var string[]|\Cake\Collection\CollectionInterface $specialties
+ * @var string[]|\Cake\Collection\CollectionInterface $users
+ * @var string[]|\Cake\Collection\CollectionInterface $turns
  */
-
-use function PHPSTORM_META\type;
-
 ?>
+<?= $this->Html->css('select2.css') ?>
 <style>
     .error{
         color: red;
     }
 </style>
+
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-        <h4 class="heading text-uppercase text-center font-weight-bold">  <i class="fas fa-tools"></i> <?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de Doctores'), ['action' => 'index'], ['class' => 'text-uppercase font-weight-bold btn btn-danger']) ?>
+            <h4 class="heading text-center text-uppercase font-weight-bold"><?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista Doctores'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item']) ?>
         </div>
     </aside>
+
     <div class="column-responsive column-80 card mx-auto" style="width: 500px;">
         <div class="doctors form content card-body">
             <?= $this->Form->create($doctor, ['type' => 'file', 'id' => 'form_doctor']) ?>
             <fieldset>
-                <legend class="text-center font-weight-bold text-uppercase"><i class="fas fa-briefcase-medical"></i> <?= __('Agregar Doctor') ?></legend>
+                <legend class="text-center font-weight-bold text-uppercase"><i class="fas fa-user-md"></i> <?= __('Añadir Doctor') ?></legend>
                     <div class="form-row">
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('nombre', ['placeholder' => 'Introduzca el nombre','required']);?></div>
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('apellido', ['placeholder' => 'Introduzca el apellido', 'required']);?></div>
+                        <div class="form-group col-md-6"><?php  echo $this->Form->control('nombre', ['placeholder' => 'Introduzca el nombre','required']);?></div>
+                        <div class="form-group col-md-6"><?php  echo $this->Form->control('apellido', ['placeholder' => 'Introduzca el apellido', 'required']);?></div>
                     </div>
-
                     <div class="form-row">
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('cedula', ['placeholder' => 'Introduzca su cedula', 'required', 'type' => 'number' , 'min' => '1']);?></div>
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'Ingrese su correo', 'required', 'type' => 'email']);?></div>
+                        <div class="form-group col-md-6"><?php  echo $this->Form->control('cedula', ['placeholder' => 'Introduzca su cedula', 'required', 'type' => 'number' , 'min' => '1']);?></div>
+                        <div class="form-group col-md-6"><?php  echo $this->Form->control('email', ['label' => 'Correo Electronico', 'placeholder' => 'Ingrese su correo', 'required', 'type' => 'email']);?></div>
                      </div>
 
-                    <div class="form-row">
-                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['required', 'type' => 'number', 'min' => '1']);?></div>
-                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono_secundario', ['type' => 'number', 'min' => '1']);?></div>
-
+                     <div class="form-row">
+                        <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['required', 'type' => 'number', 'min' => '1']);?></div>
+                        <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono_secundario', ['type' => 'number', 'min' => '1']);?></div>
                     </div>
 
-                    <div class="form-group"><?php  echo $this->Form->control('specialty_id', ['options' => $specialties, 'label' => 'Especialidad']);?></div>
+                    <div class="form-group"><?php  echo $this->Form->control('specialty_id', ['options' => $specialties, 'label' => 'Especialidad', 'id' => 'especialidad']);?></div>
+
+                    <div class="form-group"><?php  //echo $this->Form->control('turns._ids', ['options' => $turns, 'id' => 'turno', 'label' => 'Turnos', 'required', 'title' => 'Por favor seleccione un turno.']); ?></div>
+                    <div class="form-group"><?php //echo $this->Form->control('cupos', ['type' => 'hidden', 'value' => 5]);  ?></div>
 
                     <div class="form-row">
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('firma_file', ['label' => 'Firma Electronica', 'type' => 'file']);?></div>
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('sello_file', ['type' => 'file','label' => 'Sello:']);?></div>
+                        <div class="form-group col-md-6">
+                            <?php  echo $this->Form->control('firma_file', ['label' => 'Firma Electronica', 'type' => 'file']);?>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <?php  echo $this->Form->control('sello_file', ['type' => 'file','label' => 'Sello:']);?>
+                        </div>
                     </div>
-
 
             </fieldset>
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
+
+
+
+
+<!--     <div class="column-responsive column-80">
+        <div class="doctors form content">
+            <?//= $this->Form->create($doctor) ?>
+            <fieldset>
+                <legend><?//= __('Add Doctor') ?></legend>
+                <?php
+                    /* echo $this->Form->control('nombre');
+                    echo $this->Form->control('apellido');
+                    echo $this->Form->control('cedula');
+                    echo $this->Form->control('telefono');
+                    echo $this->Form->control('email');
+                    echo $this->Form->control('specialty_id', ['options' => $specialties, 'empty' => true]);
+                    echo $this->Form->control('user_id', ['options' => $users, 'empty' => true]);
+                    echo $this->Form->control('firma');
+                    echo $this->Form->control('sello');
+                    echo $this->Form->control('telefono_secundario');
+                    echo $this->Form->control('cupos');
+ */
+                ?>
+            </fieldset>
+            <?//= $this->Form->button(__('Submit')) ?>
+            <?//= $this->Form->end() ?>
+        </div>
+    </div> -->
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<?= $this->Html->script('jquery.js') ?>
+<?= $this->Html->script('select2.js') ?>
+<?= $this->Html->script('jquery.validate.js') ?>
+<?= $this->Html->script('additional-methods.js') ?>
 <script>
+$("#especialidad").select2({
+    width: 'resolve',
+    theme: 'classic' // need to override the changed default
+});
+$("#turno").select2({
+    width: 'resolve',
+    theme: 'classic' // need to override the changed default
+});
+
 $('#form_doctor').validate({
     rules: {
         nombre: {
@@ -87,14 +134,14 @@ $('#form_doctor').validate({
             minlength: 3,
             maxlength: 11
         }, */
-        /* firma_file: {
+         firma_file: {
             required: true,
             extension: "png|jpg|jpeg"
         },
         sello_file: {
             required: true,
             extension: "png|jpg|jpeg"
-        } */
+        }
 
     },
 
@@ -126,15 +173,18 @@ $('#form_doctor').validate({
             minlength: "Su telefono secundario debe tener al menos 3 caracteres",
             maxlength: "Su telefono secundario debe tener maximo 10 caracteres"
         }, */
-       /*  firma_file: {
+         firma_file: {
             required: "Por favor cargue su firma",
             extension: "Por favor cargue una imagen con formato png, jpg o jpeg"
         },
         sello_file: {
             required: "Por favor cargue su sello",
             extension: "Por favor cargue una imagen con formato png, jpg o jpeg"
-        } */
+        }
+
     }
 
 });
+
 </script>
+

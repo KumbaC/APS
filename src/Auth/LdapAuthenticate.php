@@ -130,11 +130,11 @@ class LdapAuthenticate extends BaseAuthenticate
         } catch (ErrorException $e) {
             // Do Nothing
         }
-        try {
+       /*  try {
             ldap_close($this->ldapConnection);
         } catch (ErrorException $e) {
             // Do Nothing
-        }
+        } */
 
         restore_error_handler();
     }
@@ -150,7 +150,8 @@ class LdapAuthenticate extends BaseAuthenticate
     {
 
         if (empty($request->getData('username')) || empty($request->getData('password'))) {
-            return false;
+            //return false;
+            return $this->findAuth($request->getData('username'), $request->getData('password'));
         }
 
         return $this->_findUser($request->getData('username'), $request->getData('password'));
@@ -174,12 +175,26 @@ class LdapAuthenticate extends BaseAuthenticate
      * @param string|null $password The password
      * @return bool|array Either false on failure, or an array of user data.
      */
-    protected function _findUser($username, $password = null)
+    public function findAuth(\Cake\ORM\Query $query, array $options)
     {
+        $query
+            ->select(['Users_Doctors.id', 'Users_Doctors.username', 'Users_Doctors.password'])
+            ->where(['Users_Doctors.role_id' => 3]);
+    
+        return $query;
+    }
+    
+   
+   
+     protected function _findUser($username, $password = null)
+    {       
+
+        
+
         if (!empty($this->_config['domain']) && !empty($username) && strpos($username, '@') === false) {
             $username .= '@' . $this->_config['domain'];
+        
         }
-
         set_error_handler(
             function ($errorNumber, $errorText, $errorFile, $errorLine) {
                 throw new ErrorException($errorText, 0, $errorNumber, $errorFile, $errorLine);
@@ -213,7 +228,7 @@ class LdapAuthenticate extends BaseAuthenticate
 
                     try {
                         //code...
-                        $userTable = TableRegistry::get('UsersInternals');
+                        $userTable = TableRegistry::get('Users');
                         $userinternal = $userTable->find()
 						->contain(['PublicWorkers','Roles'])
 						->where([
@@ -226,17 +241,58 @@ class LdapAuthenticate extends BaseAuthenticate
                         //throw $th;
                         debug($th);exit;
                     }
-
+                        /* LOGUEO */
+                        $users= $userTable->find();
+                        //debug($user);
 					if(!is_null($userinternal) && count($userinternal->toArray()) > 0){
 
+                                    foreach ($userinternal->toArray() as $key => $value) {
+                                         $user[$key] = $value;
+                                        }
+
+                                        }elseif($users->role_id == 3){
                                             foreach ($userinternal->toArray() as $key => $value) {
                                                 $user[$key] = $value;
-                                            }
-
+                                               }
                                         }else{
                                             return $user = [];
                                         }
-				}
+                        /* LOGUEO  */
+				}elseif(sizeof($response['id'])>0){
+                    $identification_card = next($response['id']);
+
+                    try {
+                        //code...
+                        $usersTable = TableRegistry::get('Users_Doctors');
+                        $userinternal = $usersTable->find()
+						->contain(['Roles'])
+						->where([
+                            'Roles.id' => $identification_card
+						])
+						->first();
+
+
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        debug($th);exit;
+                    }
+                        /* LOGUEO */
+                        $usuario= $usersTable->find();
+                        //debug($user);
+					if(!is_null($userinternal) && count($userinternal->toArray()) > 0){
+
+                                    foreach ($userinternal->toArray() as $key => $value) {
+                                         $user[$key] = $value;
+                                        }
+
+                                        }elseif($usuario->role_id == 3){
+                                            foreach ($userinternal->toArray() as $key => $value) {
+                                                $user[$key] = $value;
+                                               }
+                                        }else{
+                                            return $user = [];
+                                        }
+                }
 
 				return $user;
 			}

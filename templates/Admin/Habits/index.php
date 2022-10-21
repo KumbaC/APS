@@ -4,17 +4,23 @@
  * @var \App\Model\Entity\Habit[]|\Cake\Collection\CollectionInterface $habits
  */
 ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+
 <div class="habits index content">
     <?= $this->Html->link(__(''), ['action' => 'add'], ['class' => 'fas-lg fas fa-plus-circle btn btn-warning btn-lg float-right', 'style' => 'border-radius:40px;']) ?>
     <br>
     <h3 class="text-uppercase font-weight-bold"> <i class="fas fa-smoking"></i> <?= __('Habitos') ?></h3>
-    <div class="table-responsive">
-        <table class="table table-dark table-bordered">
+    <div class="card bg-dark table-responsive">
+        <table class="table table-dark table-bordered" style="border-radius: 15px 15px 15px 15px !important;" id="habito">
             <thead class="thead thead-light">
                 <tr>
 
-                    <th>Habitos</th>
-                    <th class="text-center actions"><?= __('Opciones') ?></th>
+                    <th class="text-uppercase font-weight-bold">Habitos</th>
+                    <th class="text-center actions text-uppercase font-weight-bold"><?= __('Opciones') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +30,7 @@
                     <td class="font-weight-bold"><?= h($habit->descripcion) ?></td>
                     <td class="pagination text-center">
 
-                        <?= $this->Html->link(__(''), ['action' => 'edit', $habit->id], ['class' => 'far fa-edit btn btn-warning']) ?>
+                        <?= $this->Html->link(__(''), ['action' => 'edit', $habit->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $habit->id], ['confirm' => __('¿Desea eliminar el habito de {0}?', $habit->descripcion), 'class' => 'fas fa-trash btn btn-warning elimi_habito']) ?>
                     </td>
                 </tr>
@@ -32,21 +38,29 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <!-- <//?= $this->Paginator->first('<< ' . __('first')) ?> -->
-            <?= $this->Paginator->prev('' . __('Anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('Siguiente') . '') ?>
-           <!--  <//?= $this->Paginator->last(__('last') . ' >>') ?> -->
-        </ul>
-        <!-- <p><//?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p> -->
-    </div>
+
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables/jquery.dataTables.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>
 <script>
+$('#habito').DataTable({
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+    },
+    'responsive': true,
+    'autoWidth': false,
+    'processing': true,
+
+    //'serverSide': true,
+});
+
 $(".elimi_habito").attr("onclick", "").unbind("click"); //remove function onclick button
 
 $(document).on('click', '.elimi_habito', function () {

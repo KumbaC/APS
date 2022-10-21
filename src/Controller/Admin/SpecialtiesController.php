@@ -52,7 +52,7 @@ class SpecialtiesController extends AppController
         if ($this->request->is('post')) {
             $specialty = $this->Specialties->patchEntity($specialty, $this->request->getData());
             if ($this->Specialties->save($specialty)) {
-                $this->Flash->success(__('The specialty has been saved.'));
+                $this->Flash->success(__('La especialidad ha sido guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }

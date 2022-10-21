@@ -5,8 +5,10 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\Rule\IsUnique;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+
 
 /**
  * Persons Model
@@ -67,8 +69,8 @@ class PersonsTable extends Table
         $this->belongsTo('Cargos', [
             'foreignKey' => 'cargo_id',
         ]);
-        $this->belongsTo('UsersInternals', [
-            'foreignKey' => 'user_internal_id',
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
         ]);
         $this->belongsTo('Units', [
             'foreignKey' => 'unit_id'
@@ -114,7 +116,7 @@ class PersonsTable extends Table
 
         $validator
             ->scalar('nombre')
-            ->requirePresence('nombre', 'create')
+            ->requirePresence('nombre', 'create') 
             ->notEmptyString('nombre');
 
         $validator
@@ -151,7 +153,7 @@ class PersonsTable extends Table
         $rules->add($rules->existsIn(['department_id'], 'Departments'), ['errorField' => 'department_id']);
         $rules->add($rules->existsIn(['status_id'], 'Status'), ['errorField' => 'status_id']);
         $rules->add($rules->existsIn(['cargo_id'], 'Cargos'), ['errorField' => 'cargo_id']);
-        $rules->add($rules->existsIn(['user_internal_id'], 'UsersInternals'), ['errorField' => 'user_internal_id']);
+        $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
         $rules->add($rules->existsIn(['unit_id'], 'Units'), ['errorField' => 'unit_id']);
         $rules->add($rules->existsIn(['gender_id'], 'Genders'), ['errorField' => 'gender_id']);
 

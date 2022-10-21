@@ -8,35 +8,31 @@ $session = $this->request->getAttribute('session');
 
 //$userName = $session->read('Auth.User.full_name');
 ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+
+
 <div class="beneficiary index content">
    <!--  <//?= $this->Html->link(__('Añadir Beneficiario'), ['action' => 'add'], ['class' => 'button float-right']) ?> -->
     <h3 class="text-uppercase font-weight-bold"><i class="fas fa-users"></i> <?= __('Beneficiarios') ?></h3>
     <br>
-    <!-- BUSCADOR -->
-    <?= $this->Form->create(null,['type' => 'get']) ?>
-    <div class="row">
-        <div class="col-md-2">
-        <?php echo $this->Form->control('key', ['class' => '', 'label' => '',  'placeholder' => 'Buscar' ]); ?>
 
-        </div>
-        <?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md', 'style' => 'margin-top: 21px; margin-left: -12px;' ]) ?>
-    </div>
 
-    <?= $this->Form->end() ?>
-    <!-- BUSCADOR -->
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-dark">
+    <div class="card bg-dark table-responsive">
+        <table class="table table-bordered table-dark display responsive nowrap" style="border-radius: 15px 15px 15px 15px !important;" id="beneficiario">
             <thead class="thead-light">
                 <tr>
 
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('person_id', 'Titular') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('nombre') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('apellido') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('kin_id', 'Parentesco') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('cedula') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('edad') ?></th>
-                    <th class="text-center font-weight-bold"><?= $this->Paginator->sort('genero') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Titular') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Nombre') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Apellido') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Parentesco') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Cedula') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Edad') ?></th>
+                    <th class="text-center font-weight-bold"><?= ('Genero') ?></th>
                     <!-- <th class="text-center"><//?= $this->Paginator->sort('modified', 'Actualizado') ?></th> -->
 
                     <th class="text-center"><?= __('Añadir Consulta') ?></th>
@@ -66,7 +62,7 @@ $session = $this->request->getAttribute('session');
                         <td class="text-center">
                         <?php if ($session->read('Auth.User.role_id') == 1):?>
 
-                        <?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'addb', $beneficiary->id],['class' => 'fas fa-hospital btn btn-warning']) ?>
+                        <?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'addb', $beneficiary->id],['class' => 'fas fa-file-medical btn btn-warning']) ?>
 
                         <?php endif; ?>
                         </td>
@@ -92,23 +88,20 @@ $session = $this->request->getAttribute('session');
             </tbody>
 
         </table>
-        <div class="paginator">
-        <ul class="pagination">
-        <li class="page-item"><!-- <//?= $this->Paginator->first('<< ' . __('first')) ?> -->
-            <?= $this->Paginator->prev(' ' . __('Anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('Siguiente') . ' ') ?>
-            <!-- <//?= $this->Paginator->last(__('last') . ' >>') ?> --> </li>
-        </ul>
 
-      </div>
     </div>
 
 </div>
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables/jquery.dataTables.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>
 <script>
 $(".elimi_beneficiario").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -145,5 +138,19 @@ $(document).on('click', '.elimi_beneficiario', function () {
             }
         });
 });
+
+$('#beneficiario').DataTable({
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+    },
+        scrollY:        "200px",
+        scrollX:        false,
+        scrollCollapse: true,
+        paging:         true,
+        fixedColumns:   true
+
+});
+
+
 
 </script>

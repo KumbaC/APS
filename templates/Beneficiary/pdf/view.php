@@ -13,7 +13,7 @@
 
 <div class="container">
 <div class="card mb-3 rounded border border-dark" style="max-width: 540px;">
- <?= $this->Html->image('logo.png', ['fullBase' => true]);?>  <h1 style="margin-left: 25rem; margin-top: -60px;">APS</h1>
+ <?= $this->Html->image('logo.png', ['fullBase' => true]);?>  <h1 style="margin-left: 25rem; margin-top: -60px;"></h1>
   <div class="row no-gutters">
     <div class="col-md-8">
       <div class="card-body">
@@ -29,7 +29,7 @@
  </div>
 
 <div class="card mb-3 rounded border border-dark" style="max-width: 540px;">
-<?= $this->Html->image('carabobo(1).png', ['fullBase' => true]);?>  <h1 style="margin-left: 25rem; margin-top: -60px;">APS</h1>
+<?= $this->Html->image('carabobo(1).png', ['fullBase' => true]);?>  <h1 style="margin-left: 25rem; margin-top: -60px;"></h1>
   <div class="row no-gutters">
     <div class="col-md-8">
       <div class="card-body">

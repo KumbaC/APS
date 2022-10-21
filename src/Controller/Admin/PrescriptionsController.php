@@ -10,7 +10,7 @@ use App\Model\Table\QuotesTable;
 /**
  * Prescriptions Controller
  *
- * @property \App\Model\Table\PrescriptionsTable $Prescriptions
+ * @property \App\Model\Table\PrescriptionsTable $prescriptions
  * @method \App\Model\Entity\Prescription[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
@@ -47,7 +47,7 @@ class PrescriptionsController extends AppController
                 'Doctors.user_internal_id' => $this->Auth->user('id'),
             ],
         ];
-        $prescriptions = $this->paginate($query, ['limit' => '5']);
+        $prescriptions = $this->paginate($query);
 
         $this->set(compact('prescriptions'));
 
@@ -62,7 +62,7 @@ class PrescriptionsController extends AppController
         $this->paginate = [
             'contain' => ['Persons', 'Beneficiary', 'Doctors', 'Quotes', 'ClinicalHistories'],
         ];
-        $prescriptions = $this->paginate($query, ['limit' => '5']);
+        $prescriptions = $this->paginate($query);
 
         $this->set(compact('prescriptions'));
     }
@@ -90,12 +90,13 @@ class PrescriptionsController extends AppController
             'pdfConfig',
             [
                 'orientation' => 'landscape',
-                'filename' => 'RecipeMedico_' . $id,
+                'title' => 'Recipe Medico'. ' ',
+                'pageSize' => 'A5',
                 'margin' => [
                     'bottom' => 0,
-                    'left' => 50,
-                    'right' => 0,
-                    'top' => 4
+                    'left' => 8,
+                    'right' => 5,
+                    'top' => 2
                 ],
             ]
         );

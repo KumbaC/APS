@@ -1,66 +1,101 @@
 <?php
+
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
+ * @var \CakeLte\View\Helper\CakeLteHelper $this->CakeLte
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <?= $this->Html->charset() ?>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?= 'APS'. ' | ' . strip_tags($this->CakeLte->getConfig('app-name')) ?></title>
 
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
     <?= $this->Html->meta('icon') ?>
-
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-
-
-
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
-
-
     <?= $this->fetch('meta') ?>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
+    
+    <!-- Theme style -->
+    <?= $this->Html->css('CakeLte./AdminLTE/dist/css/adminlte.css') ?>
+    <?= $this->Html->css('CakeLte.style') ?>
+    <?= $this->element('layout/css') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
-<body>
-    <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
-        </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
-    </nav>
-    <main class="main">
-        <div class="container">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
-    </main>
-    <footer>
-    </footer>
 
+<body class="hold-transition <?= $this->CakeLte->getBodyClass() ?>">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand <?= $this->CakeLte->getHeaderClass() ?>">
+            <?= $this->element('header/main') ?>
+        </nav>
+        <!-- /.navbar -->
 
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>">
+            <!-- Brand Logo -->
+            
+            <a href="<?= $this->Url->build('/') ?>" class="brand-link">
+                <?= $this->Html->image($this->CakeLte->getConfig('app-logo'), ['alt' => $this->CakeLte->getConfig('app-name') . ' logo', 'class' => 'brand-image']) ?>
+                <span class="brand-text font-weight-light"><?= $this->CakeLte->getConfig('app-name') ?></span>
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <?= $this->element('sidebar/main') ?>
+            </div>
+            <!-- /.sidebar -->
+        </aside>
 
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <?= $this->element('content/header') ?>
+                </div><!-- /.container-fluid -->
+            </div>
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <?= $this->Flash->render() ?>
+                    <?= $this->fetch('content') ?>
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <?= $this->element('aside/main') ?>
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <?= $this->element('footer/main') ?>
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.min.js') ?>
+    <!-- Bootstrap 4 -->
+    <?= $this->Html->script('CakeLte./AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>
+    <!-- AdminLTE App -->
+    <?= $this->Html->script('CakeLte./AdminLTE/dist/js/adminlte.min.js') ?>
+
+    <?= $this->element('layout/script') ?>
+    <?= $this->fetch('script') ?>
 </body>
-
 
 </html>

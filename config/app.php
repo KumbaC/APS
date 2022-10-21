@@ -2,11 +2,12 @@
 
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
-use Cake\Database\Driver\Mysql;
+//use Cake\Database\Driver\Mysql;
 use Cake\Database\Driver\Postgres;
 use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
+
 
 return [
     /*
@@ -18,7 +19,8 @@ return [
      * Development Mode:
      * true: Errors and warnings shown.
      */
-    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+
 
     //**najema32++
 
@@ -60,7 +62,7 @@ return [
         'webroot' => 'webroot',
         'wwwRoot' => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
-        'fullBaseUrl' => false,
+        'fullBaseUrl' => 'http://172.16.205.54',
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
@@ -71,30 +73,27 @@ return [
         ],
     ],
 
-
-
-'Ldap' => [
-    'domain' => 'sudeaseg.gob.ve',
-    'host' => '172.16.202.2',
-    'port' => 389,
-    'search' => 'UserPrincipalName',
-    'baseDN' => [
-        'OU=Directores,DC=sudeaseg,DC=gob,DC=ve',
-        'OU=Coordinadores,DC=sudeaseg,DC=gob,DC=ve',
-        'OU=Usuarios,DC=sudeaseg,DC=gob,DC=ve',
-        'OU=Redes - Soporte,DC=sudeaseg,DC=gob,DC=ve',
+    'Ldap' => [
+        'domain' => 'sudeaseg.gob.ve',
+        'host' => '172.16.202.2',
+        'port' => 389,
+        'search' => 'UserPrincipalName',
+        'baseDN' => [
+            'OU=Directores,DC=sudeaseg,DC=gob,DC=ve',
+            'OU=Coordinadores,DC=sudeaseg,DC=gob,DC=ve',
+            'OU=Usuarios,DC=sudeaseg,DC=gob,DC=ve',
+            'OU=Redes - Soporte,DC=sudeaseg,DC=gob,DC=ve',
+        ],
+        'errors' => [
+            'data 773' => 'Some error for Flash',
+            'data 532' => 'Some error for Flash',
+        ],
+        'logErrors' => true,
+        'options' => [
+            LDAP_OPT_NETWORK_TIMEOUT => 5,
+            LDAP_OPT_PROTOCOL_VERSION => 3
+        ]
     ],
-    'errors' => [
-        'data 773' => 'Some error for Flash',
-        'data 532' => 'Some error for Flash',
-    ],
-    'logErrors' => true,
-    'options' => [
-        LDAP_OPT_NETWORK_TIMEOUT => 5,
-        LDAP_OPT_PROTOCOL_VERSION => 3
-    ]
-],
-
 
 
 
@@ -106,7 +105,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT'),
+        'salt' => env('SECURITY_SALT', 'dfc123c6c22d84f4bc12273f3df67c6ae55009696e4126b36ac2f755778faccc'),
     ],
 
     /*
@@ -117,10 +116,10 @@ return [
      * Set to true to apply timestamps when debug is true. Set to 'force' to always
      * enable timestamping regardless of debug value.
      */
-    'Asset' => [
-        //'timestamp' => true,
+    /* 'Asset' => [
+        'timestamp' => true,
         // 'cacheTime' => '+1 year'
-    ],
+    ], */
 
     /*
      * Configure the cache adapters.
@@ -210,13 +209,14 @@ return [
      *   your application that still emit deprecations.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
         'exceptionRenderer' => ExceptionRenderer::class,
         'skipLog' => [],
         'log' => true,
         'trace' => true,
-        'ignoredDeprecationPaths' => [],
+        'ignoredDeprecationPaths' => ['config/bootstrap.php'],
     ],
+	
 
     /*
      * Debugger configuration
@@ -322,8 +322,31 @@ return [
         'default' => [
             'className' => Connection::class,
             'driver' => Postgres::class,
-            'persistent' => false,
-            'timezone' => 'UTC',
+            'persistent' => true,
+            'timezone' => 'UTC -04:00',
+            'host' => '172.16.205.55',
+	        'port' => '5432',
+            /*
+             * CakePHP will use the default DB port based on the driver selected
+             * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
+             * the following line and set the port accordingly
+             */
+            //'port' => 'non_standard_port_number',
+
+            'username' => 'Useraps',
+            'password' => '123456',
+
+            'database' => 'SAPS',
+            /*
+             * If not using the default 'public' schema with the PostgreSQL driver
+             * set it here.
+             */
+            //'schema' => 'myapp',
+
+            /*
+             * You can use a DSN string to set the entire configuration
+             */
+            'url' => env('DATABASE_URL', null),
 
             /*
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support, in CakePHP 3.6
@@ -364,7 +387,7 @@ return [
          */
         'test' => [
             'className' => Connection::class,
-            'driver' => Mysql::class,
+            'driver' => Postgres::class,
             'persistent' => false,
             'timezone' => 'UTC',
             //'encoding' => 'utf8mb4',

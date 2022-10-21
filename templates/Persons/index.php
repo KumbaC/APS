@@ -10,7 +10,7 @@
     <br><br>
     <div class="table-responsive">
         <table class="table table-bordered bg-dark mt-4 rounded-top">
-            <thead class="thead-info">
+            <thead class="thead-light">
                 <tr>
 
                     <th class="text-center"><?= h('Cedula') ?></th>
@@ -21,6 +21,7 @@
                     <!-- <th class="text-center"><//?= h('Estatus') ?></th> -->
                     <th class="text-center"><?= h('Cargo') ?></th>
                     <th class="actions text-center"><?= __('Imprimir') ?></th>
+                    <th class="actions text-center"><?= __('Consultas') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +39,9 @@
                        <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning']) ?>
                         <!-- <//?= $this->Html->link(__('Editar'), ['action' => 'edit', $person->id]) ?>
                         <//?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $person->id], ['confirm' => __('Are you sure you want to delete # {0}?', $person->id)]) ?> -->
+                    </td>
+                    <td class="text-center">
+                        <?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'add', $person->id], ['class' => 'fas fa-ticket-alt btn btn-warning']) ?> &nbsp;
                     </td>
                 </tr>
                 <?php endforeach; ?>

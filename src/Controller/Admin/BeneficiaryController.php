@@ -18,10 +18,6 @@ use App\Controller\AppController;
 
     class BeneficiaryController extends AppController
 {
-
-
-
-
     /**
      * Index method
      *
@@ -33,20 +29,17 @@ use App\Controller\AppController;
         $session = $this->request->getAttribute('session');
     if ($session->read('Auth.User.role_id') == 1){
 
-        $key = $this->request->getQuery('key');
-            if($key){
-                    $query = $this->Beneficiary->find('all')->where(['beneficiary.cedula like' => '%'. $key. '%']);
-            }else{
-                   $query = $this->Beneficiary;
+       
+           
+            $beneficiary = $this->Beneficiary->find()->contain(['Persons', 'Kins', 'Genders']);
+            
+            /*  $this->paginate = [
+                
+            ];  */
 
-            }
-            $this->paginate = [
-                'contain' => ['Persons', 'Kins', 'Genders'],
-            ];
+            //$beneficiary = $this->paginate($beneficiary);
 
-            $beneficiary = $this->paginate($query, ['limit' => '5']);
-
-            $this->set(compact('beneficiary'), $beneficiary);
+            $this->set(compact('beneficiary'));
 
     }else{
         $this->Flash->error(__('No tienes acceso para entrar.'));
@@ -73,7 +66,7 @@ use App\Controller\AppController;
             'pdfConfig',
              [
                 'orientation' => 'portrait',
-                'filename' => 'CarnetAPS_' . $id
+                'filename' => 'Carnet' . $id
              ]
         ]);
         $this->set(compact('beneficiary'));

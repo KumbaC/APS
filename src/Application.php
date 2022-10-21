@@ -28,19 +28,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-/* use Authentication\AuthenticationService;
-use Authentication\AuthenticationServiceInterface;
-use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Middleware\AuthenticationMiddleware;
-use Authentication\Authenticator; */
-use Cake\Routing\Router;
-use Authorization\AuthorizationService;
-use Authorization\AuthorizationServiceInterface;
-use Authorization\AuthorizationServiceProviderInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+
 
 
 /**
@@ -63,15 +51,12 @@ class Application extends BaseApplication
 
         $this->addPlugin('LdapUtility');
 
-        $this->addPlugin('CakePdf');
+        $this->addPlugin('CakePdf', ['bootstrap' => true, 'routes' => true]);
 
         $this->addPlugin('CakeLte');
 
-        $this->addPlugin('Acl');
-
         $this->addPlugin('Ajax');
 
-        //$this->addPlugin('Authorization');
 
         // Call parent to load bootstrap from files.
         parent::bootstrap();
@@ -102,7 +87,7 @@ class Application extends BaseApplication
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $middlewareQueue
             // Catch any exceptions in the lower layers,
@@ -115,6 +100,7 @@ class Application extends BaseApplication
             ->add(new AssetMiddleware([
                 'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
+
 
             ->add(new RoutingMiddleware($this))
             // add Authentication after RoutingMiddleware
@@ -130,28 +116,19 @@ class Application extends BaseApplication
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
-            ->add(new BodyParserMiddleware())
+            ->add(new BodyParserMiddleware());
 
             // Cross Site Request Forgery (CSRF) Protection Middleware
             // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
-            ->add(new CsrfProtectionMiddleware([
+            /* ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ])); */
 
 
-       // $middlewareQueue->add(new AuthorizationMiddleware($this));
+        //$middlewareQueue->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
-
-
-
-
-    public function getAuthorizationService(ServerRequestInterface $request)
-    {
-
-    }
-
 
     /**
      * Register application container services.

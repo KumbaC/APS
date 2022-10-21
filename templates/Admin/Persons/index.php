@@ -4,62 +4,55 @@
  * @var \App\Model\Entity\Person[]|\Cake\Collection\CollectionInterface $persons
  */
 ?>
-<div class="persons index content">
+
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+
 
     <h3 class="text-uppercase font-weight-bold"> <i class="fas fa-user-tie"></i> <?= __('Titulares') ?></h3>
 
-<?= $this->Html->link((''), ['action' => 'add'], ['class' => 'btn btn-warning fas fa-user-plus float-right text-xl', 'style' => 'margin-top: 30px; border-radius:50px;']) ?>
-<br><br>
-
-
+<?= $this->Html->link((''), ['action' => 'add'], ['class' => 'btn btn-warning fas fa-user-plus float-right text-xl', 'style' => 'border-radius:10px;']) ?>
 <?= $this->Form->create(null,['type' => 'get']) ?>
-<div class="row">
-        <div class="col-md-2">
-<?php echo $this->Form->control('key', ['label' =>'Buscador', 'placeholder' => 'Buscar']); ?>
-        </div>
-<?= $this->Form->submit(__('Buscar'), ['class' => 'btn btn-primary btn-md', 'style' => 'margin-top: 29px; margin-left: -12px;']) ?>
-</div>
-<?= $this->Form->end() ?>
 
-
-
-    <div class="table-responsive">
-        <table class="table table-dark table-bordered">
-            <thead class="thead thead-light">
+    <div class="card bg-dark table-responsive">
+        <table class="table table-bordered table-dark display responsive nowrap" style="border-radius: 15px 15px 15px 15px !important;" id="titular">
+            <thead class="thead-light">
                 <tr>
-                    <th class="text-center"><?= h('Cedula') ?></th>
-                    <th class="text-center"><?= h('Titular') ?></th>
-                    <th class="text-center"><?= h('Email') ?></th>
-                    <!-- <th class="text-center"><?= h('Telefono') ?></th> -->
+                    <th><?= h('Cedula') ?></th>
+                    <th><?= h('Titular') ?></th>
+                    <!-- <th>< ?= h('Email') ?></th> -->
+                    <!-- <th class="text-center">< ?= h('Telefono') ?></th> -->
 
-                    <th class="text-center"><?= h('Departamentos') ?></th>
+                    <th><?= h('Departamentos') ?></th>
 
 
-                    <th class="text-center"><?= __('Imprimir') ?></th>
-                    <th class="text-center"><?= __('Añadir beneficiario') ?></th>
-                    <th class="text-center"><?= __('Añadir consulta') ?></th>
-                    <th class="text-center"><?= __('Editar') ?></th>
-                    <th class="text-center"><?= __('Eliminar') ?></th>
+                    <th><?= __('Imprimir') ?></th>
+                    <th><?= __('Beneficiario+') ?></th>
+                    <th><?= __('Consulta+') ?></th>
+                    <th><?= __('Editar') ?></th>
+                    <th><?= __('Eliminar') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($persons as $person): ?>
                 <tr>
 
-                    <td class="text-center font-weight-bold">V-<?= h($person->cedula) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($person->nombre),' ', h($person->apellido) ?></td>
-                    <td class="text-center font-weight-bold"><?= h($person->email)  ?></td>
-                    <!-- <td class="text-center font-weight-bold">+58<?= h($person->phone) ?></td> -->
+                    <td class="font-weight-bold">V-<?= h($person->cedula) ?></td>
+                    <td class="font-weight-bold"><?= h($person->nombre),' ', h($person->apellido) ?></td>
+                    
 
-                    <td class="text-center font-weight-bold"><?= $person->has('department') ? h($person->department->descripcion) : '' ?></td>
-
+                    <td class="font-weight-bold"><?= $person->has('department') ? h($person->department->descripcion) : '' ?></td>
 
 
-                    <td class="text-center font-weight-bold"> <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning ']) ?></td> &nbsp;
-                    <td class="text-center font-weight-bold"> <?= $this->Html->link(__('+'), ['controller' => 'beneficiary', 'action' => 'add', $person->id], ['class' => 'fas fa-user btn btn-warning']) ?> </td> &nbsp;
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'add', $person->id], ['class' => 'fas fa-hospital btn btn-warning']) ?></td> &nbsp;
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $person->id], ['class' => 'fas fa-edit btn btn-warning']) ?> </td> &nbsp;
-                    <td class="text-center font-weight-bold"><?= $this->Form->postLink(__(''), ['action' => 'delete', $person->id],  ['confirm' => __('¿Esta seguro de borrar a {0} {1}?', $person->nombre, $person->apellido), 'class' => 'fas fa-trash-alt btn btn-warning elimi_persona']) ?></td>
+
+                    <td class="font-weight-bold text-center"> <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning ']) ?></td>
+                    <td class="font-weight-bold text-center"> <?= $this->Html->link(__('+'), ['controller' => 'beneficiary', 'action' => 'add', $person->id], ['class' => 'fas fa-user btn btn-warning']) ?> </td>
+                    <td class="font-weight-bold text-center"><?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'add', $person->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?></td>
+                    <td class="font-weight-bold text-center"><?= $this->Html->link(__(''), ['action' => 'edit', $person->id], ['class' => 'fas fa-edit btn btn-warning']) ?> </td>
+                    <td class="font-weight-bold text-center"><?= $this->Form->postLink(__(''), ['action' => 'delete', $person->id],  ['confirm' => __('¿Esta seguro de borrar a {0} {1}?', $person->nombre, $person->apellido), 'class' => 'fas fa-trash-alt btn btn-warning elimi_persona']) ?></td>
 
 
                 </tr>
@@ -67,20 +60,15 @@
             </tbody>
         </table>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-
-            <?= $this->Paginator->prev(' ' . __('Anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('Siguiente') . '') ?>
-
-        </ul>
-
-    </div>
-</div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables/jquery.dataTables.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>
 <script>
 $(".elimi_persona").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -116,6 +104,18 @@ $(document).on('click', '.elimi_persona', function () {
 
             }
         });
+});
+$('#titular').DataTable({
+    "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+    },
+        scrollY:        "200px",
+        scrollX:        false,
+        scrollCollapse: true,
+        paging:         true,
+        fixedColumns:   true
+       
+    
 });
 
 </script>

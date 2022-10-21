@@ -46,7 +46,7 @@ use function PHPSTORM_META\type;
                  <?php
                     echo $this->Form->control('cedula', ['placeholder' => 'Ingrese su cedula de identidad', 'type' => 'number', 'min' => '1']);
                 ?>
-                <small class="form-text text-muted ml-2" style="margin-top: -12px;">Ejemplo V- 5.812.144 </small>
+
             </div>
             <div class="form-row">
             <div class="form-group col-md-6">
@@ -71,6 +71,12 @@ use function PHPSTORM_META\type;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script>
+
+/* METODO PARA SOLO CARACTERERS MAYUSUCULAS */
+$.validator.addMethod("noC", function(value, element) {
+   return this.optional(element) || /[A-Z]/.test(value);
+}, "You are not permitted to input more than three uppercase letters in a row!");
+
 $('#form_beneficiario').validate({
 
 rules: {
@@ -85,12 +91,14 @@ rules: {
         required: true,
         minlength: 3,
         maxlength: 50,
+        noC: true,
 
     },
     apellido: {
         required: true,
         minlength: 3,
-        maxlength: 50
+        maxlength: 50,
+        noC: true,
     },
 
     gender_id: {
@@ -122,12 +130,14 @@ messages: {
             required: "Por favor ingrese el nombre",
             minlength: "Por favor ingrese un nombre valido",
             maxlength: "Por favor ingrese un nombre valido",
+            noC: "Solo caracteres en mayusculas"
 
         },
         apellido: {
             required: "Por favor ingrese el apellido",
             minlength: "Por favor ingrese un apellido valido",
             maxlength: "Por favor ingrese un apellido valido",
+            noC: "Solo caracteres en mayusculas",
         },
 
         gender_id: {
@@ -142,7 +152,7 @@ messages: {
             required: 'Ingrese la edad del titular',
             min: 'Por favor ingrese una edad valida',
             max: 'Por favor ingrese una edad valida',
-            number: 'Ingrese solo numeros'
+            number: 'Ingrese solo numeros',
         }
     }
 

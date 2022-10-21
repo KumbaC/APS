@@ -5,7 +5,7 @@
  */
 ?>
 <div class="beneficiary index content">
-    <?//= $this->Html->link(__('Añadir Beneficiario'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    
     <h3 class="text-uppercase font-weight-bold"><i class="fas fa-users"></i> <?= __('Beneficiarios') ?></h3>
     <br><br>
     <div class="table-responsive">
@@ -13,16 +13,17 @@
             <thead class="thead-light">
                 <tr>
 
-                    <th class="text-center" ><?= $this->Paginator->sort('person_id', 'Afiliado') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('nombre') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('apellido') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('cedula') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('edad') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('kin_id', 'Parentesco') ?></th>
-                    <th class="text-center" ><?= $this->Paginator->sort('genero') ?></th>
+                    <th class="text-center" ><?= h('Afiliado') ?></th>
+                    <th class="text-center" ><?= h('Nombre') ?></th>
+                    <th class="text-center" ><?= h('Apellido') ?></th>
+                    <th class="text-center" ><?= h('Cedula') ?></th>
+                    <th class="text-center" ><?= h('Edad') ?></th>
+                    <th class="text-center" ><?= h('Parentesco') ?></th>
+                    <th class="text-center" ><?= h('Genero') ?></th>
 
 
-                    <th class="actions"><?= __('Opciones') ?></th>
+                    <!-- <th class="actions"><?//= __('Opciones') ?></th> -->
+                    <th class="actions"><?= __('Consulta') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +41,12 @@
                     <td class="text-center font-weight-bold"><?=  h($beneficiary->kin->descripcion) ?></td>
                     <td class="text-center font-weight-bold"><?= h($beneficiary->gender->descripcion) ?></td>
 
-                    <td class="actions">
-                       <?= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class'  => 'ml-2 fas fa-eye btn btn-warning']) ?>
+                    <!-- <td class="actions">
+                       <?//= $this->Html->link(__(''), ['action' => 'view', $beneficiary->id], ['class'  => 'ml-2 fas fa-eye btn btn-warning']) ?>
 
+                    </td> -->
+                    <td class="text-center">
+                        <?= $this->Html->link(__('+'), ['controller' => 'Quotes', 'action' => 'addb', $beneficiary->id], ['class' => 'fas fa-ticket-alt btn btn-warning']) ?> &nbsp;
                     </td>
                 </tr>
                 <?php endforeach; ?>

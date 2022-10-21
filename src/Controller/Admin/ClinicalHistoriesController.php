@@ -46,20 +46,24 @@ class ClinicalHistoriesController extends AppController
     public function view($id = null)
     {
         $clinicalHistory = $this->ClinicalHistories->get($id, [
-            'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors', 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
+            'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors' =>['Specialties'], 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
         ]);
 
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
+
                 'orientation' => 'portrait',
-                'filename' => 'HistoriaClinica_' . $id,
+                'pageSize' => 'A5',
+                'filename' => 'Informe Medico_'. $id .'.pdf',
+                'title' => 'Informe Medico',
                 'margin' => [
                     'bottom' => 0,
                     'left' => 7,
                     'right' => 7,
                     'top' => 8
                 ],
+                'pagesCount' => true
             ]
 
         );

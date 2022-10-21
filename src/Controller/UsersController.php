@@ -80,7 +80,7 @@ public function register()
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Persons', 'Roles'],
+            'contain' => ['Roles'],
         ];
         $users = $this->paginate($this->Users);
 

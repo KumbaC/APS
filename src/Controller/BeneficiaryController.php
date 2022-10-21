@@ -37,7 +37,7 @@ class BeneficiaryController extends AppController
 
         $this->paginate = [
             'conditions' => [
-                 'Persons.user_internal_id' => $this->Auth->user('id'),
+                 'Persons.user_id' => $this->Auth->user('id'),
             ],
             'contain' => ['Persons', 'Kins', 'Genders'],
         ];
@@ -78,7 +78,7 @@ class BeneficiaryController extends AppController
             'pdfConfig',
              [
                 'orientation' => 'portrait',
-                'filename' => 'CarnetAPS_' . $id
+                'filename' => 'Carnet' . $id
              ]
         ]);
         $this->set(compact('beneficiary'));

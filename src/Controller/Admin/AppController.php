@@ -45,10 +45,8 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        //$this->loadComponent('Cookie');
-        //$this->loadComponent('DataTables');
-        //$this->loadComponent('SessionHandle');
-        //$this->loadComponent('Acl', ['className' => 'Acl.Acl']);
+        $this->loadComponent('Paginator');
+
 
         if ($this->request->getParam('prefix')) {
             if ($this->request->getParam('prefix') == 'admin') {

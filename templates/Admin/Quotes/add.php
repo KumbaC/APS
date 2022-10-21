@@ -51,6 +51,8 @@ foreach($persons as $person) {
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" rel="stylesheet" />
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/summernote/summernote-bs4.css') ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -65,33 +67,33 @@ foreach($persons as $person) {
                 <legend class="text-uppercase font-weight-bold text-center"><i class="fas fa-notes-medical"></i> <?= __('Agregar una consulta') ?></legend>
                 <div class="row">
                     <div class="col">
-                  <?php  echo $this->Form->control('asunto', ['placeholder' => 'Agregar asunto', 'class' => 'required']);  ?>
+                  <?php  echo $this->Form->control('asunto', ['type' => 'textarea', 'class' => 'required', 'label' => 'Motivo de consulta']);  ?>
                   </div>
 
-                  <div class="col">
-                  <?php  echo $this->Form->control('nota', ['placeholder' => 'Agregar una nota', 'class' => 'required']); ?>
-                  </div>
+                 <!-- <div class="col">
+                  <?php  //echo $this->Form->control('nota', ['placeholder' => 'Agregar una nota', 'class' => 'required']); ?>
+                  </div> -->
                 </div>
 
 
-                  <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidades', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'class' => 'required']); ?>
+                  <?php  echo $this->Form->control('specialty_id', ['id' => 'especialidad', 'label' => 'Especialidades', 'options' => $specialties_list, 'empty' => 'Seleccione una especialidad', 'class' => 'required especialidades']); ?>
 
 
 
-                  <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'options' => [], 'empty' => 'Seleccione una doctor', 'label' => 'Doctores']); ?>
+                  <?php  echo $this->Form->control('doctor_id', ['id'=>'doctor', 'options' => [], 'empty' => 'Seleccione una doctor', 'label' => 'Doctores', 'class'=>'doctores']); ?>
 
                 <div class="row">
                   <div class="col">
-                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'title' => 'Por favor ingrese la fecha',  'class' => 'required',  'type' => 'text', 'placeholder' => '00/00/21']); ?>
+                  <?php  echo $this->Form->control('fecha', ['empty' => true, 'label' => 'Fecha Tentativa', 'title' => 'Por favor ingrese la fecha',  'class' => 'required',  'type' => 'text', 'placeholder' => 'YYYY-MM-DD']); ?>
                   </div>
 
-                  <div class="col">
-                  <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'placeholder' => 'Ejemplo: 00:00']); ?>
-                  </div>
+                   <div class="col">
+                   <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'placeholder' => 'Ejemplo: 00:00']); ?>
+                  </div> 
                 </div>
 
                 <div class="col-md-14">
-                  <?php  echo $this->Form->control('status_quote_id', ['options' => $statusQuotes, 'label' => 'Estatus']); ?>
+                  <?php  echo $this->Form->control('status_quote_id', ['type' => 'hidden', 'value'=> 2, 'options' => $statusQuotes, 'label' => 'Estatus']); ?>
                 </div>
                   <br><br>
 
@@ -103,10 +105,16 @@ foreach($persons as $person) {
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/summernote-bs4.js") ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/lang/summernote-es-ES.js") ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/select2/js/select2.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/select2/js/i18n/es.js') ?>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js" integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<?= $this->Html->script('bootstrap-datepicker.min') ?>
+<?= $this->Html->script('bootstrap-datepicker.es') ?>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
 
@@ -145,17 +153,45 @@ $.each(beneficiaryObject, function(key,value) {
 
 });
 
+   // Summernote
+    $('#asunto').summernote({ lang: 'es-ES' })
+
+        $('#asunto').summernote();
+
+        $('.especialidades').select2({
+            placeholder: 'Seleccionar especialidad'
+        });
+        $('.doctores').select2({
+            placeholder: 'Seleccionar un doctor',
+            search:false,
+            noResults:'No hay resultados'
+
+        });
 
 });
 
     $('[name="fecha"]')
     .datepicker({
       format: "yyyy-mm-dd",
+      language: 'es',
+      daysOfWeekDisabled: [0, 6],
+      startDate: '+0d',
+      endDate:  '2030-12-31',
+      todayBtn: 'linked',
+      orientation: 'bottom',
+      todayHighlight: true,
+      clearBtn: true,
+      //setEndDate: true,
+
 
     }),
     $('[name="hora"]').datetimepicker({
           datepicker: false,
-          format: 'H:i'
+          format: 'H:i',
+          allowTimes:[
+            '08:00','09:00','10:00','11:00', '12:00', '13:00','14:00', '15:00',
+            '16:00',
+        ]
         });
 
 
@@ -179,7 +215,6 @@ jQuery.validator.setDefaults({
 jQuery.validator.addMethod("dateVE", function(value, element) {
 	return this.optional(element) || /^\d\d\d\d?[\.\/\-]\d\d?[\.\/\-]\d\d?$/.test(value);
 }, "Vul hier een geldige datum in.");
-
 
 
 
@@ -247,8 +282,9 @@ $('form#form_consu').validate({
 
     }
 
-
-
-
   });
+
+
+
+
 </script>

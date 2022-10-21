@@ -15,6 +15,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\BelongsTo $Beneficiary
  * @property \App\Model\Table\BloodTypesTable&\Cake\ORM\Association\BelongsTo $BloodTypes
  * @property \App\Model\Table\DoctorsTable&\Cake\ORM\Association\BelongsTo $Doctors
+ * @property \App\Model\Table\LaboratoriesTable&\Cake\ORM\Association\HasMany $Laboratories
  * @property \App\Model\Table\DiagnosesTable&\Cake\ORM\Association\BelongsToMany $Diagnoses
  * @property \App\Model\Table\HabitsTable&\Cake\ORM\Association\BelongsToMany $Habits
  * @property \App\Model\Table\MedicalsAntecedentsTable&\Cake\ORM\Association\BelongsToMany $MedicalsAntecedents
@@ -61,6 +62,9 @@ class ClinicalHistoriesTable extends Table
         $this->belongsTo('Doctors', [
             'foreignKey' => 'doctor_id',
         ]);
+        $this->hasMany('Laboratories', [
+        'foreignKey' => 'clinical_history_id',
+    ]);
         $this->belongsToMany('Diagnoses', [
             'foreignKey' => 'clinic_history_id',
             'targetForeignKey' => 'diagnosis_id',
@@ -76,7 +80,9 @@ class ClinicalHistoriesTable extends Table
             'targetForeignKey' => 'medical_antecedent_id',
             'joinTable' => 'clinical_histories_medicals_antecedents',
         ]);
+
     }
+
 
     /**
      * Default validation rules.
@@ -92,31 +98,45 @@ class ClinicalHistoriesTable extends Table
 
         $validator
             ->scalar('type_of_diagnosis')
+            ->maxLength('type_of_diagnosis', 60)
             ->allowEmptyString('type_of_diagnosis');
 
         $validator
-            ->scalar('peso')
+            ->integer('peso')
             ->allowEmptyString('peso');
 
         $validator
             ->scalar('altura')
+            ->maxLength('altura', 4)
             ->allowEmptyString('altura');
 
         $validator
-            ->scalar('fr')
+            ->integer('fr')
             ->allowEmptyString('fr');
 
         $validator
-            ->scalar('fc')
+            ->integer('fc')
             ->allowEmptyString('fc');
 
         $validator
-            ->scalar('ta')
+            ->scalar('ta', null, true)
+            ->maxLength('ta', 50)
             ->allowEmptyString('ta');
+            
 
-            $validator
+        $validator
             ->integer('expediente')
-            ->allowEmptyString('expediente', null, 'create', 'update');
+            ->allowEmptyString('expediente');
+
+        $validator
+            ->scalar('imc')
+            ->maxLength('imc', 50)
+            ->allowEmptyString('imc');
+
+        $validator
+            ->scalar('lpm')
+            ->maxLength('lpm', 50)
+            ->allowEmptyString('lpm');
 
         return $validator;
     }
@@ -134,7 +154,6 @@ class ClinicalHistoriesTable extends Table
         $rules->add($rules->existsIn(['beneficiary_id'], 'Beneficiary'), ['errorField' => 'beneficiary_id']);
         $rules->add($rules->existsIn(['blood_type_id'], 'BloodTypes'), ['errorField' => 'blood_type_id']);
         $rules->add($rules->existsIn(['doctor_id'], 'Doctors'), ['errorField' => 'doctor_id']);
-
 
         return $rules;
     }

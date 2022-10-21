@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-
 /**
  * Doctors Controller
  *
@@ -20,32 +20,23 @@ class DoctorsController extends AppController
      */
     public function index()
     {
-        $session = $this->request->getSession();
-        $session = $this->request->getAttribute('session');
-        if ($session->read('Auth.User.role_id') == 1) {
-
-            $key = $this->request->getQuery('key');
-            if($key){
-                    $query = $this->Doctors->find('all')->where(['doctors.cedula like' => '%'. $key. '%']);
-            }else{
-                   $query = $this->Doctors;
-
-            }
-
-            $this->paginate = [
-
-            'contain' => ['Specialties'],
+        $this->paginate = [
+            'contain' => ['Specialties', 'UsersDoctors'],
         ];
-
-        $doctors = $this->Auth->user('id');
-        $doctors = $this->paginate($query, ['limit' => '5']);
+        $doctors = $this->paginate($this->Doctors);
 
         $this->set(compact('doctors'));
+        /* $doctor = $this->Doctors->newEmptyEntity();
+        $data = $this->request->getData('Doctor.cupos');
+        //$doctor = $this->Doctors->patchEntity($doctor, $data);
 
-        }else {
-        $this->Flash->error(__('No tienes acceso para entrar.'));
-        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
-        }
+        $this->Doctors->save($data);
+
+        $response = $this->response->withType('application/json')
+            ->withStringBody(json_encode($doctor));
+
+            return $response; */
+
     }
 
     /**
@@ -55,23 +46,14 @@ class DoctorsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-   /*  public function view($id = null)
+    public function view($id = null)
     {
-        $session = $this->request->getSession();
-        $session = $this->request->getAttribute('session');
-        if ($session->read('Auth.User.role_id') == 1) {
-
         $doctor = $this->Doctors->get($id, [
-            'contain' => ['Specialties'],
+            'contain' => ['Specialties', 'UsersDoctors', 'ClinicalHistories', 'Prescriptions', 'Quotes'],
         ]);
 
         $this->set(compact('doctor'));
-
-      }else {
-        $this->Flash->error(__('No tienes acceso para entrar.'));
-        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
-        }
-    } */
+    }
 
     /**
      * Add method
@@ -82,50 +64,55 @@ class DoctorsController extends AppController
     {
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
+
         if ($session->read('Auth.User.role_id') == 1) {
+            $doctor = $this->Doctors->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
+                if (!$doctor->getErrors()) {
 
-        $doctor = $this->Doctors->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
-            if (!$doctor->getErrors()) {
+                    $firma = $this->request->getData('firma_file');
+                    $sello = $this->request->getData('sello_file');
 
-                $firma = $this->request->getData('firma_file');
-                $sello = $this->request->getData('sello_file');
+                    $name = $firma->getClientFilename();
+                    $names = $sello->getClientFilename();
 
-                $name = $firma->getClientFilename();
-                $names = $sello->getClientFilename();
+                    $fileName = $firma->getClientFilename();
+                    $fileNames = $sello->getClientFilename();
 
-                $fileName = $firma->getClientFilename();
-                $fileNames = $sello->getClientFilename();
+                    $targetPath = WWW_ROOT.'img'.DS.$fileName;
+                    $targetPaths = WWW_ROOT.'img'.DS.$fileNames;
 
-                $targetPath = WWW_ROOT.'img'.DS.$fileName;
-                $targetPaths = WWW_ROOT.'img'.DS.$fileNames;
+                    if ($name && $names) {
+                        $firma->moveTo($targetPath);
+                        $sello->moveTo($targetPaths);
 
-                if ($name && $names) {
-                    $firma->moveTo($targetPath);
-                    $sello->moveTo($targetPaths);
-
-                    $doctor->firma = $name;
-                    $doctor->sello = $names;
+                        $doctor->firma = $name;
+                        $doctor->sello = $names;
+                    }
                 }
+
+
+
+                if ($this->Doctors->save($doctor)) {
+                    $this->Flash->success(__('El doctor fue agregado con exito.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('Imposible agregar el doctor, intente mas tarde.'));
             }
 
+            $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200])->order(['id' => 'asc']);
+            $users = $this->Doctors->UsersDoctors->find('list', ['limit' => 200]);
+            //$turns = $this->Doctors->Turns->find('list', ['limit' => 200]);
+            $this->set(compact('doctor', 'specialties', 'users'));
 
 
-            if ($this->Doctors->save($doctor)) {
-                $this->Flash->success(__('Se registro con exito al doctor. '));
-
-                return $this->redirect(['action' => 'index']);
+            }else{
+                $this->Flash->error(__('No tiene permisos para acceder a esta página.'));
+                return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
             }
-            $this->Flash->error(__('No se pudo guardar al medico, inténtalo de nuevo.'));
-        }
-        $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200]);
-        $this->set(compact('doctor', 'specialties'));
 
-        }else {
-        $this->Flash->error(__('No tienes acceso para entrar.'));
-        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
-        }
     }
 
     /**
@@ -142,11 +129,10 @@ class DoctorsController extends AppController
         if ($session->read('Auth.User.role_id') == 1) {
 
         $doctor = $this->Doctors->get($id, [
-            'contain' => [],
+            //'contain' => ['Turns'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $doctor = $this->Doctors->patchEntity($doctor, $this->request->getData());
-
             if (!$doctor->getErrors()) {
 
                 $firma = $this->request->getData('firma_file');
@@ -174,19 +160,22 @@ class DoctorsController extends AppController
                 }
             }
 
+
             if ($this->Doctors->save($doctor)) {
-                $this->Flash->success(__('Se actualizo con exito el registro del Doctor.'));
+                $this->Flash->success(__('La información del doctor fue actualizada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The doctor could not be saved. Please, try again.'));
+            $this->Flash->error(__('Imposible actualiar la información del doctor.'));
         }
         $specialties = $this->Doctors->Specialties->find('list', ['limit' => 200]);
-        $this->set(compact('doctor', 'specialties'));
+        $users = $this->Doctors->UsersDoctors->find('list', ['limit' => 200]);
+        //$turns = $this->Doctors->Turns->find('list', ['limit' => 200]);
+        $this->set(compact('doctor', 'specialties', 'users'));
 
-        }else {
-        $this->Flash->error(__('No tienes acceso para entrar.'));
-        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }else{
+            $this->Flash->error(__('No tiene permisos para acceder a esta página.'));
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
         }
     }
 
@@ -199,10 +188,6 @@ class DoctorsController extends AppController
      */
     public function delete($id = null)
     {
-        $session = $this->request->getSession();
-        $session = $this->request->getAttribute('session');
-        if ($session->read('Auth.User.role_id') == 1) {
-
         $this->request->allowMethod(['post', 'delete']);
         $doctor = $this->Doctors->get($id);
         if ($this->Doctors->delete($doctor)) {
@@ -212,11 +197,5 @@ class DoctorsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-
-        }else {
-        $this->Flash->error(__('No tienes acceso para entrar.'));
-        $this->redirect(['controller' => 'Pages', 'action' => 'display']);
-        }
     }
-
 }

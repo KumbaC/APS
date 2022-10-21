@@ -13,12 +13,21 @@ use Cake\ORM\Entity;
  * @property int|null $beneficiary_id
  * @property int|null $blood_type_id
  * @property int|null $doctor_id
- * @property int $expediente
+ * @property string|null $type_of_diagnosis
+ * @property int|null $peso
+ * @property string|null $altura
+ * @property int|null $fr
+ * @property int|null $fc
+ * @property string|null $ta
+ * @property int|null $expediente
+ * @property string|null $imc
+ * @property string|null $lpm
  *
  * @property \App\Model\Entity\Person $person
  * @property \App\Model\Entity\Beneficiary $beneficiary
  * @property \App\Model\Entity\BloodType $blood_type
  * @property \App\Model\Entity\Doctor $doctor
+ * @property \App\Model\Entity\Laboratory[] $laboratories
  * @property \App\Model\Entity\Diagnosis[] $diagnoses
  * @property \App\Model\Entity\Habit[] $habits
  * @property \App\Model\Entity\MedicalsAntecedent[] $medicals_antecedents
@@ -41,6 +50,7 @@ class ClinicalHistory extends Entity
         'doctor_id' => true,
         'person' => true,
         'beneficiary' => true,
+        'laboratories' => true,
         'blood_type' => true,
         'doctor' => true,
         'diagnoses' => true,
@@ -53,5 +63,9 @@ class ClinicalHistory extends Entity
         'fc' => true,
         'ta' => true,
         'expediente' => true,
+        'imc' => true,
+        'lpm' => true
     ];
+
+
 }

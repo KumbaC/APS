@@ -18,7 +18,7 @@ use Cake\ORM\Entity;
  * @property int|null $department_id
  * @property int $status_id
  * @property int|null $cargo_id
- * @property int|null $user_internal_id
+ * @property int|null $user_id
  * @property int|null $unit_id
  * @property int|null $phone
  * @property int $edad
@@ -57,7 +57,7 @@ class Person extends Entity
         'department_id' => true,
         'status_id' => true,
         'cargo_id' => true,
-        'user_internal_id' => true,
+        'user_id' => true,
         'unit_id' => true,
         'phone' => true,
         'edad' => true,
@@ -65,7 +65,7 @@ class Person extends Entity
         'department' => true,
         'status' => true,
         'cargo' => true,
-        'users_internal' => true,
+        'users' => true,
         'unit' => true,
         'gender' => true,
         'beneficiary' => true,

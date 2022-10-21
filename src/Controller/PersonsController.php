@@ -26,9 +26,9 @@ class PersonsController extends AppController
     {
 
         $this->paginate = [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'Units', 'Genders'],
             'conditions' => [
-                'Persons.user_internal_id' => $this->Auth->user('id'),
+                'persons.user_id' => $this->Auth->user('id'),
             ],
 
         ];
@@ -48,14 +48,14 @@ class PersonsController extends AppController
     public function view($id = null)
     {
         $person = $this->Persons->get($id, [
-            'contain' => ['Departments', 'Status', 'Cargos', 'UsersInternals', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes', 'Users'],
+            'contain' => ['Departments', 'Status', 'Cargos', 'Units', 'Genders', 'Beneficiary'=>['Kins'], 'ClinicalHistories', 'PublicWorkers', 'Quotes',],
         ]);
 
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
                 'orientation' => 'portrait',
-                'filename' => 'CarnetAPS_' . $person->nombre. $person->apellido,
+                'filename' => $person->nombre. $person->apellido,
                 'margin' => [
                     'bottom' => 2,
                     'left' => 15,
