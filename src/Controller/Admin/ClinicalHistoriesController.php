@@ -20,18 +20,10 @@ class ClinicalHistoriesController extends AppController
      */
     public function index()
     {
-        $key = $this->request->getQuery('key');
-            if($key){
-                    $query = $this->ClinicalHistories->find('all')->where(['Or' => ['persons.cedula like' => '%'. $key. '%', 'beneficiary.cedula like' => '%'. $key. '%']]);
-            }else{
-                   $query = $this->ClinicalHistories;
-
-            }
-
         $this->paginate = [
             'contain' => ['Persons', 'Beneficiary', 'BloodTypes', 'Doctors'],
         ];
-        $clinicalHistories = $this->paginate($query, ['limit' => '5']);
+        $clinicalHistories = $this->paginate($this->ClinicalHistories->find('all'), ['limit' => '5']);
 
         $this->set(compact('clinicalHistories'));
     }
@@ -46,7 +38,14 @@ class ClinicalHistoriesController extends AppController
     public function view($id = null)
     {
         $clinicalHistory = $this->ClinicalHistories->get($id, [
-            'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors' =>['Specialties'], 'Diagnoses', 'Habits', 'MedicalsAntecedents'],
+            'contain' => ['Persons'=>['Genders'], 'Beneficiary'=>['Genders'], 'BloodTypes', 'Doctors' =>['Specialties'], 'Diagnoses', 'Habits', 'MedicalsAntecedents', 'SurgicalsAntecedents'],
+        ]);
+
+
+        $idDoctor = $clinicalHistory->doctor_id;
+
+        $clinical = $this->ClinicalHistories->Doctors->get($idDoctor, [
+            'contain' => ['Specialties'],
         ]);
 
         $this->viewBuilder()->setOption(
@@ -68,7 +67,7 @@ class ClinicalHistoriesController extends AppController
 
         );
 
-        $this->set(compact('clinicalHistory'));
+        $this->set(compact('clinicalHistory', 'clinical'));
 
 
     }
@@ -78,33 +77,36 @@ class ClinicalHistoriesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id, $idDoctor = null)
+    public function add($id, $idDoctor = null, $idConsulta = null)
 
     {
-
-        $habit = $this->ClinicalHistories->Habits->newEmptyEntity();
-        if ($this->request->is('post')) {
-
-            $habit = $this->ClinicalHistories->Habits->patchEntity($habit, $this->request->getData());
-            $this->ClinicalHistories->Habits->save($habit);
-        }
-
+     
         $clinicalHistory = $this->ClinicalHistories->newEmptyEntity();
-        if ($this->request->is('post')) {
+        
+        if ($this->request->is('post', 'ajax')) {
             $clinicalHistory = $this->ClinicalHistories->patchEntity($clinicalHistory, $this->request->getData());
 
             $clinicalHistory->person_id = $id;
 
             $clinicalHistory->doctor_id = $idDoctor;
 
+            $clinicalHistory->quote_id = $idConsulta;
+            
 
             if ($this->ClinicalHistories->save($clinicalHistory)) {
-                $this->Flash->success(__('La historia clinica fue guardada.'));
+                $this->Flash->success(__('El informe medico fue guardado, con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The clinical history could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo guardar el informe medico. Inténtalo de nuevo.'));
         }
+        
+      
+
+        $clinical = $this->ClinicalHistories->Doctors->get($idDoctor, [
+            'contain' => ['Specialties'],
+        ]);
+
         $persons = $this->ClinicalHistories->Persons->find('list', ['limit' => 200]);
         $beneficiary = $this->ClinicalHistories->Beneficiary->find('list', ['limit' => 200]);
         $bloodTypes = $this->ClinicalHistories->BloodTypes->find('list', ['limit' => 200]);
@@ -112,7 +114,8 @@ class ClinicalHistoriesController extends AppController
         $diagnoses = $this->ClinicalHistories->Diagnoses->find('list');
         $habits = $this->ClinicalHistories->Habits->find('list', ['limit' => 200]);
         $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list');
-        $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents', 'habit'));
+        $surgicalsAntecedents = $this->ClinicalHistories->SurgicalsAntecedents->find('list');
+        $this->set(compact('clinicalHistory', 'surgicalsAntecedents', 'clinical', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
     }
 
     public function addb($id, $idDoctor = null)
@@ -127,12 +130,17 @@ class ClinicalHistoriesController extends AppController
             $clinicalHistory->doctor_id = $idDoctor;
 
             if ($this->ClinicalHistories->save($clinicalHistory)) {
-                $this->Flash->success(__('The clinical history has been saved.'));
+                $this->Flash->success(__('La historia clinica fue actualizada, con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The clinical history could not be saved. Please, try again.'));
+            $this->Flash->error(__('La historia clinica no pudo ser guardada. Inténtalo de nuevo.'));
         }
+
+        $clinical = $this->ClinicalHistories->Doctors->get($idDoctor, [
+            'contain' => ['Specialties'],
+        ]);
+
         $persons = $this->ClinicalHistories->Persons->find('list', ['limit' => 200]);
         $beneficiary = $this->ClinicalHistories->Beneficiary->find('list', ['limit' => 200]);
         $bloodTypes = $this->ClinicalHistories->BloodTypes->find('list', ['limit' => 200]);
@@ -140,7 +148,8 @@ class ClinicalHistoriesController extends AppController
         $diagnoses = $this->ClinicalHistories->Diagnoses->find('list');
         $habits = $this->ClinicalHistories->Habits->find('list', ['limit' => 200]);
         $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list');
-        $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
+        $surgicalsAntecedents = $this->ClinicalHistories->SurgicalsAntecedents->find('list');
+        $this->set(compact('clinicalHistory', 'surgicalsAntecedents', 'clinical', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
     }
 
     /**
@@ -150,24 +159,29 @@ class ClinicalHistoriesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id)
+    public function edit($id, $idDoctor = null)
     {
         $clinicalHistory = $this->ClinicalHistories->get($id, [
-            'contain' => ['Diagnoses', 'Habits', 'MedicalsAntecedents'],
+            'contain' => ['Diagnoses', 'Habits', 'MedicalsAntecedents','SurgicalsAntecedents'],
         ]);
 
         //$clinicalHistory->beneficiary_id = $id;
-        //$clinicalHistory->doctor_id = $idDoctor;
+        $idDoctor = $clinicalHistory->doctor_id; 
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $clinicalHistory = $this->ClinicalHistories->patchEntity($clinicalHistory, $this->request->getData());
             if ($this->ClinicalHistories->save($clinicalHistory)) {
-                $this->Flash->success(__('La historia clinica fue actualizada con exito.'));
+                $this->Flash->success(__('El informe medico fue actualizado con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The clinical history could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo actualizar el informe medico. Inténtalo de nuevo.'));
         }
+
+        $clinical = $this->ClinicalHistories->Doctors->get($idDoctor, [
+            'contain' => ['Specialties'],
+        ]);
+
         $persons = $this->ClinicalHistories->Persons->find('list', ['limit' => 200]);
         $beneficiary = $this->ClinicalHistories->Beneficiary->find('list', ['limit' => 200]);
         $bloodTypes = $this->ClinicalHistories->BloodTypes->find('list', ['limit' => 200]);
@@ -175,7 +189,8 @@ class ClinicalHistoriesController extends AppController
         $diagnoses = $this->ClinicalHistories->Diagnoses->find('list');
         $habits = $this->ClinicalHistories->Habits->find('list', ['limit' => 200]);
         $medicalsAntecedents = $this->ClinicalHistories->MedicalsAntecedents->find('list');
-        $this->set(compact('clinicalHistory', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
+        $surgicalsAntecedents = $this->ClinicalHistories->SurgicalsAntecedents->find('list');
+        $this->set(compact('clinicalHistory', 'clinical', 'surgicalsAntecedents', 'persons', 'beneficiary', 'bloodTypes', 'doctors', 'diagnoses', 'habits', 'medicalsAntecedents'));
     }
 
     /**
@@ -190,9 +205,9 @@ class ClinicalHistoriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $clinicalHistory = $this->ClinicalHistories->get($id);
         if ($this->ClinicalHistories->delete($clinicalHistory)) {
-            $this->Flash->success(__('The clinical history has been deleted.'));
+            $this->Flash->success(__('El informe medico fue eliminado con exito.'));
         } else {
-            $this->Flash->error(__('The clinical history could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se pudo eliminar el informe medico. Inténtalo de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);

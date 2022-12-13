@@ -79,6 +79,8 @@ public function beforeFilter(\Cake\Event\EventInterface $event)
             parent::beforeFilter($event);
 
             $this->Auth->allow('login', 'logout');
+
+
     }
 
 

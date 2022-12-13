@@ -5,12 +5,12 @@
  */
 ?>
 
-<?= $this->Html->image('recipe.png', ['fullBase' => true, 'style' => 'position: absolute; left: 0px; top: 0px; z-index: -1; opacity:1; height:750px;']);?>
+<?= $this->Html->image('marca_de_agua_recipe.png', ['fullBase' => true, 'style' => 'position: absolute; left: 0px; top: 0px; z-index: -1; opacity:1; height:750px;']);?>
 
 <div class="" style="width:32.7rem; height:47.5rem; border:solid;">
   <div class="">
     <aside class="">
-         <?= $this->Html->image('cintillo.png', ['fullBase' => true, 'style' => 'height:50px; width:510px; margin-top:-2px;']);?>
+         <?= $this->Html->image('cintillo.png', ['fullBase' => true, 'style' => 'height:50px; width:510px; margin-top:-2px; z-index: 0; opaciry: 0; position:relative;']);?>
     </aside>
     <br>
     <h6 class="text-center font-weight-bold">SERVICIO MÉDICO DE LA SUPERINTENDENCIA DE LA ACTIVIDAD ASEGURADORA </h6>
@@ -56,26 +56,30 @@
             <hr class="bg-dark">
             <br>
 
-            <div style="border:solid; height:23rem; border-radius:30px;">
+            <div style=" height:23rem; border-radius:30px;">
             <br>
                     <div style="height:100px;">
-                    <p class="font-weight-bold text-center text-uppercase h5"><?= __('Recipe: ') ?></p>
+                    <p class="font-weight-bold text-center text-uppercase h5"><?= __('Preescripción ') ?></p>
+                    <hr class="bg-dark">
                     <div style="font-size:12px;" class=""><?= ($prescription->descripcion) ?></div>
                     </div>
-
-
-
+                        
+                            <br>
+                                
                             <!-- FIRMA -->
-                        <?= $this->Html->image($prescription->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:40px; height:110px; width:180px;  margin-top:4rem; background-attachment:fixed;']); ?>
+                        <?= $this->Html->image($prescription->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:40px; height:170px; width:200px;  margin-top:5rem; background-attachment:fixed;']); ?>
                             <!-- FIRMA -->
 
                         <!-- < ?= $this->Html->image($prescription->doctor->sello, ['fullBase' => true, 'style' => 'height:120px; width:120px; margin-left:80px;  margin-top:4rem; background-attachment:fixed;']) ?> -->
 
                         </div>
-
+                        
   </div>
+  <br><br>
+  <hr class="bg-dark">
+  
   <footer>
-        <small style="font-size:8px; margin-top:-10px;" class="blockquote-footer font-weight-bold text-center">Av. Venezuela, Torre del Desarrollo, El Rosal, Municipio Chacao, Zona Metropolitana de Caracas, Venezuela, Código Postal 1060 Teléfono: 0212-9051611 – Sitio Web: www.sudeaseg.gob.ve - Twitter: SudeasegOficial</small>
+        <small style="font-size:8px; margin-top:20px;" class="blockquote-footer font-weight-bold text-center">Av. Venezuela, Torre del Desarrollo, El Rosal, Municipio Chacao, Zona Metropolitana de Caracas, Venezuela, Código Postal 1060 Teléfono: 0212-9051611 – Sitio Web: www.sudeaseg.gob.ve - Twitter: SudeasegOficial</small>
 </footer>
 </div>
 
@@ -83,11 +87,11 @@
 
 <!-- INDICACIONES -->
 
-<div class="" style="width: 32.7rem; height:47.5rem; border:solid; margin-left:32.2em; margin-top:-49.1em;">
+<div class="" style="width: 32.7rem; height:47.5rem; border:solid; margin-left:32.6em; margin-top:-48.5em;">
   <div class="">
     <aside class="">
         
-        <?= $this->Html->image('cintillo.png', ['fullBase' => true, 'style' => 'height:50px; width:510px; position:relative; margin-top:25px;']);?>
+        <?= $this->Html->image('cintillo.png', ['fullBase' => true, 'style' => 'height:50px; width:510px; position:relative; margin-top:-2px;']);?>
 
     </aside>
     <br>
@@ -127,18 +131,19 @@
             <!-- FECHA -->
 
                 
-                 <p class="font-weight-bold text-center" style="margin-left:15em; margin-top:-80px;"><?= __('Fecha:') ?></p>
+                 <p class="font-weight-bold text-center" style="margin-left:12.9em; margin-top:-80px;"><?= __('Fecha:') ?></p>
                 
-                 <p class="text-right" style="margin-left:24.5rem; width:60px; margin-top:-40px;"><?= h($prescription->fecha) ?></p>
+                 <p class="text-right" style="margin-left:24.7rem; width:60px; margin-top:-40px;"><?= h($prescription->fecha) ?></p>
             <!-- FECHA -->
 
             </table>
             
             <hr class="bg-dark">
-            <br>
-                <div style="border:solid; height:23rem; border-radius:30px;">
-                <br>
-                    <p class="font-weight-bold text-center text-uppercase h5"><?= __('Indicaciones: ') ?></p>
+            <br><br>
+                <div style="height:23rem; border-radius:30px;">
+                
+                    <p class="font-weight-bold text-center text-uppercase h5"><?= __('Indicaciones ') ?></p>
+                    <hr class="bg-dark">
                     <small style="font-size:12px;" class=""><?= ($prescription->indicaciones)  ?></small>
 
                         <br>
@@ -149,14 +154,15 @@
 
 
 <!-- <p class="font-weight-bold text-uppercase" style="margin-left:30px;"><?//= __('Firma del medico: ') ?></p> -->
-                    <picture  class="h4 text-center"> <?= $this->Html->image($prescription->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:50px; height:110px; width:180px; margin-top:-15rem;']); ?> </picture>
+                    <picture  class="h4 text-center"> <?= $this->Html->image($prescription->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:50px; height:170px; width:200px; margin-top:-12rem;']); ?> </picture>
 
   </div>
-
-                   
+                        
+  <hr class="bg-dark">
+  <br>                  
 <footer>
 
-        <small style="font-size:8px; margin-top:-42px;" class="blockquote-footer font-weight-bold text-center">Av. Venezuela, Torre del Desarrollo, El Rosal, Municipio Chacao, Zona Metropolitana de Caracas, Venezuela, Código Postal 1060 Teléfono: 0212-9051611 – Sitio Web: www.sudeaseg.gob.ve - Twitter: SudeasegOficial</small>
+        <small style="font-size:8px; margin-top:-20px;" class="blockquote-footer font-weight-bold text-center">Av. Venezuela, Torre del Desarrollo, El Rosal, Municipio Chacao, Zona Metropolitana de Caracas, Venezuela, Código Postal 1060 Teléfono: 0212-9051611 – Sitio Web: www.sudeaseg.gob.ve - Twitter: SudeasegOficial</small>
 </footer>
 
 

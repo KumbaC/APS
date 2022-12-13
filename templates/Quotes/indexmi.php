@@ -19,19 +19,19 @@ $session = $this->request->getAttribute('session');
     <h3 class="text-uppercase font-weight-bold ml-2"><i class="fas fa-notes-medical"></i>  <?= __('Consultas') ?></h3>
     <br>
    
-    <?= $this->html->link('Consulta Familiares', ['action' => 'index'], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+    <!-- < ?= $this->html->link('Consulta Familiares', ['action' => 'index'], ['class' => 'btn btn-outline-primary btn-sm']) ?> -->
     <div class="card bg-dark table-responsive">
         <table class="table table-bordered table-dark" id="consultas_titulares">
             <thead class="thead thead-light">
                 <tr>
 
-                    <th class="text-center"><?= ('Asunto') ?></th>
+                    <!-- <th class="text-center">< ?= ('Asunto') ?></th> -->
                     <!-- <th class="text-center">< ?= h('Nota') ?></th> -->
                     <th class="text-center"><?= h('Paciente') ?></th>
                     <th class="text-center"><?= h('Especialidad') ?></th>
                     <th class="text-center"><?= h('Doctor') ?></th>
-                    <th class="text-center"><?= h('Fecha') ?></th>
-                    <th class="text-center"><?= h('Hora') ?></th>
+                    <th class="text-center"><?= h('Fecha exigida') ?></th>
+                    <th class="text-center"><?= h('Hora exigida') ?></th>
                     <th class="text-center"><?= h('Estatus') ?></th>
 
 
@@ -41,7 +41,7 @@ $session = $this->request->getAttribute('session');
                 <?php foreach ($quotes as $quote): ?>
                 <tr>
 
-                    <td class="text-center font-weight-bold"><?= ($quote->asunto) ?></td>
+                    <!-- <td class="text-center font-weight-bold">< ?= ($quote->asunto) ?></td> -->
                     <!-- <td class="text-center font-weight-bold">< ?= h($quote->nota) ?></td> -->
 
                     <?php if (empty($quote->person->nombre)): ?>
@@ -54,6 +54,7 @@ $session = $this->request->getAttribute('session');
 
                     <td class="text-center font-weight-bold"><?= h($quote->specialty->descripcion) ?></td>
                     <td class="text-center font-weight-bold">Dr. <?= h($quote->doctor->nombre), '  ', h($quote->doctor->apellido)?></td>
+                    
                     <td class="text-center font-weight-bold"><?= h($quote->fecha) ?></td>
                     <td class="text-center font-weight-bold"><?= h($quote->hora) ?></td>
 

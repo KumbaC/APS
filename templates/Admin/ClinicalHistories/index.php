@@ -9,7 +9,7 @@ $session = $this->request->getAttribute('session');
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins//datatables-responsive/css/responsive.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
-<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
 <div class="clinicalHistories index content">
 
     <br>
@@ -54,12 +54,12 @@ $session = $this->request->getAttribute('session');
 
                     <td class="text-center font-weight-bold"><?= $clinicalHistory->has('doctor') ? h('Dr. '. ' ' . $clinicalHistory->doctor->nombre . ' '. $clinicalHistory->doctor->apellido ) : '' ?></td>
                     <td class="text-center font-weight-bold">
-                        <?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id, '_ext' => 'pdf'], ['class' => 'far fa-file-pdf btn btn-warning']) ?>
+                        <?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning']) ?>
                     </td>
 
                     <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['controller' => 'Laboratories', 'action' => 'add', $clinicalHistory->id], ['class' => 'fas fa-microscope btn btn-warning']) ?></td>
 
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'fas fa-edit btn btn-warning']) ?></td>
                     <?php if ($session->read('Auth.User.role_id') == 1): ?>
                     <td class="text-center font-weight-bold"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning elimi_historia']) ?></td>
 
@@ -78,6 +78,7 @@ $session = $this->request->getAttribute('session');
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 <script>
 $(".elimi_historia").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -118,7 +119,8 @@ $(document).on('click', '.elimi_historia', function () {
 $('#informe').DataTable({
     "language": {
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-    }
+    },
+    "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
 });
 
 </script>

@@ -9,7 +9,7 @@
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
-<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
 
 
     <h3 class="text-uppercase font-weight-bold"> <i class="fas fa-user-tie"></i> <?= __('Titulares') ?></h3>
@@ -23,14 +23,13 @@
                 <tr>
                     <th><?= h('Cedula') ?></th>
                     <th><?= h('Titular') ?></th>
-                    <!-- <th>< ?= h('Email') ?></th> -->
-                    <!-- <th class="text-center">< ?= h('Telefono') ?></th> -->
+                    
 
                     <th><?= h('Departamentos') ?></th>
 
 
                     <th><?= __('Imprimir') ?></th>
-                    <th><?= __('Beneficiario+') ?></th>
+                   
                     <th><?= __('Consulta+') ?></th>
                     <th><?= __('Editar') ?></th>
                     <th><?= __('Eliminar') ?></th>
@@ -43,13 +42,13 @@
                     <td class="font-weight-bold">V-<?= h($person->cedula) ?></td>
                     <td class="font-weight-bold"><?= h($person->nombre),' ', h($person->apellido) ?></td>
                     
-
+                    <?php if(!empty($person->department->descripcion)): ?>
                     <td class="font-weight-bold"><?= $person->has('department') ? h($person->department->descripcion) : '' ?></td>
-
-
+                    <?php else: ?>
+                    <td class="font-weight-bold">SIN DIVISIÓN ASIGNADO</td>
+                    <?php endif; ?>
 
                     <td class="font-weight-bold text-center"> <?= $this->Html->link(__(''), ['action' => 'view', $person->id, '_ext' => 'pdf'], ['class' => 'fas fa-file-pdf btn btn-warning ']) ?></td>
-                    <td class="font-weight-bold text-center"> <?= $this->Html->link(__('+'), ['controller' => 'beneficiary', 'action' => 'add', $person->id], ['class' => 'fas fa-user btn btn-warning']) ?> </td>
                     <td class="font-weight-bold text-center"><?= $this->Html->link(__('+'), ['controller' => 'quotes', 'action' => 'add', $person->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?></td>
                     <td class="font-weight-bold text-center"><?= $this->Html->link(__(''), ['action' => 'edit', $person->id], ['class' => 'fas fa-edit btn btn-warning']) ?> </td>
                     <td class="font-weight-bold text-center"><?= $this->Form->postLink(__(''), ['action' => 'delete', $person->id],  ['confirm' => __('¿Esta seguro de borrar a {0} {1}?', $person->nombre, $person->apellido), 'class' => 'fas fa-trash-alt btn btn-warning elimi_persona']) ?></td>
@@ -69,6 +68,7 @@
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 <script>
 $(".elimi_persona").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -109,6 +109,7 @@ $('#titular').DataTable({
     "language": {
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
+    "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
         scrollY:        "200px",
         scrollX:        false,
         scrollCollapse: true,

@@ -122,9 +122,9 @@ class QuotesController extends AppController
             if ($this->Quotes->save($quote)) {
                 $this->Flash->success(__('Consulta medica guardada con exito. '));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'indexmi']);
             }
-            $this->Flash->error(__('The quote could not be saved. Please, try again.'));
+            $this->Flash->error(__('La consulta no pudo ser creada, comuniquese con |soporteaps@sudeaseg.gob.ve|.'));
 
         }
 

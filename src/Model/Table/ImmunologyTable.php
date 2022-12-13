@@ -7,7 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use Cake\Routing\Router;
 /**
  * Immunology Model
  *
@@ -52,7 +52,26 @@ class ImmunologyTable extends Table
             'targetForeignKey' => 'laboratory_id',
             'joinTable' => 'laboratories_immunology',
         ]);
+        $this->addBehavior('AuditLog.Auditable', [
+            //'ignore' => ['created'],
+            //'habtm' => ['Tags'],
+        ]);
     }
+
+    public function currentUser(): array
+{
+    $session = Router::getRequest()->getSession();
+    $session = Router::getRequest()->getAttribute('session');
+    
+    return [
+        'id' => $session->read('Auth.User.role_id'),
+        'ip' => Router::getRequest()->clientIp(),
+        'url' => Router::url(null, true),
+        'description' => $session->read('Auth.User.full_name')
+        
+    ];
+
+}
 
     /**
      * Default validation rules.

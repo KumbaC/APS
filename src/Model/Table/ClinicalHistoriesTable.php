@@ -7,7 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use Cake\Routing\Router;
 /**
  * ClinicalHistories Model
  *
@@ -15,11 +15,13 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\BeneficiaryTable&\Cake\ORM\Association\BelongsTo $Beneficiary
  * @property \App\Model\Table\BloodTypesTable&\Cake\ORM\Association\BelongsTo $BloodTypes
  * @property \App\Model\Table\DoctorsTable&\Cake\ORM\Association\BelongsTo $Doctors
+ * @property \App\Model\Table\QuotesTable&\Cake\ORM\Association\BelongsTo $Quotes
  * @property \App\Model\Table\LaboratoriesTable&\Cake\ORM\Association\HasMany $Laboratories
  * @property \App\Model\Table\DiagnosesTable&\Cake\ORM\Association\BelongsToMany $Diagnoses
  * @property \App\Model\Table\HabitsTable&\Cake\ORM\Association\BelongsToMany $Habits
  * @property \App\Model\Table\MedicalsAntecedentsTable&\Cake\ORM\Association\BelongsToMany $MedicalsAntecedents
- *
+ * @property \App\Model\Table\SurgicalsAntecedentsTable&\Cake\ORM\Association\BelongsToMany $SurgicalsAntecedents
+ * 
  * @method \App\Model\Entity\ClinicalHistory newEmptyEntity()
  * @method \App\Model\Entity\ClinicalHistory newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ClinicalHistory[] newEntities(array $data, array $options = [])
@@ -49,6 +51,7 @@ class ClinicalHistoriesTable extends Table
         $this->setTable('clinical_histories');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        
 
         $this->belongsTo('Persons', [
             'foreignKey' => 'person_id',
@@ -62,9 +65,13 @@ class ClinicalHistoriesTable extends Table
         $this->belongsTo('Doctors', [
             'foreignKey' => 'doctor_id',
         ]);
+        $this->belongsTo('Quotes', [
+            'foreignKey' => 'quote_id',
+        ]);
         $this->hasMany('Laboratories', [
         'foreignKey' => 'clinical_history_id',
-    ]);
+        ]);
+
         $this->belongsToMany('Diagnoses', [
             'foreignKey' => 'clinic_history_id',
             'targetForeignKey' => 'diagnosis_id',
@@ -80,8 +87,35 @@ class ClinicalHistoriesTable extends Table
             'targetForeignKey' => 'medical_antecedent_id',
             'joinTable' => 'clinical_histories_medicals_antecedents',
         ]);
+        $this->belongsToMany('SurgicalsAntecedents', [
+            'foreignKey' => 'clinic_history_id',
+            'targetForeignKey' => 'surgical_antecedent_id',
+            'joinTable' => 'clinical_histories_surgicals_antecedents',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
+            
+        ]);
 
+        $this->addBehavior('AuditLog.Auditable', [
+            //'ignore' => ['created'],
+            //'habtm' => ['Tags'],
+        ]);
     }
+
+    public function currentUser(): array
+{
+    $session = Router::getRequest()->getSession();
+    $session = Router::getRequest()->getAttribute('session');
+    
+    return [
+        'id' => $session->read('Auth.User.role_id'),
+        'ip' => Router::getRequest()->clientIp(),
+        'url' => Router::url(null, true),
+        'description' => $session->read('Auth.User.full_name')
+        
+    ];
+
+}
 
 
     /**
@@ -97,9 +131,9 @@ class ClinicalHistoriesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('type_of_diagnosis')
-            ->maxLength('type_of_diagnosis', 60)
-            ->allowEmptyString('type_of_diagnosis');
+            ->scalar('workplan')
+            ->maxLength('workplan', 400, 'Por favor no coloque mas de 400 caracteres')
+            ->allowEmptyString('workplan');
 
         $validator
             ->integer('peso')
@@ -125,8 +159,29 @@ class ClinicalHistoriesTable extends Table
             
 
         $validator
-            ->integer('expediente')
-            ->allowEmptyString('expediente');
+            ->scalar('reason_consultation')
+            ->notEmptyString('reason_consultation', 'Por favor coloque el motivo de la consulta')
+            ->maxLength('reason_consultation', 600, 'Por favor no coloque mas de 600 caracteres');
+
+        $validator
+            ->scalar('suggestions')
+            ->allowEmptyString('suggestions')
+            ->maxLength('suggestions', 600, 'Por favor no coloque mas de 600 caracteres');
+
+        $validator
+            ->scalar('diagnostic_impression')
+            ->allowEmptyString('diagnostic_impression')
+            ->maxLength('diagnostic_impression', 400, 'Por favor no coloque mas de 400 caracteres');
+
+        $validator
+            ->scalar('observations')
+            ->notEmptyString('observations', 'Por favor coloque las observaciones')
+            ->maxLength('observations', 2000, 'Por favor no coloque mas de 2000 caracteres');
+
+        $validator
+            ->scalar('disease_current')
+            ->allowEmptyString('disease_current')
+            ->maxLength('disease_current', 400, 'Por favor no coloque mas de 400 caracteres');
 
         $validator
             ->scalar('imc')
@@ -134,9 +189,19 @@ class ClinicalHistoriesTable extends Table
             ->allowEmptyString('imc');
 
         $validator
-            ->scalar('lpm')
-            ->maxLength('lpm', 50)
-            ->allowEmptyString('lpm');
+            ->scalar('tp')
+            ->maxLength('tp', 50)
+            ->allowEmptyString('tp');
+
+        $validator
+            ->scalar('saturacion')
+            ->maxLength('saturacion', 50)
+            ->allowEmptyString('saturacion');
+
+        $validator
+            ->scalar('dental_diagnosis')
+            ->notEmptyString('dental_diagnosis', 'Por favor coloque el diagnostico dental')
+            ->maxLength('dental_diagnosis', 600, 'Por favor no coloque mas de 600 caracteres');
 
         return $validator;
     }

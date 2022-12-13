@@ -17,7 +17,12 @@ class PagesController extends AppController
          if ($session->read('Auth.User.role_id') == 3){
 
 
-        }else{
+        }elseif ($session->read('Auth.User.role_id') == 4){
+
+
+        }
+        
+        else{
 
             $this->Flash->error(__('No tienes acceso para entrar.'));
             $this->redirect(['controller' => 'UsersDoctors', 'action' => 'login']);

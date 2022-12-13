@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
-    
+    <?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
     <!-- Theme style -->
     <?= $this->Html->css('CakeLte./AdminLTE/dist/css/adminlte.css') ?>
     <?= $this->Html->css('CakeLte.style') ?>
@@ -88,11 +88,13 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.min.js') ?>
+    <?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
     <!-- Bootstrap 4 -->
     <?= $this->Html->script('CakeLte./AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>
     <!-- AdminLTE App -->
     <?= $this->Html->script('CakeLte./AdminLTE/dist/js/adminlte.min.js') ?>
+    <!-- SweetAlert2 App -->
+    <?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 
     <?= $this->element('layout/script') ?>
     <?= $this->fetch('script') ?>

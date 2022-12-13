@@ -54,6 +54,7 @@ class AppController extends Controller
                 $this->viewBuilder()->setLayout('doctor');
            //     $this->loadComponent('Csrf');
                 $this->loadComponent('Auth', [
+
 		        'authenticate' => [
 	                'Form' => [
 	                    'fields' => ['username' => 'username', 'password' => 'password'],
@@ -69,7 +70,7 @@ class AppController extends Controller
                 'loginRedirect' => [
                     'prefix' => 'doctor',
                     'controller' => 'pages',
-                    'action' => 'index'
+                    'action' => 'display'
                 ],
                 'logoutRedirect' => [
                     'prefix' => 'doctor',
@@ -81,10 +82,21 @@ class AppController extends Controller
                     'controller' => 'UsersDoctors',
                     'action' => 'login'
                 ],
+                'authError' => 'No tienes permiso para entrar a esta seccion',
+
                 'flash' => [
                     'element' => 'Flash/error',
+                    
                 ],
                 
+                
+                
+              /*   'noAuthError' => [
+                    'No tienes permiso para entrar a esta seccion',
+                    'element' => 'Flash/error'
+                ], */
+                
+
                 ]);
      
     }
@@ -99,8 +111,12 @@ class AppController extends Controller
     public function isAuthorized($user)
     {
         if ($this->request->getParam('prefix') === 'Doctor') {
-            return $user->role_id == 3;
+            return $user->role_id == 3 && $user->role_id == 4 ;
         }
+        else{
+            return 'No tienes permiso para entrar a esta seccion';
+        }
+
         return !empty($user);
     }
 

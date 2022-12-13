@@ -15,67 +15,156 @@
  .error{
     color:red;
  }
-
+ .select2-container{
+        width: 100% !important;
+    }
+    .control-label {
+        width: 100%;
+    }
+ 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.css" integrity="sha512-7/BfnxW2AdsFxJpEdHdLPL7YofVQbCL4IVI4vsf9Th3k6/1pu4+bmvQWQljJwZENDsWePEP8gBkDKTsRzc5uVQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/select2/css/select2.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/summernote/summernote-bs4.css') ?>
 <div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading text-uppercase font-weight-bold text-center"><?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de Historia Clinicas'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item']) ?>
-        </div>
-    </aside>
+   
 
 
 <br> <br>
-    <div class="column-responsive column-80 card mx-auto col-md-5">
+
+<!-- INFORME RADIOLOGIA -->
+<?php if($clinical->specialty_id == 9): ?>
+
+<div class="column-responsive column-80 card mx-auto col-md-10">
+    <div class="clinicalHistories form content card-body">
+        <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
+        <fieldset>
+
+        <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> ESTUDIOS ECOGRAFICOS </h3>
+            <br>
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('observations', ['label' => 'Observaciónes', 'id' => 'observaciones', 'type' => 'textarea']); ?>
+                </div>
+
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('diagnostic_impression', ['label' => 'Impresión Diagnóstica', 'id' => 'impresion', 'type' => 'textarea']); ?>
+                </div>
+
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('suggestions', ['label' => 'Sugerencias', 'id' => 'sugerencias', 'type' => 'textarea']); ?>
+                </div>
+
+
+        </fieldset>
+        <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-danger btn-block text-uppercase font-weight-bold', 'type'=>'submit']) ?>
+        <?= $this->Form->end() ?>
+    </div>
+</div>
+<!-- CIERRE INFORME RADIOLOGIA -->
+
+
+
+
+
+<!-- INFORME ODONTOLOGIA -->
+    <?php elseif($clinical->specialty_id == 8): ?>
+
+<div class="column-responsive column-80 card mx-auto col-md-10">
+    <div class="clinicalHistories form content card-body">
+        <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
+        <fieldset>
+
+        <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> INFORME DE ODONTOLOGIA </h3>
+            <br>
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('reason_consultation', ['label' => 'Motivo de la consulta', 'id' => 'motivo', 'type' => 'textarea']); ?>
+                </div>
+
+
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('dental_diagnosis', ['label' => 'Diagnostico dental', 'id' => 'observaciones', 'type' => 'textarea']); ?>
+                </div>
+
+
+                <div class="col-md-12">
+                  <?php echo $this->Form->control('treatment_sequence', ['label' => 'Plan de tratamiento', 'id' => 'plan_tratamiento', 'type' => 'textarea']); ?>
+                </div>
+               
+
+        </fieldset>
+        <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold', 'type'=>'submit']) ?>
+        <?= $this->Form->end() ?>
+    </div>
+</div>
+
+<!-- CIERRE INFORME ODONTOLOGIA -->
+
+
+
+<?php else: ?>
+
+<!-- INFORME MEDICINA GENERAL -->
+    <div class="column-responsive column-80 card mx-auto col-md-10">
         <div class="clinicalHistories form content card-body">
             <?= $this->Form->create($clinicalHistory, ['id' => 'form_historia']) ?>
             <fieldset>
 
-            <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> HISTORIA CLINICA </h3>
+            <h3 class="text-uppercase font-weight-bold text-center"> <i class="fas fa-book-medical"></i> INFORME MEDICO </h3>
                 <br>
+                    <div class="col-md-12">
+                      <?php echo $this->Form->control('reason_consultation', ['label' => 'Motivo de la consulta', 'id' => 'motivo', 'type' => 'textarea']); ?>
+                    </div>
+
+                    <div class="col-md-12">
+                      <?php echo $this->Form->control('disease_current', ['label' => 'Enfermedad actual', 'id' => 'enfermedad', 'type' => 'textarea']); ?>
+                    </div>
+
+                    <div class="col-md-12">
+                      <?php echo $this->Form->control('workplan', ['label' => 'Plan de trabajo', 'id' => 'plan_trabajo', 'type' => 'textarea']); ?>
+                    </div>
+
+                    <label>Tipo de Sangre</label>
+                             <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => false, 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO']); ?>
 
 
+
+                      <div class="row">
+                        <div class="col-md-6">
+                         <label>Habitos (Opcional)</label>
+                         <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => false,  'options' => $habits, 'json_decode' => true]); ?>
+                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="margin-top:-5.4rem; margin-left:-30px;"><i class="fas fa-plus"></i></button>
+                        </div>
+
+                       <div class="col">
+                        <label>Antecedentes medicos (Opcional)</label>
+                        <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente', 'label' => false, 'options' => $medicalsAntecedents]); ?>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAntecedentes" data-whatever="@mdo" style="margin-top:-5.5rem; margin-left:-30px;"><i class="fas fa-plus"></i></button>
+                       </div>
+                     </div>
+
+
+
+
+
+
+
+
+                   
+        
                 <div class="row">
-                        <div class="col">
-                    <?php  echo $this->Form->control('habits._ids', ['id' => 'habitos', 'label' => 'Habitos (Opcional)', 'options' => $habits, 'json_decode' => true]); ?>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+</button>
+                    <div class="col-md-6">
+                    <label>Diagnosticos</label>
+                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => false, 'options' => $diagnoses, 'title'=>'Seleccione un diagnostico', 'class' => 'required']); ?>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalDiagnoses" data-whatever="@mdo" style="margin-top:-5.5rem; margin-left:-30px;"><i class="fas fa-plus"></i></button>
                     </div>
+                    
 
-
-
-
-
-
-                    <div class="col">
-                    <?php  echo $this->Form->control('medicals_antecedents._ids', ['id' => 'antecedente','label' => 'Antecedentes medicos (Opcional)', 'options' => $medicalsAntecedents]); ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAntecedentes" data-whatever="@mdo">+</button>
-                    </div></div>
-
-
-
-
-
-
-
-
-                    <div class="row">
-                        <div class="col">
-                    <?php echo $this->Form->control('blood_type_id', ['id' => 'blood', 'label' => 'Tipo de Sangre', 'options' => $bloodTypes, 'empty' => 'DESCONOCIDO', 'class'=>'required', 'title'=>'Selecciona el tipo de sangre', 'style' => 'width:280px;']); ?>
+                   <div class="col">
+                        <label>Antecedentes Quirurgicos (Opcional)</label>
+                        <?php  echo $this->Form->control('surgicals_antecedents._ids', ['id' => 'antecedente_quirurgicos', 'label' => false, 'options' => $surgicalsAntecedents]); ?>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAntecedentesQuirurgicos" data-whatever="@mdo" style="margin-top:-5.5rem; margin-left:-30px;"><i class="fas fa-plus"></i></button>
                     </div>
+                  </div>
 
-
-                    <div class="col">
-                    <?php  echo $this->Form->control('diagnoses._ids', ['id' => 'diagnostico', 'label' => 'Diagnostico', 'options' => $diagnoses, 'title'=>'Selecciona el diagnostico', 'class' => 'required']); ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDiagnoses" data-whatever="@mdo">+</button>
-                    </div></div>
-
-
-
-                    <!-- <div class="col-md-12">
-                    <?php //echo $this->Form->control('type_of_diagnosis', ['label' => 'Comentario de Diagnostico (Opcional)', 'id' => 'type_of_diagnosis', 'hidden' => 'false', 'type' => 'textarea',]); ?>
-                    </div> -->
 
 
                 <hr class="font-weight-bold"> <br>
@@ -83,10 +172,10 @@
                 <h4 class="text-uppercase font-weight-bold text-center">Examen Fisico</h4>
                     <div class="row">
                         <div class="col-md-6">
-                   <?php echo $this->Form->control('peso', ['id' => 'Peso', 'label' => 'Peso', 'placeholder' => '60 kg', 'required']); ?>
+                   <?php echo $this->Form->control('peso', ['id' => 'Peso', 'label' => 'Peso', 'placeholder' => '60 KG', 'required']); ?>
                    </div>
                    <div class="col">
-                   <?php echo $this->Form->control('altura', ['id' => 'Altura', 'label' => 'Altura', 'placeholder' => '1,70 mt', 'required']); ?>
+                   <?php echo $this->Form->control('altura', ['id' => 'Altura', 'type' => 'text', 'label' => 'Altura', 'placeholder' => '1.70 mt', 'required']); ?>
                    </div></div>
 
                    <div class="row">
@@ -97,14 +186,72 @@
                    <?php echo $this->Form->control('fc', ['id' => 'FC','label' => 'FC', ]); ?>
                    </div></div>
 
+                   <div class="row">
+                   <div class="col">
                    <?php echo $this->Form->control('ta', ['id' => 'TA', 'label' => 'TA' , ]); ?>
+                   </div>
+                   <div class="col">
+                   <?php echo $this->Form->control('imc', ['id' => 'IMC', 'label' => 'IMC', 'readonly' => true]); ?>
+                   </div></div>
+ 
+                   <div class="row">
+                   <div class="col">
+                   <?php echo $this->Form->control('tp', ['id' => 'TP', 'label' => 'TP' , ]); ?>
+                   </div>
+                   <div class="col">
+                   <?php echo $this->Form->control('cms', ['id' => 'CMS', 'label' => 'CMS']); ?>
+                   </div></div>
+
+                   <?php echo $this->Form->control('saturacion', ['id' => 'saturacion', 'label' => 'Saturación']); ?>
 
             </fieldset>
-            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'type'=>'submit']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold', 'type'=>'submit']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
+    <!-- CIERRE INFORME GENERAL -->
+
+
+
+
+<?php endif; ?>
+
+
+
+
 </div>
+
+
+ <!-- MODAL-ANTECEDENTES QUIRURGICOS -->
+ <div class="modal fade" id="modalAntecedentesQuirurgicos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Nuevo Antecedente Quirurgicos</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                       <div class="modal-body">
+                         <form id="modal_antecedentesQuirurgicos" name="modal_antecedentesQuirurgicos">
+                          <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Descripción:</label>
+                          <input type="text" class="form-control" id="recipient-antecedentequirurgico">
+                        </div>
+
+                         </form>
+                     </div>
+                         <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                          <button type="button" class="btn btn-primary" id="g_antecedente_quirurgico">Guardar</button>
+                         </div>
+                    </div>
+               </div>
+             </div>
+                <!-- MODAL-ANTECEDENTES -->
+
+
+
 
    <!-- MODAL-ANTECEDENTES -->
    <div class="modal fade" id="modalAntecedentes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -196,10 +343,16 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha512-U6K1YLIFUWcvuw5ucmMtT9HH4t0uz3M366qrF5y4vnyH6dgDzndlcGvH/Lz5k8NFh80SN95aJ5rqGZEdaQZ7ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery-validation/jquery.validate.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery-validation/additional-methods.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/select2/js/select2.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/select2/js/i18n/es.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/summernote-bs4.js") ?>
+<?= $this->Html->script("CakeLte./AdminLTE/plugins/summernote/lang/summernote-es-ES.js") ?>
+
+
 <script>
 
 
@@ -212,7 +365,7 @@
                // '_csrfToken': $('input[name=_csrfToken]').val()
             },
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                //'X-CSRF-TOKEN': csrfToken
             },
             success: function(data){
                 $('#habitos').append('<option value="'+data.id+'">'+data.descripcion+'</option>');
@@ -229,32 +382,51 @@
             type: 'POST',
             data: {
                 'descripcion': $('#recipient-antecedente').val(),
-               // '_csrfToken': $('input[name=_csrfToken]').val()
+                
             },
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                //'X-CSRF-TOKEN': csrfToken
             },
             success: function(data){
                 $('#antecedente').append('<option value="'+data.id+'">'+data.descripcion+'</option>');
                 $('#modalAntecedentes').modal('hide');
-                Swal.fire('Antecedente guardado', 'Ya puede seleccionar este antecedente para la historia clinica', 'success');
+                Swal.fire('Antecedente guardado', 'Ya puede seleccionar este antecedente medico para el informe', 'success');
             }
         });
-        })
+       })
    // });
 
-//$(function(){
+   $('#g_antecedente_quirurgico').click(function(){
+        $.ajax({
+            url: '<?php echo $this->Url->build(['controller' => 'SurgicalsAntecedents', 'action' => 'receive']); ?>',
+            type: 'POST',
+            data: {
+                'descripcion': $('#recipient-antecedentequirurgico').val(),
+            },
+             headers: {
+                //'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(data){
+                $('#antecedente_quirurgicos').append('<option value="'+data.id+'">'+data.descripcion+'</option>');
+                $('#modalAntecedentes').modal('hide');
+                Swal.fire('Antecedente guardado', 'Ya puede seleccionar este antecedente quirurgico para el informe medico', 'success');
+            }
+        });
+       })
+
+
     $('#g_diagnostico').click(function(){
         $.ajax({
-            url: '<?php echo $this->Url->build(['controller' => 'diagnoses', 'action' => 'receive']); ?>',
+            url: '<?php echo $this->Url->build(['controller' => 'Diagnoses', 'action' => 'receive']); ?>',
             type: 'POST',
             data: {
                 'descripcion': $('#recipient-diagnostico').val(),
-               // '_csrfToken': $('input[name=_csrfToken]').val()
             },
+ 
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': <?= json_encode($this->request->getParam('_csrfToken')); ?>
             },
+
             success: function(data){
                 $('#diagnostico').append('<option value="'+data.id+'">'+data.descripcion+'</option>');
                 $('#modalDiagnoses').modal('hide');
@@ -262,26 +434,38 @@
                 //$('#recipient-diagnostico').reset();
             }
         });
-        })
-    //});
+    })
 
 
 $("#habitos").select2({
     tags: false,
     tokenSeparators: [',', ' '],
     placeholder: "Seleccione los habitos",
-    theme: "classic",
+    theme: "default",
     allowClear: true,
     width: 'resolve',
+    language: "es",
 
 })
 
 
 $("#antecedente").select2({
-    tags: true,
+    tags: false,
     tokenSeparators: [',', ' '],
+    language: "es",
     placeholder: "Seleccione los antecedentes medicos",
-    theme: "classic",
+    theme: "default",
+    allowClear: true,
+    width: 'resolve',
+
+})
+
+$("#antecedente_quirurgicos").select2({
+    tags: false,
+    language: "es",
+    tokenSeparators: [',', ' '],
+    placeholder: "Seleccione los antecedentes quirurgicos",
+    theme: "default",
     allowClear: true,
     width: 'resolve',
 
@@ -292,13 +476,14 @@ $("#diagnostico").select2({
     maximumSelectionLength: 3,
     placeholder: "Escriba su diagnostico",
     empty: "Escriba su diagnostico",
-    theme: "classic",
+    theme: "default",
     allowClear: true,
     width: 'resolve',
 
 })
 
 $("#blood").select2({
+    language: "es",
     placeholder: "Seleccione su tipo de sangre",
     allowClear: true,
     width: 'resolve',
@@ -307,17 +492,10 @@ $("#blood").select2({
 
 $('form#form_historia').validate({
 
-submitHandler: function(form) {
-
-//alert('Form Submitted!');
- $(form).ajaxSubmit();
-
-
-},
 rules: {
-    blood: {
+  /*   blood: {
         required: true
-    },
+    }, */
 
     diagnostico: {
         required: true,
@@ -332,7 +510,8 @@ rules: {
 
     altura: {
         required: true,
-        min:110,
+        number:true,
+        
     },
 
 
@@ -340,9 +519,9 @@ rules: {
 
 
 messages: {
-    blood: {
+    /* blood: {
         required: "Por favor seleccione un tipo de sangre"
-    },
+    }, */
 
     diagnostico: {
 
@@ -358,28 +537,155 @@ messages: {
 
     altura: {
        required: "Por favor ingrese la estatura",
-            min: "Altura invalida"
+       number: 'Por favor, solo datos numericos'
     },
 
 
   }
 });
 
-  /* $('[data-action=save]').click(function(e){
-        e.stopPropagation();
-        $('form#form_historia').submit(); */
+$(function () {
+    // Summernote
+    $('#motivo').summernote({ lang: 'es-ES' })
+
+
+    $(document).ready(function() {
+    $('#motivo').summernote({
+        height: 300,
+        width:300,
+        codemirror:{
+            theme: 'lumen'
+        }
+
+        });
+    });
+
+    $('#sugerencias').summernote({ lang: 'es-ES' })
+
+
+    $(document).ready(function() {
+    $('#sugerencias').summernote({
+        height: 300,
+        width:300,
+        codemirror:{
+            theme: 'lumen'
+        }
+
+        });
+    });
+
+    $('#impresion').summernote({ lang: 'es-ES' })
+
+
+    $(document).ready(function() {
+    $('#impresion').summernote({
+        height: 300,
+        width:300,
+        codemirror:{
+            theme: 'lumen'
+        }
+
+        });
+    });
+
+    $('#observaciones').summernote({ lang: 'es-ES' })
+
+
+$(document).ready(function() {
+$('#observaciones').summernote({
+    height: 300,
+    width:300,
+    codemirror:{
+        theme: 'lumen'
+    }
+
+    });
+});
+
+
+$('#plan_trabajo').summernote({ lang: 'es-ES' })
+
+$(document).ready(function() {
+$('#plan_trabajo').summernote({
+    height: 300,
+    width:300,
+    codemirror:{
+        theme: 'lumen'
+    }
+
+    });
+});
+$('#enfermedad').summernote({ lang: 'es-ES' })
+
+
+$(document).ready(function() {
+$('#enfermedad').summernote({
+    height: 300,
+    width:300,
+    codemirror:{
+        theme: 'lumen'
+    }
+
+    });
+});
 
 
 
-/* }); */
+$('#plan_tratamiento').summernote({ lang: 'es-ES' })
+
+
+$(document).ready(function() {
+$('#plan_tratamiento').summernote({
+    height: 300,
+    width:300,
+    codemirror:{
+        theme: 'lumen'
+    }
+
+    });
+});
 
 
 
 
+  });
+  
+ 
 
 
-//});
+/* CALCULO DE IMC */
+   
+    kg = document.getElementById("Peso");
+	m = document.getElementById("Altura");
 
+	imc = document.getElementById("IMC");
+	lectura = document.getElementById("IMC");
+    fr = document.getElementById('FR');
+    
+    m.onchange = function(){
+		if(kg.value!="" && m.value!=""){
+			imcx = (kg.value / (m.value* m.value));
+			imc.value =  imcx.toFixed(2);     
+        }
+        else if(imc.value == NaN){
+            imc.value = 'Por favor use punto en vez de coma.'
+        
+		}else{
+            imc.value = 'Por favor llene el campo peso.'
+        }
+
+	};
+
+    kg.onchange = function(){
+		if(kg.value!="" && m.value!=""){
+			imcx = (kg.value / (m.value* m.value));
+			imc.value = imcx.toFixed(2);
+		}else{ 
+            imc.value = 'Por favor llene el campo altura.'
+        }
+
+	};
+/* CALCULO DE IMC */
 
 
 </script>

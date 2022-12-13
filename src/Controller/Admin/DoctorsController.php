@@ -26,16 +26,7 @@ class DoctorsController extends AppController
         $doctors = $this->paginate($this->Doctors);
 
         $this->set(compact('doctors'));
-        /* $doctor = $this->Doctors->newEmptyEntity();
-        $data = $this->request->getData('Doctor.cupos');
-        //$doctor = $this->Doctors->patchEntity($doctor, $data);
-
-        $this->Doctors->save($data);
-
-        $response = $this->response->withType('application/json')
-            ->withStringBody(json_encode($doctor));
-
-            return $response; */
+      
 
     }
 
@@ -49,7 +40,7 @@ class DoctorsController extends AppController
     public function view($id = null)
     {
         $doctor = $this->Doctors->get($id, [
-            'contain' => ['Specialties', 'UsersDoctors', 'ClinicalHistories', 'Prescriptions', 'Quotes'],
+            'contain' => ['Specialties', 'UsersDoctors', 'ClinicalHistories'=>['Persons', 'Doctors', 'BloodTypes'], 'Prescriptions' =>['Quotes', 'Persons', 'ClinicalHistories', 'Doctors'], 'Quotes' =>['Persons', 'Doctors', 'StatusQuotes', 'Specialties']],
         ]);
 
         $this->set(compact('doctor'));
@@ -72,23 +63,23 @@ class DoctorsController extends AppController
                 if (!$doctor->getErrors()) {
 
                     $firma = $this->request->getData('firma_file');
-                    $sello = $this->request->getData('sello_file');
+                    //$sello = $this->request->getData('sello_file');
 
                     $name = $firma->getClientFilename();
-                    $names = $sello->getClientFilename();
+                    //$names = $sello->getClientFilename();
 
                     $fileName = $firma->getClientFilename();
-                    $fileNames = $sello->getClientFilename();
+                    //$fileNames = $sello->getClientFilename();
 
                     $targetPath = WWW_ROOT.'img'.DS.$fileName;
-                    $targetPaths = WWW_ROOT.'img'.DS.$fileNames;
+                    //$targetPaths = WWW_ROOT.'img'.DS.$fileNames;
 
-                    if ($name && $names) {
+                    if ($name) {
                         $firma->moveTo($targetPath);
-                        $sello->moveTo($targetPaths);
+                        //$sello->moveTo($targetPaths);
 
                         $doctor->firma = $name;
-                        $doctor->sello = $names;
+                        //$doctor->sello = $names;
                     }
                 }
 

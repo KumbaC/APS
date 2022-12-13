@@ -69,8 +69,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-danger elevation-4">
       <!-- Brand Logo -->
-      <?php if ($this->request->getParam('prefix') == 'Admin'): ?>
-      <a href="<?= $this->Url->build('/admin') ?>" class="brand-link">
+      <?php if ($this->request->getParam('prefix') == 'Doctor'): ?>
+      <a href="<?= $this->Url->build('/doctor') ?>" class="brand-link">
       <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:50px;']);?>
         <span class="brand-text font-weight-light">APS</span>
       </a>

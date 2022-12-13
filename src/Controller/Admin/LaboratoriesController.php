@@ -45,13 +45,13 @@ class LaboratoriesController extends AppController
             'pdfConfig',
             [
                 'orientation' => 'landscape',
-                'title' => 'Laboratorio',
+                'title' => 'Paraclinicos',
                 'filename' => 'Solicitud de Laboratorio_' . $id,
                 'margin' => [
                     'bottom' => 0,
-                    'left' => 50,
+                    'left' => 0,
                     'right' => 0,
-                    'top' => 4
+                    'top' => 2
                 ],
             ]
         );
@@ -76,7 +76,7 @@ class LaboratoriesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('La solicitud no pudo ser guardada con exito.'));
+            $this->Flash->error(__('El examen no pudo ser guardado con exito.'));
         }
         $urinalysis = $this->Laboratories->Urinalysis->find('list', ['limit' => 200]);
         $specials = $this->Laboratories->Specials->find('list', ['limit' => 200]);
@@ -104,11 +104,11 @@ class LaboratoriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $laboratory = $this->Laboratories->patchEntity($laboratory, $this->request->getData());
             if ($this->Laboratories->save($laboratory)) {
-                $this->Flash->success(__('The laboratory has been saved.'));
+                $this->Flash->success(__('El examen de paraclinico fue actualizado con exito. '));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The laboratory could not be saved. Please, try again.'));
+            $this->Flash->error(__('El examen no pudo ser actualizado con exito.'));
         }
         $urinalysis = $this->Laboratories->Urinalysis->find('list', ['limit' => 200]);
         $specials = $this->Laboratories->Specials->find('list', ['limit' => 200]);
@@ -133,9 +133,9 @@ class LaboratoriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $laboratory = $this->Laboratories->get($id);
         if ($this->Laboratories->delete($laboratory)) {
-            $this->Flash->success(__('The laboratory has been deleted.'));
+            $this->Flash->success(__('El examen paraclinico, fue eliminado con exito.'));
         } else {
-            $this->Flash->error(__('The laboratory could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El examen paraclinico no pudo ser eliminado. Por favor, intente de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);

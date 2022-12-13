@@ -109,7 +109,7 @@ class PrescriptionsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id, $idDoctor = null)
+    public function add($id, $idDoctor = null, $idConsulta = null, $idInforme = null)
     {
         $prescription = $this->Prescriptions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -118,6 +118,11 @@ class PrescriptionsController extends AppController
             $prescription->person_id = $id;
             //$Quotes = $this->Quotes->find('all');
             $prescription->doctor_id =  $idDoctor;
+
+            $prescription->quote_id = $idConsulta;
+
+            $prescription->clinic_history_id = $idInforme;
+            
 
             if ($this->Prescriptions->save($prescription)) {
                 $this->Flash->success(__('Recipe creado con exito, que tenga un buen dia.'));

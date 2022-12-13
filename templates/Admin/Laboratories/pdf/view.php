@@ -6,45 +6,48 @@
 ?>
 <div class="row">
 
-    <div class="column-responsive column-80" style="margin-left:60px; border:solid; width:60rem; height:60rem;">
-    <?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'height:65px; position:relative;']);?>
-
+    <div class="column-responsive column-80" style="margin-left:40px; border:solid; width:60rem; height:42rem;">
+     <?= $this->Html->image('cintillo.png', ['fullBase' => true, 'style' => 'height:65px; width:950px; position:fixed;']);?>
+        <br><br>
         <div class="laboratories view content">
-            <h3 class="font-weight-bold text-uppercase text-center">Examenes Paraclinicios <i class="fas fa-microscope"></i> </h3> 
+            <h3 class="font-weight-bold text-uppercase text-center"></h3> 
             <hr class="font-weight-bold" style="border:solid;">
-            <table>
+            <table style="width:900px; border:none;">
+                <thead><h5 class="font-weight-bold text-uppercase text-center">Examenes Paraclinicos</h5></thead>
+                
+                         
                 <tr>
-                    <h5 class="font-weight-bold text-uppercase text-center">Información de la Historia Clinica</h5>
-
-                    <th><?= __('Paciente: ') ?></th>
-                    <?php if (empty($laboratories->clinical_history->person_id)): ?>
-                    <td class="text-uppercase" style="width:800px;"><?= h($laboratories->clinical_history->beneficiary->nombre),  h($laboratories->clinical_history->beneficiary->apellido) ?></td>
-                    <?php elseif (empty($laboratories->clinical_history->beneficiary_id)): ?>
-                    <td class="text-uppercase" style="width:800px;"><?= h($laboratories->clinical_history->person->nombre), h($laboratories->clinical_history->person->apellido) ?></td>
+                    <th class="text-uppercase"><?= __('Paciente: ') ?></th>
+                    <?php if (!empty($laboratories->clinical_history->person_id)): ?>
+                        <td class="text-uppercase" style="width:1900px;"><?= h($laboratories->clinical_history->person->nombre), h($laboratories->clinical_history->person->apellido) ?></td>
                     <?php endif; ?>
 
-                    <th><?= __('Cedula: ') ?></th>
-                    <?php if (empty($laboratories->clinical_history->person_id)): ?>
-                    <td style="width:300px;">V-<?= h($laboratories->clinical_history->beneficiary->cedula) ?></td>
-                    <?php elseif (empty($laboratories->clinical_history->beneficiary_id)): ?>
-                    <td style="width:300px;">V-<?= h($laboratories->clinical_history->person->cedula) ?></td>
+                    <th class="text-uppercase"><?= __('Medico: ') ?></th>
+
+                    <td class="text-uppercase" style="width:800px;">Dr. <?= h($laboratories->clinical_history->doctor->nombre) ?> <?= h($laboratories->clinical_history->doctor->apellido) ?></td>
+                </tr>
+
+
+                <tr>
+
+                
+                <th class="text-uppercase"><?= __('Cedula: ') ?></th>
+                    <?php if (!empty($laboratories->clinical_history->person_id)): ?>
+                       <td style="width:300px;">V-<?= h($laboratories->clinical_history->person->cedula) ?></td>
                     <?php endif; ?>
 
-                    <th style=''><?= __('Genero: ') ?></th>
 
-                    <?php if (empty($laboratories->clinical_history->person_id)): ?>
+                    <th class="text-uppercase" style="width:600px;"><?= __('Telefono ') ?> <sup>(Medico)</sup> :</th>
 
-                     <td><?= h($laboratories->clinical_history->beneficiary->gender->descripcion) ?></td>
+                    <?php if (!empty($laboratories->clinical_history->doctor_id)): ?>
 
-                    <?php elseif (empty($laboratories->clinical_history->beneficiary_id)): ?>
-                    <td><?= h($laboratories->clinical_history->person->gender->descripcion) ?></td>
+                     <td class="text-uppercase">+58<?= h($laboratories->clinical_history->doctor->telefono)?></td>
+
+                    <?php else: ?>
+                     <td class="font-weight-bold">NO DEFINIDO<!--< ?= h($laboratories->clinical_history->person->gender->descripcion) ?>--></td> 
                     <?php endif; ?>
 
-                    <th style=''><?= __('Medico: ') ?></th>
-
-                    <td>Dr. <?= h($laboratories->clinical_history->doctor->nombre) ?></td>
-
-                    <td><?= h($laboratories->clinical_history->doctor->apellido) ?></td>
+                    
 
 
                 </tr>
@@ -52,150 +55,164 @@
                 <hr style="border:solid;">
 
 
-
-                <p class="text-uppercase h5 font-weight-bold" style="margin-left:600px; margin-top:-595px;"><?= __('Observaciones') ?></p>
-
-            <p style="margin-left:450px;"><?= ($laboratories->descripcion) ?></p>
-
             </table>
 
             
 
             <hr style="border:solid;">
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Bioquimicas') ?></h5>
-                <?php if (!empty($laboratories->biochemistry)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
 
+        <table>
 
+            <thead><h5 class="text-center font-weight-bold text-uppercase"><?= __('Indicaciones') ?></h5></thead>
+           
 
-                        </tr>
-                        <?php foreach ($laboratories->biochemistry as $biochemistry) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($biochemistry->descripcion) ?></li>
-
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Hematologicas') ?></h5>
-                <?php if (!empty($laboratories->hematologies)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-
-                        </tr>
-                        <?php foreach ($laboratories->hematologies as $hematologies) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($hematologies->descripcion) ?></li>
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Inmunológica') ?></h5>
-                <?php if (!empty($laboratories->immunology)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-
-                        </tr>
-                        <?php foreach ($laboratories->immunology as $immunology) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($immunology->descripcion) ?></li>
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Parasitologias') ?></h5>
-                <?php if (!empty($laboratories->parasitologies)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-
-                        </tr>
-                        <?php foreach ($laboratories->parasitologies as $parasitologies) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($parasitologies->descripcion) ?></li>
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Especiales') ?></h5>
-                <?php if (!empty($laboratories->specials)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-
-
-                        </tr>
-                        <?php foreach ($laboratories->specials as $specials) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($specials->descripcion) ?></li>
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="related">
-                <h5 class="font-weight-bold text-uppercase"><?= __('Análisis de Orina') ?></h5>
-                <?php if (!empty($laboratories->urinalysis)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-
-                        </tr>
-                        <?php foreach ($laboratories->urinalysis as $urinalysis) : ?>
-                        <tr>
-
-                            <li style="margin-left:30px;"><?= h($urinalysis->descripcion) ?></li>
-
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-
-
-            <table>
-            <!-- <th style=''><?//= __('Firma: ') ?></th> -->
-
-            <td class="text-uppercase"><?= $this->Html->image($laboratories->clinical_history->doctor->firma, ['fullBase' => true, 'style' => 'margin-left:200px; margin-top:60px; height:110px; width:180px;']) ?></td>
-
-            <td class="text-uppercase">Sello Humedo</td>
-            </table>
-
-
+            <tbody>
+                <tr>
+                    <td class="text-center" style="width:950px; position: fixed; font-size:14px;">
+                            <?= ($laboratories->descripcion) ?>
+                    </td>
+                </tr>
+            </tbody>
             
+        </table>
+        <!-- <hr class="font-weight-bold" style="border:solid;"> -->
+
+            <!-- <div class="related">
+                
+                < ?php if (!empty($laboratories->biochemistry || $laboratories->hematologies)) : ?>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-light" style="width:1020px;">
+                        
+                        <tr>
+
+                            <th>< ?= __('Bioquimicas') ?></th>
+                            < ?php foreach ($laboratories->biochemistry as $biochemistry) : ?>
+                            <td><li>< ?= h($biochemistry->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+                            
+                        
+                            <th>< ?= __('Hematologicas') ?></th>
+                            < ?php foreach ($laboratories->hematologies as $hematologies) : ?>
+                            <td><li>< ?= h($hematologies->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+                        
+                        </tr>
+                        
+                    </table>
+                </div>
+                < ?php elseif (empty($laboratories->biochemistry)) : ?>               
+                    <div class="table-responsive">
+                    <table class="table table-responsive table-light" style="width:1020px;">
+                        
+                        <tr>
+
+                            <th>< ?= __('Hematologicas') ?></th>
+                            < ?php foreach ($laboratories->hematologies as $hematologies) : ?>
+                            <td><li>< ?= h($hematologies->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+                        
+                        </tr>
+                        
+                    </table>
+                </div>
 
 
-                            <hr class="font-weight-bold" style="margin-top:32rem; border:solid;">
-                    <p style="margin-left:80px; width:60.3rem;" class='font-weight-bold'>Torre del Desarrollo, Av. Venezuela Urb. El Rosal, Chacao-Caracas. Teléfonos: (0212) 905.16.11 / 905.16.50 </p>
-        </div>
+
+
+                < ?php endif; ?>
+            </div>
+
+
+
+           
+            <div class="related">
+                
+                < ?php if (!empty($laboratories->immunology || $laboratories->specials)) : ?>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-light" style="width:1020px;">
+                        
+                        <tr>
+                            <th>< ?= __('Inmunologicas') ?></th>
+                            < ?php foreach ($laboratories->immunology as $immunology) : ?>
+                            <td><li>< ?= h($immunology->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+                            
+                            <th>< ?= __('Especiales') ?></th>
+                            < ?php foreach ($laboratories->specials as $specials) : ?>
+                            <td><li>< ?= h($specials->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+                        </tr>
+                        
+                    </table>
+                </div>
+                < ?php endif; ?>
+            </div>
+
+
+
+            <div class="related">
+                
+                < ?php if (!empty($laboratories->parasitologies || $laboratories->urinalysis)) : ?>
+                <div class="table-responsive">
+                    <table class="table table-responsive table-light" style="width:1020px; border:none;">
+                    
+                        <tr>
+                        
+                        
+                        
+                            <th>< ?= __('Parasitologicas') ?></th>
+                            < ?php foreach ($laboratories->parasitologies as $parasitologies) : ?>
+                            <td><li>< ?= h($parasitologies->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+
+                            
+                            <th>< ?= __('Analisis de Orina') ?></th>                        
+                            < ?php foreach ($laboratories->urinalysis as $urinalysis) : ?>
+                            <td><li>< ?= h($urinalysis->descripcion) ?>
+                            <span class="badge badge-primary badge-pill">X</span>
+                            </li></td>
+                            < ?php endforeach; ?>
+
+
+
+                        </tr>
+                        
+                    </table>
+                </div>
+                < ?php endif; ?>
+            </div> -->
+            
+          
+            <table style="border:none; margin-left:200px; height:100px; position:fixed; margin-top:100px;" class="">
+           
+            <tr>
+                
+                <td><?= $this->Html->image($laboratories->clinical_history->doctor->firma, ['fullBase' => true, 'style' => 'height:250px; width:270px;']) ?></td>
+                            
+                <th class="font-weight-bold text-uppercase text-center">Requiere sello humedo institucional </th>
+                
+            </tr>
+           </table>
+            
+            
+            <div style="position:fixed; margin-top:300px;">    
+            <hr class="bg-dark" style="border:solid; width: 950px; margin-right:60px;">        
+               <ol style="font-size:13px; margin-top:-18px; margin-right:80px;" class='font-weight-bold text-center'>Av. Venezuela, Torre del Desarrollo, El Rosal, Municipio Chacao, Zona Metropolitana de Caracas, Venezuela, Código Postal 1060 Teléfono: 0212-9051611 – Sitio Web: www.sudeaseg.gob.ve - Twitter: @SudeasegOficial </ol>    
+            </div>
+                            
+      
+          </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79bd008e72f7ed186d1fc8876ce89d13",
+    "content-hash": "4e57d7a36a10b9293002a3c312da7c07",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -750,6 +750,68 @@
                 "source": "https://github.com/FriendsOfCake/CakePdf/tree/4.1.2"
             },
             "time": "2022-08-31T13:06:10+00:00"
+        },
+        {
+            "name": "hevertonfreitas/cakephp-audit-log",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hevertonfreitas/cakephp-audit-log.git",
+                "reference": "0ed2b4d1dcbec5507b83c53690ac6fa2240dcef9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hevertonfreitas/cakephp-audit-log/zipball/0ed2b4d1dcbec5507b83c53690ac6fa2240dcef9",
+                "reference": "0ed2b4d1dcbec5507b83c53690ac6fa2240dcef9",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0",
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "AuditLog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Winther",
+                    "homepage": "http://cakephp.nu/",
+                    "role": "Author"
+                },
+                {
+                    "name": "Heverton Coneglian",
+                    "email": "hevertonconeglian@gmail.com",
+                    "homepage": "https://www.hevertonfreitas.com.br/",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "A logging plugin for CakePHP. It takes a snapshot of the fully hydrated object after a change is complete and it also records each individual change in the case of an update action",
+            "homepage": "https://github.com/hevertonfreitas/cakephp-audit-log",
+            "keywords": [
+                "Audit",
+                "cakephp",
+                "log",
+                "logging",
+                "plugin",
+                "security"
+            ],
+            "support": {
+                "issues": "https://github.com/hevertonfreitas/cakephp-audit-log/issues",
+                "source": "https://github.com/hevertonfreitas/cakephp-audit-log"
+            },
+            "time": "2019-12-16T13:55:56+00:00"
         },
         {
             "name": "illuminate/contracts",

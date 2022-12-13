@@ -76,8 +76,23 @@
 
 $('#laboratorio').DataTable({
     "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-    }
+       // "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ resultados",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ninguna información disponible en esta tabla",
+      "sInfo": "Mostrando resultados _START_-_END_ de  _TOTAL_",
+      "sInfoEmpty": "Mostrando resultados del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sSearch": "Buscar ",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Ultimo",
+        "sNext": "Siguiente",
+        "sPrevious": "Anterior"
+    },
+  },
 });
 
 $(".eliminar").attr("onclick", "").unbind("click"); //remove function onclick button

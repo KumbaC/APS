@@ -56,7 +56,7 @@ input[type=number] { -moz-appearance:textfield; }
 
                     <div class="form-row">
                         
-                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['required', 'type' => 'number', 'min' => '1']);?></div>
+                    <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono', ['required', 'value' => '', 'type' => 'number', 'min' => '1']);?></div>
                         
                     <div class="form-group col-md-6"> <?php  echo $this->Form->control('telefono_secundario', ['type' => 'number', 'min' => '1']);?></div>
 
@@ -66,7 +66,7 @@ input[type=number] { -moz-appearance:textfield; }
                     <div class="form-group"><?php echo $this->Form->control('cupos', ['type' => 'hidden', 'value' => 5]);  ?></div>
                     <div class="form-row">
                     <div class="form-group col-md-6"><?php  echo $this->Form->control('firma_file', ['label' => 'Firma Electronica', 'type' => 'file', ]);?></div>
-                    <div class="form-group col-md-6"><?php  echo $this->Form->control('sello_file', ['type' => 'file','label' => 'Sello:']);?></div>
+                    <!-- <div class="form-group col-md-6">< ?php  echo $this->Form->control('sello_file', ['type' => 'file','label' => 'Sello:']);?></div> -->
                     </div>
 
             </fieldset>

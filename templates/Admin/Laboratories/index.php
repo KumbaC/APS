@@ -9,7 +9,7 @@
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
-<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
 <div class="laboratories index content">
     <!-- <?//= $this->Html->link(__('New Laboratory'), ['action' => 'add'], ['class' => 'button float-right']) ?> -->
     <br></br>
@@ -48,7 +48,7 @@
                     <!-- <td><?//= h($laboratory->created) ?></td>
                     <td><?//= h($laboratory->modified) ?></td> -->
                     <td class="text-center">
-                        <?= $this->Html->link(__(''), ['action' => 'view', $laboratory->id, '_ext' => 'pdf'],['class' => 'fas fa-print btn btn-warning text-center']) ?>
+                        <?= $this->Html->link(__(''), ['action' => 'view', $laboratory->id, '_ext' => 'pdf'],['class' => 'fas fa-file-pdf btn btn-warning text-center']) ?>
 
 
                     </td>
@@ -71,13 +71,16 @@
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 
 <script>
 
 $('#laboratorio').DataTable({
     "language": {
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-    }
+    },
+    "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
+    
 });
 
 $(".eliminar").attr("onclick", "").unbind("click"); //remove function onclick button

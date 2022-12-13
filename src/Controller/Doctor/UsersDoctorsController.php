@@ -23,10 +23,7 @@ class UsersDoctorsController extends AppController
 
     public function login()
     {
-        $session = $this->request->getSession();
-        $session = $this->request->getAttribute('session');
-
-
+        
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -49,6 +46,7 @@ class UsersDoctorsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
+    
     public function index()
     {
         $usersDoctors = $this->paginate($this->UsersDoctors);
@@ -83,11 +81,11 @@ class UsersDoctorsController extends AppController
         if ($this->request->is('post')) {
             $usersDoctor = $this->UsersDoctors->patchEntity($usersDoctor, $this->request->getData());
             if ($this->UsersDoctors->save($usersDoctor)) {
-                $this->Flash->success(__('The users doctor has been saved.'));
+                $this->Flash->success(__('Usuario creado correctamente'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The users doctor could not be saved. Please, try again.'));
+            $this->Flash->error(__('El usuario no se ha podido crear. Inténtelo de nuevo'));
         }
         $this->set(compact('usersDoctor'));
     }
@@ -107,11 +105,11 @@ class UsersDoctorsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $usersDoctor = $this->UsersDoctors->patchEntity($usersDoctor, $this->request->getData());
             if ($this->UsersDoctors->save($usersDoctor)) {
-                $this->Flash->success(__('The users doctor has been saved.'));
+                $this->Flash->success(__('El usuario se ha actualizado correctamente'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The users doctor could not be saved. Please, try again.'));
+            $this->Flash->error(__('El usuario no se ha podido actualizar. Inténtelo de nuevo'));
         }
         $this->set(compact('usersDoctor'));
     }
@@ -128,9 +126,9 @@ class UsersDoctorsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $usersDoctor = $this->UsersDoctors->get($id);
         if ($this->UsersDoctors->delete($usersDoctor)) {
-            $this->Flash->success(__('The users doctor has been deleted.'));
+            $this->Flash->success(__('El usuario se ha eliminado correctamente'));
         } else {
-            $this->Flash->error(__('The users doctor could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El usuario no se ha podido eliminar. Inténtelo de nuevo'));
         }
 
         return $this->redirect(['action' => 'index']);

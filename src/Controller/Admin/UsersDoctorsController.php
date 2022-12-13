@@ -49,7 +49,23 @@ class UsersDoctorsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function registerDoctors()
+    {
+        $usersDoctor = $this->UsersDoctors->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $usersDoctor = $this->UsersDoctors->patchEntity($usersDoctor, $this->request->getData());
+            if ($this->UsersDoctors->save($usersDoctor)) {
+                $this->Flash->success(__('The users doctor has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The users doctor could not be saved. Please, try again.'));
+        }
+        $roles = $this->UsersDoctors->Roles->find('list', ['limit' => 200]);
+        $this->set(compact('usersDoctor', 'roles'));
+    }
+
+    public function registerSupport()
     {
         $usersDoctor = $this->UsersDoctors->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -85,6 +101,25 @@ class UsersDoctorsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The users doctor could not be saved. Please, try again.'));
+        }
+        $roles = $this->UsersDoctors->Roles->find('list', ['limit' => 200]);
+        $this->set(compact('usersDoctor', 'roles'));
+    }
+
+
+    public function changePassword($id = null)
+    {
+        $usersDoctor = $this->UsersDoctors->get($id, [
+            'contain' => [],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $usersDoctor = $this->UsersDoctors->patchEntity($usersDoctor, $this->request->getData());
+            if ($this->UsersDoctors->save($usersDoctor)) {
+                $this->Flash->success(__('Cambio contraseña fue exitoso.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('No se pudo cambiar la contraseña, por favor intente mas tarde..'));
         }
         $roles = $this->UsersDoctors->Roles->find('list', ['limit' => 200]);
         $this->set(compact('usersDoctor', 'roles'));

@@ -9,31 +9,40 @@
 
 
 ?>
-
 <br><br><br><br><br><br><br>
-<?= $this->Html->image('logo.png', ['fullBase' => true, 'style' => 'margin-left: 30px; height:70px;']);?>
-
+<br><br><br>
+<?= $this->Html->image('logo.png', ['fullBase' => true,'style' => 'margin-left: 30px; height:70px; margin-top:-400px;']);?>
 <!-- ABRE |PARTE DELANTERA DEL CARNET AFILIADO| ABRE -->
-<h2 class="text-center font-weight-bold">CARNET ATENCIÓN PRIMARIA DE SALUD </h2>
+<h2 class="font-weight-bold text-center" style="">CARNET ATENCIÓN PRIMARIA DE SALUD </h2>
 
 
 
 
-<div class="card rounded" style="max-width: 520px; border:dashed; margin-left:15px; width:30rem;">
+<div class="card rounded" style="max-width: 520px; border:dashed; margin-left:15px; width:30rem; margin-top:-150px;">
 <div class="row">
 
 
     <div class="col-md-8">
      <?= $this->Html->image('fondo.jpeg', ['fullBase' => true, 'style' => 'height:232px; margin-top:2px;']);?>
       <div class="card-body card-img-overlay">
-         <h4 class="text-center font-weight-bold ">ATENCIÓN PRIMARIA DE SALUD</h4>
-     <h6 class="card-title text-center font-weight-bold"> AFILIADO </h6> <br>
+         <h5 class="text-center font-weight-bold mx-auto">ATENCIÓN PRIMARIA DE SALUD</h5>
+             <h6 class="card-title text-center font-weight-bold"> AFILIADO </h6><br>
 
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Nombre: <?= h($person->nombre)?> <?= h($person->apellido) ?></p>
 
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Cedula: V- <?= h($person->cedula) ?> </p>
+        <?php if(!empty($person->email)): ?>
         <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Correo Electronico: <?= h($person->email) ?></p>
+        <?php else:?>
+          <p class="card-text text-dark  h50 font-weight-bold"style="margin-top: -15px;" >Correo Electronico: Sin correo electronico</p>
+        <?php endif; ?>
+
+        <?php if(!empty($person->department->descripcion)): ?>
         <p class="card-text h51 font-weight-bold"style="margin-top: -15px;" ><span class="badge badge-primary"><?= h($person->department->descripcion) ?> </span></p>
+        <?php else:?>
+          <p class="card-text h51 font-weight-bold"style="margin-top: -15px;" ><span class="badge badge-primary text-uppercase">Sin departamento asignado</span></p>
+        <?php endif; ?>
+
         <p class="card-text text-center" style="margin-top: -2px;"><small class="font-weight-bold h51" >Fecha de emisión: <?= h($fechaActual) ?></small></p>
       </div>
 
@@ -112,5 +121,7 @@
 
 <?php endif; ?>
     </div>
+        <br><br>
+   <!--  <p class="font-weight-bold text-center text-uppercase"  style="margin-left:-10rem;">Nota: Preferiblemente imprimir el carnet a color.</p> -->
 
 

@@ -20,7 +20,7 @@ class SpecialtiesController extends AppController
      */
     public function index()
     {
-        $specialties = $this->paginate($this->Specialties);
+        $specialties = $this->Specialties->find('all');
 
         $this->set(compact('specialties'));
     }

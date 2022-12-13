@@ -7,7 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use Cake\Routing\Router;
 /**
  * Laboratories Model
  *
@@ -86,7 +86,27 @@ class LaboratoriesTable extends Table
             'targetForeignKey' => 'urinalysis_id',
             'joinTable' => 'laboratories_urinalysis',
         ]);
+       
+        $this->addBehavior('AuditLog.Auditable', [
+            //'ignore' => ['created'],
+            //'habtm' => ['Tags'],
+        ]);
     }
+
+    public function currentUser(): array
+{
+    $session = Router::getRequest()->getSession();
+    $session = Router::getRequest()->getAttribute('session');
+    
+    return [
+        'id' => $session->read('Auth.User.role_id'),
+        'ip' => Router::getRequest()->clientIp(),
+        'url' => Router::url(null, true),
+        'description' => $session->read('Auth.User.full_name')
+        
+    ];
+
+}
 
     /**
      * Default validation rules.
@@ -102,7 +122,9 @@ class LaboratoriesTable extends Table
 
         $validator
             ->scalar('descripcion')
-            ->allowEmptyString('descripcion');
+            ->notEmptyString('descripcion', 'Por favor llenar la información de los examenes paraclinicos')
+            ->maxLength('descripcion', 424, 'La información no puede ser mayor a 400 caracteres')
+            ->minLength('descripcion', 10, 'La información debe tener como minimo 10 caracteres');
 
         return $validator;
     }

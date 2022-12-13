@@ -25,20 +25,30 @@ class QuotesController extends AppController
             
         $session = $this->request->getSession();
         $session = $this->request->getAttribute('session');
+
+
     if ($session->read('Auth.User.role_id') == 3) {
         $this->paginate = [
             'contain' => ['Specialties','Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
             'order' => ['Quotes.fecha' => 'ASC'],
             'conditions' => [
                 'Doctors.user_doctor_id' => $this->Auth->user('id'),
-            ],
+                'StatusQuotes.id in' => [1, 3],
+               
+            ],    
+            
         ];
         $quotes = $this->paginate($query);
 
         $this->set(compact('quotes'));
-       }else{
+
+       }elseif($session->read('Auth.User.role_id') == 4){
            $this->paginate = [
             'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
+            'order' => ['Quotes.fecha' => 'DESC'],
+            'conditions' => [
+                'StatusQuotes.id' => 2,
+            ],
 
         ];
            $quotes = $this->paginate($query);

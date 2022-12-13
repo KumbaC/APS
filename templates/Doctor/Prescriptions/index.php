@@ -25,7 +25,7 @@ $session = $this->request->getAttribute('session');
                 <tr>
 
                     <th class="text-center"><?= h('Paciente') ?></th>
-                    <th class="text-center"><?= h('Receta') ?></th>
+                    <!-- <th class="text-center">< ?= h('Receta') ?></th> -->
                     <th class="text-center"><?= h('Doctor') ?></th>
                     <th class="text-center"><?= h('Fecha') ?></th>
                     <th class="actions text-center"><?= __('Imprimir') ?></th>
@@ -41,14 +41,14 @@ $session = $this->request->getAttribute('session');
 
 
                     <?php  if ($prescription->person_id != null): ?>
-                        <td class="text-center font-weight-bold"><?= h($prescription->person->nombre) ?>  <?= h($prescription->person->apellido) ?></td>
+                        <td class="text-center font-weight-bold text-uppercase"><?= h($prescription->person->nombre) ?>  <?= h($prescription->person->apellido) ?></td>
                     <?php else: ?>
-                        <td class="text-center font-weight-bold"><?= h($prescription->beneficiary->nombre) ?> <?= h($prescription->beneficiary->apellido) ?></td>
+                        <td class="text-center font-weight-bold text-uppercase"><?= h($prescription->beneficiary->nombre) ?> <?= h($prescription->beneficiary->apellido) ?></td>
                     <?php endif; ?>
 
-                    <td class="text-center font-weight-bold"><?= ($prescription->descripcion) ?></td>
+                    <!-- <td class="text-center font-weight-bold">< ?= ($prescription->descripcion) ?></td> -->
 
-                    <td class="text-center font-weight-bold">Dr. <?= h($prescription->doctor->nombre) ?> <?= h($prescription->doctor->apellido) ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"><?= h($prescription->doctor->nombre) ?> <?= h($prescription->doctor->apellido) ?></td>
 
                     <td class="text-center font-weight-bold"><?= h($prescription->fecha) ?></td>
                     <td class="text-center font-weight-bold">

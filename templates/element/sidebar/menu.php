@@ -1,52 +1,5 @@
 <!-- Add icons to the links using the .nav-icon class
      with font-awesome or any other icon font library -->
-<!-- <li class="nav-item has-treeview menu-open">
-  <a href="#" class="nav-link active">
-    <i class="nav-icon fas fa-tachometer-alt"></i>
-    <p>
-      Starter Pages
-      <i class="right fas fa-angle-left"></i>
-    </p>
-  </a>
-  <ul class="nav nav-treeview">
-    <li class="nav-item">
-      <a href="#" class="nav-link active">
-        <i class="far fa-circle nav-icon"></i>
-        <p>Active Page</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="far fa-circle nav-icon"></i>
-        <p>Inactive Page</p>
-      </a>
-    </li>
-  </ul>
-</li>
-
-<li class="nav-item">
-  <a href="#" class="nav-link">
-    <i class="nav-icon fas fa-th"></i>
-    <p>
-      Simple Link
-      <span class="right badge badge-danger">New</span>
-    </p>
-  </a>
-</li>
-
- -->
-
-
-
-
-
-
-
-
-
-
-<!-- Add icons to the links using the .nav-icon class
-     with font-awesome or any other icon font library -->
      <?php
     $c_name = $this->request->getParam('controller');
     $a_name = $this->request->getParam('action');
@@ -64,7 +17,7 @@ $session = $this->request->getAttribute('session');
     <i class="nav-icon fas fa-tachometer-alt"></i>
     <?php if ($session->read('Auth.User.role_id') == 1):?>
     <p class="font-weight-bold">
-    Panel de Administrador
+      Panel de Administrador
       <i class="right fas fa-angle-left"></i>
     </p>
     <?php elseif ($session->read('Auth.User.role_id') == 2):?>
@@ -72,27 +25,35 @@ $session = $this->request->getAttribute('session');
       Panel de Usuarios
       <i class="right fas fa-angle-left"></i>
      </p>
-    <?php elseif ($session->read('Auth.User.role_id') == 3 ):?>
+    <?php elseif ($session->read('Auth.User.role_id') == 3):?>
 
       <p class="font-weight-bold">
       Panel de Medicos
-    <i class="right fas fa-angle-left"></i>
-     </p>
+        <i class="right fas fa-angle-left"></i>
+      </p>
+
+     <?php elseif ($session->read('Auth.User.role_id') == 4):?>
+
+      <p class="font-weight-bold">
+       Apoyo Administrativo
+        <i class="right fas fa-angle-left"></i>
+      </p>
+
      <?php endif; ?>
   </a>
 
 
   <ul class="nav nav-treeview">
-  <?php if ($session->read('Auth.User.role_id') == 1 or $session->read('Auth.User.role_id') == 2):?>
+  <!-- < ?php if ($session->read('Auth.User.role_id') == 1 or $session->read('Auth.User.role_id') == 2):?> -->
 
-    <li class=<?= $c_name == 'Beneficiary' ? 'bg-danger' : 'nav-item' ?>> 
-  <a href=<?= $this->Url->build(['controller' => 'beneficiary', 'action' => 'index'])?> class='nav-link' >
+    <!-- <li class=< ?= $c_name == 'Beneficiary' ? 'bg-danger' : 'nav-item' ?>> 
+  <a href=< ?= $this->Url->build(['controller' => 'beneficiary', 'action' => 'index'])?> class='nav-link' >
   <i class="fas fa-users"></i>
     <p>
       Beneficiarios
     </p>
-  </a>
-  <?php endif; ?>
+  </a> -->
+  <!-- < ?php endif; ?> -->
   </li>
   <?php if ($session->read('Auth.User.role_id') == 1 or $session->read('Auth.User.role_id') == 2):?>
     
@@ -101,7 +62,7 @@ $session = $this->request->getAttribute('session');
 <a href=<?= $this->Url->build(['controller' => 'persons', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-id-card-alt"></i>
   <p>
-   Titular
+   Titulares
 
   </p>
 </a>
@@ -165,8 +126,7 @@ $session = $this->request->getAttribute('session');
 <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-laptop-medical"></i>
   <p>
-   Consultas Medicas
-
+      Consultas Medicas
   </p>
 </a>
 
@@ -178,7 +138,6 @@ $session = $this->request->getAttribute('session');
 <i class="fas fa-file-medical-alt"></i>
   <p>
       Prescripciones Medicas
-
   </p>
 </a>
 
@@ -190,8 +149,7 @@ $session = $this->request->getAttribute('session');
 <a href=<?= $this->Url->build(['controller' => 'ClinicalHistories', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-file-medical"></i>
   <p>
-    Informes Medicos
-
+     Informes Medicos
   </p>
 </a>
 
@@ -203,8 +161,7 @@ $session = $this->request->getAttribute('session');
 <a href=<?= $this->Url->build(['controller' => 'Laboratories', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-microscope"></i>
   <p>
-     Laboratorios
-
+     Paraclinicos
   </p>
 </a>
 
@@ -258,7 +215,7 @@ $session = $this->request->getAttribute('session');
 <a href=<?= $this->Url->build(['controller' => 'Laboratories', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-microscope"></i>
   <p>
-     Laboratorios
+    Paraclinicos
 
   </p>
 </a>
@@ -274,6 +231,42 @@ $session = $this->request->getAttribute('session');
 <?php endif; ?>
 <?php endif; ?>
 <!-- PANEL MEDICO -->
+
+
+
+<!-- PANEL DE APOYO -->
+
+<?php if ($session->read('Auth.User.role_id') == 4):?>
+
+
+
+  
+<li class="nav-item has-treeview menu-open">
+ 
+
+
+
+
+<ul class="nav nav-treeview">
+  
+  <li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?>>
+
+  <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
+  <i class="fas fa-laptop-medical"></i>
+    <p>
+    Consultas Medicas
+    </p>
+  </a>
+
+  
+
+</li>
+
+
+<?php endif; ?>
+
+<!-- PANEL DE APOYO -->
+
 
 
 
@@ -342,6 +335,19 @@ $session = $this->request->getAttribute('session');
 <i class="fas fa-head-side-cough"></i>
   <p>
       Antecedentes Medicos
+
+  </p>
+</a>
+
+</li>
+
+
+<li class=<?= $c_name == 'SurgicalsAntecedents' ? 'bg-danger' : 'nav-item' ?>>
+
+<a href=<?= $this->Url->build(['controller' => 'SurgicalsAntecedents', 'action' => 'index'])?> class='nav-link' >
+<i class="fas fa-procedures"></i>
+  <p>
+      Antecedentes Quirurgicos
 
   </p>
 </a>

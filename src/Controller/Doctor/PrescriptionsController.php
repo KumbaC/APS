@@ -5,22 +5,9 @@ namespace App\Controller\Doctor;
 
 use App\Controller\Doctor\AppController;
 
-/**
- * Prescriptions Controller
- *
- * @property \App\Model\Table\PrescriptionsTable $prescriptions
- * @method \App\Model\Entity\Prescription[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-
- /**
- *
- *
- * @property \App\Model\Table\QuotesTable $Quotes
- * @method \App\Model\Entity\Quote[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-
 class PrescriptionsController extends AppController
 {
+
     /**
      * Index method
      *
@@ -38,9 +25,7 @@ class PrescriptionsController extends AppController
 
             $this->paginate = [
             'contain' => ['Persons', 'Beneficiary', 'Doctors', 'Quotes', 'ClinicalHistories'],
-            'conditions' => [
-                'Doctors.user_doctor_id' => $this->Auth->user('id'),
-            ],
+            'conditions'=>['Doctors.user_doctor_id' => $this->Auth->user('id')]
         ];
         $prescriptions = $this->paginate($query);
 
@@ -64,7 +49,7 @@ class PrescriptionsController extends AppController
     public function view($id = null)
     {
         $prescription = $this->Prescriptions->get($id, [
-            'contain' => ['Persons', 'Beneficiary', 'Doctors', 'ClinicalHistories'],
+            'contain' => ['Persons', 'Beneficiary', 'Doctors', 'Quotes', 'ClinicalHistories'],
         ]);
 
         $this->viewBuilder()->setOption(
@@ -92,31 +77,41 @@ class PrescriptionsController extends AppController
      */
     public function add($id, $idDoctor = null)
     {
-        $prescription = $this->Prescriptions->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $prescription = $this->Prescriptions->patchEntity($prescription, $this->request->getData());
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
 
-            $prescription->person_id = $id;
-            //$Quotes = $this->Quotes->find('all');
-            $prescription->doctor_id =  $idDoctor;
+            $prescription = $this->Prescriptions->newEmptyEntity();
+            if ($this->request->is('post')) {
+                $prescription = $this->Prescriptions->patchEntity($prescription, $this->request->getData());
 
-            if ($this->Prescriptions->save($prescription)) {
-                $this->Flash->success(__('Recipe creado con exito, que tenga un buen dia.'));
+                $prescription->person_id = $id;
+                //$Quotes = $this->Quotes->find('all');
+                $prescription->doctor_id = $idDoctor;
 
-                return $this->redirect(['action' => 'add' , $id, $idDoctor]);
+                if ($this->Prescriptions->save($prescription)) {
+                    $this->Flash->success(__('Recipe creado con exito, que tenga un buen dia.'));
+
+                    return $this->redirect(['action' => 'add', $id, $idDoctor]);
+                }
+                $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
             }
-            $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
-        }
 
-        $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
-        $beneficiary = $this->Prescriptions->Beneficiary->find('list', ['limit' => 200]);
-        $doctors = $this->Prescriptions->Doctors->find('list', ['limit' => 200]);
-        $quotes = $this->Prescriptions->Quotes->find('all')->contain(['Doctors']);
-        $clinicalHistories = $this->Prescriptions->ClinicalHistories->find('list', ['limit' => 200]);
-        $this->set(compact('prescription', 'persons', 'beneficiary', 'doctors', 'quotes', 'clinicalHistories'));
+            $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
+            $beneficiary = $this->Prescriptions->Beneficiary->find('list', ['limit' => 200]);
+            $doctors = $this->Prescriptions->Doctors->find('list', ['limit' => 200]);
+            $quotes = $this->Prescriptions->Quotes->find('all')->contain(['Doctors']);
+            $clinicalHistories = $this->Prescriptions->ClinicalHistories->find('list', ['limit' => 200]);
+            $this->set(compact('prescription', 'persons', 'beneficiary', 'doctors', 'quotes', 'clinicalHistories'));
+
+        }else{
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+            }
+
     }
-
-    public function addb($id, $idDoctor = null)
+    /* RECIPES PARA DOCTORES */
+   /*  public function addb($id, $idDoctor = null)
     {
         $prescription = $this->Prescriptions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -140,7 +135,7 @@ class PrescriptionsController extends AppController
         $quotes = $this->Prescriptions->Quotes->find('list', ['limit' => 200]);
         $clinicalHistories = $this->Prescriptions->ClinicalHistories->find('list', ['limit' => 200]);
         $this->set(compact('prescription', 'persons', 'beneficiary', 'doctors', 'quotes', 'clinicalHistories'));
-    }
+    } */
 
     /**
      * Edit method
@@ -151,25 +146,33 @@ class PrescriptionsController extends AppController
      */
     public function edit($id = null, $idDoctor = null)
     {
-        $prescription = $this->Prescriptions->get($id, [
-            'contain' => [],
-        ]);
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $prescription = $this->Prescriptions->patchEntity($prescription, $this->request->getData());
-            if ($this->Prescriptions->save($prescription)) {
-                $this->Flash->success(__('El recipe se actualizo con exito. Que tenga un buen dia.'));
+            $prescription = $this->Prescriptions->get($id, [
+                'contain' => [],
+            ]);
 
-                return $this->redirect(['action' => 'index']);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $prescription = $this->Prescriptions->patchEntity($prescription, $this->request->getData());
+                if ($this->Prescriptions->save($prescription)) {
+                    $this->Flash->success(__('El recipe se actualizo con exito. Que tenga un buen dia.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
             }
-            $this->Flash->error(__('El recipe no pudo ser guardado. Por favor, intente mas tarde.'));
-        }
-        $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
-        $beneficiary = $this->Prescriptions->Beneficiary->find('list', ['limit' => 200]);
-        $doctors = $this->Prescriptions->Doctors->find('list', ['limit' => 200]);
-        $quotes = $this->Prescriptions->Quotes->find('list', ['limit' => 200]);
-        $clinicalHistories = $this->Prescriptions->ClinicalHistories->find('list', ['limit' => 200]);
-        $this->set(compact('prescription', 'persons', 'beneficiary', 'doctors', 'quotes', 'clinicalHistories'));
+            $persons = $this->Prescriptions->Persons->find('list', ['limit' => 200]);
+            $beneficiary = $this->Prescriptions->Beneficiary->find('list', ['limit' => 200]);
+            $doctors = $this->Prescriptions->Doctors->find('list', ['limit' => 200]);
+            $quotes = $this->Prescriptions->Quotes->find('list', ['limit' => 200]);
+            $clinicalHistories = $this->Prescriptions->ClinicalHistories->find('list', ['limit' => 200]);
+            $this->set(compact('prescription', 'persons', 'beneficiary', 'doctors', 'quotes', 'clinicalHistories'));
+        }else{
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+            }
     }
 
     /**

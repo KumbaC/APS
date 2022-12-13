@@ -42,30 +42,30 @@ $session = $this->request->getAttribute('session');
                 <tr>
 
                     <?php if (empty($clinicalHistory->person->nombre)): ?>
-                        <td class="text-center font-weight-bold"><?= $clinicalHistory->has('beneficiary') ? h($clinicalHistory->beneficiary->nombre .' '. $clinicalHistory->beneficiary->apellido) : '' ?></td>
+                        <td class="text-center font-weight-bold text-uppercase"><?= $clinicalHistory->has('beneficiary') ? h($clinicalHistory->beneficiary->nombre .' '. $clinicalHistory->beneficiary->apellido) : '' ?></td>
                     <?php else: ?>
-                    <td class="text-center font-weight-bold"><?= $clinicalHistory->has('person') ? h($clinicalHistory->person->nombre .'  '. ' '. $clinicalHistory->person->apellido) : '' ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"><?= $clinicalHistory->has('person') ? h($clinicalHistory->person->nombre .'  '. ' '. $clinicalHistory->person->apellido) : '' ?></td>
                     <?php endif; ?>
 
                     <?php if (empty($clinicalHistory->blood_type->descripcion)): ?>
-                        <td class="text-uppercase font-weight-bold text-center">Desconocido</td>
+                        <td class="text-uppercase font-weight-bold text-center text-uppercase">Desconocido</td>
                     <?php else: ?>
-                    <td class="text-uppercase font-weight-bold text-center"><?= $clinicalHistory->has('blood_type') ? h($clinicalHistory->blood_type->descripcion) : '' ?></td>
+                    <td class="text-uppercase font-weight-bold text-center text-uppercase"><?= $clinicalHistory->has('blood_type') ? h($clinicalHistory->blood_type->descripcion) : '' ?></td>
                     <?php endif; ?>
 
-                    <td class="text-center font-weight-bold"><?= $clinicalHistory->has('doctor') ? h('Dr. '. ' ' . $clinicalHistory->doctor->nombre . ' '. $clinicalHistory->doctor->apellido ) : '' ?></td>
-                    <td class="text-center font-weight-bold">
+                    <td class="text-center font-weight-bold text-uppercase"><?= $clinicalHistory->has('doctor') ? h('Dr. '. ' ' . $clinicalHistory->doctor->nombre . ' '. $clinicalHistory->doctor->apellido ) : '' ?></td>
+                    <td class="text-center font-weight-bold text-uppercase">
                         <?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id, '_ext' => 'pdf'], ['class' => 'far fa-file-pdf btn btn-warning']) ?>
                     </td>
 
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['controller' => 'Laboratories', 'action' => 'add', $clinicalHistory->id], ['class' => 'fas fa-microscope btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"><?= $this->Html->link(__(''), ['controller' => 'Laboratories', 'action' => 'add', $clinicalHistory->id], ['class' => 'fas fa-microscope btn btn-warning']) ?></td>
 
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"><?= $this->Html->link(__(''), ['action' => 'edit', $clinicalHistory->id], ['class' => 'far fa-edit btn btn-warning']) ?></td>
                     <?php if ($session->read('Auth.User.role_id') == 1): ?>
-                    <td class="text-center font-weight-bold"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning elimi_historia']) ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"> <?= $this->Form->postLink(__(''), ['action' => 'delete', $clinicalHistory->id], ['confirm' => __('Are you sure you want to delete # {0}?', $clinicalHistory->id), 'class' => 'fas fa-trash-alt btn btn-warning elimi_historia']) ?></td>
 
                     <?php endif; ?>
-                    <td class="text-center font-weight-bold"><?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id], ['class' => 'far fa-search btn btn-warning']) ?></td>
+                    <td class="text-center font-weight-bold text-uppercase"><?= $this->Html->link(__(''), ['action' => 'view', $clinicalHistory->id], ['class' => 'far fa-search btn btn-warning']) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -119,8 +119,25 @@ $(document).on('click', '.elimi_historia', function () {
 
 $('#informe').DataTable({
     "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-    }
+       // "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ resultados",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ninguna información disponible en esta tabla",
+      "sInfo": "Mostrando resultados _START_-_END_ de  _TOTAL_",
+      "sInfoEmpty": "Mostrando resultados del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sSearch": "Buscar ",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Ultimo",
+        "sNext": "Siguiente",
+        "sPrevious": "Anterior"
+    },
+  },
+
+  
 });
 
 </script>

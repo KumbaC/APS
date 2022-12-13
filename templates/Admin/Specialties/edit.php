@@ -13,16 +13,14 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading text-uppercase font-weight-bold text-center"> <i class="fas fa-tools"></i> <?= __('opciones') ?></h4>
-            <!-- <?//= $this->Form->postLink(
-                // ('Delete'),
-                //['action' => 'delete', $specialty->id],
-               // ['confirm' => __('Are you sure you want to delete # {0}?', $specialty->id), 'class' => ' side-nav-item']
-            //) ?> -->
-            <?= $this->Html->link(__('Lista de Especialidades'), ['action' => 'index'], ['class' => 'side-nav-item btn btn-danger']) ?>
+           
+            <?= $this->Html->link(__('Lista de Especialidades'), ['action' => 'index'], ['class' => 'side-nav-item btn btn-danger text-uppercase font-weight-bold']) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
-        <div class="specialties form content card" style="margin-left:30rem;">
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="column-responsive">
+        <div class="specialties form content card">
             <?= $this->Form->create($specialty, ['id' => 'form_especialidades']) ?>
             <fieldset class="card-body">
                 <legend class="font-weight-bold text-uppercase"><?= __('Actualizar Especialidad') ?></legend>
@@ -30,7 +28,7 @@
                     echo $this->Form->control('descripcion', ['id' => 'descripcion', 'class' => 'form-control']);
                 ?>
 
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block']) ?>
+            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold']) ?>
             </fieldset>
             <?= $this->Form->end() ?>
         </div>

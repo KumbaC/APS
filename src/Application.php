@@ -57,6 +57,8 @@ class Application extends BaseApplication
 
         $this->addPlugin('Ajax');
 
+        //$this->addPlugin('Json');
+
 
         // Call parent to load bootstrap from files.
         parent::bootstrap();
@@ -79,6 +81,7 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
+        $this->addPlugin('AuditLog');
     }
 
     /**

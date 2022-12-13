@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= __($this->fetch('title') . ' | ' . strip_tags($this->CakeLte->getConfig('app-name'))) ?></title>
+    <title><?= 'APS'. ' | ' . strip_tags($this->CakeLte->getConfig('app-name')) ?></title>
 
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>

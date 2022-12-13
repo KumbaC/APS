@@ -32,9 +32,11 @@ class UsersDoctor extends Entity
         'username' => true,
         'password' => true,
         'role_id' => true,
+        'doctor_id' => true,
         'created' => true,
         'modified' => true,
         'role' => true,
+        'doctor' => true
     ];
 
     /**

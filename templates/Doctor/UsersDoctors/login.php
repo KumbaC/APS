@@ -8,7 +8,7 @@
 <div class="card">
   <div class="card-body login-card-body">
     <p class="login-box-msg font-weight-bold"> <?= $this->html->image('logo2.png', ['style'=>'height:140px; width:280px; margin-left:-30px;']) ?></p>
-    <p class="login-box-msg font-weight-bold"> MEDICOS</p>
+    <p class="login-box-msg font-weight-bold"> MEDICOS|APOYO</p>
     <?= $this->Form->create() ?>
 
     <?= $this->Form->control('username', [

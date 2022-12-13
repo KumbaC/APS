@@ -40,6 +40,11 @@
     <?= $this->fetch('script') ?>
 
 <style>
+
+   .panel{
+    text-align: center;
+    margin: 0 auto;
+   }
 		@media only screen and (min-width : 768px) {
 			.errors .panel {
 				width: 900px;
@@ -51,6 +56,10 @@
 				width: 600px;
 		    }
 		}
+
+
+
+
 	</style>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -66,11 +75,11 @@
 			<div class="panel panel-bordered animation-slide-top">
 				<div class="panel-body">
 					<?= $this->Html->image('logo.png'); ?>
-					<div class="h2"><?= $this->fetch('content') ?></div>
+					<div class="h2"><h2>¡Ha ocurrido un error interno!</h2>  <h5>Error: Disculpe las molestias.</h5>  </div>
 
 					<div class="mt-4">
 						<hr>
-						<p class="error-advise text-justify h3"><?= __('SI EL PROBLEMA PERSISTE, POR FAVOR CONTACTE AL ADMINISTRADOR DEL SISTEMA A TRAVÉS DE LA SIGUIENTE DIRECCIÓN DE CORREO ELECTRÓNICO {0}.',    '<strong>email@domnio.com</strong>')?></p>
+						<p class="error-advise text-justify h3"><?= __('SI EL PROBLEMA PERSISTE, POR FAVOR CONTACTE AL ADMINISTRADOR DEL SISTEMA A TRAVÉS DE LA SIGUIENTE DIRECCIÓN DE CORREO ELECTRÓNICO {0}.',    '<strong>soporteaps@sudeaseg.gob.ve</strong>')?></p>
 						<a class="btn btn-primary btn-round btn-lg" href="javascript:history.back()"><?= __('IR A LA PÁGINA PRINCIPAL'); ?></a>
 					</div>
 				</div>

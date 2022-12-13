@@ -8,22 +8,22 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Users Doctors'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <h4 class="heading"><?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista de usarios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="usersDoctors form content">
             <?= $this->Form->create($usersDoctor) ?>
             <fieldset>
-                <legend><?= __('Add Users Doctor') ?></legend>
+                <legend class="text-uppercase"><?= __('Registrar Apoyos Administrativos') ?></legend>
                 <?php
                     echo $this->Form->control('username');
                     echo $this->Form->control('password');
-                    echo $this->Form->control('role_id', ['options' => $roles, 'empty' => true]);
+                    echo $this->Form->control('role_id', ['options' => $roles, 'value' => 4, 'type' => 'hidden']);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Guardar')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

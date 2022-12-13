@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\Datasource\ConnectionManager;
-use Cake\Utility\Hash;
-use Cake\Routing\Router;
+
 /**
  * Diagnoses Controller
  *
@@ -16,13 +14,6 @@ use Cake\Routing\Router;
 class DiagnosesController extends AppController
 {
 
-    public $db;
-
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->db = ConnectionManager::get("default");
-    }
     /**
      * Index method
      *
@@ -30,19 +21,9 @@ class DiagnosesController extends AppController
      */
     public function index()
     {
+        $diagnoses = $this->Diagnoses->find('all');
 
-        $key = $this->request->getQuery('key');
-        if($key){
-                $query = $this->Diagnoses->find('all')->where(['diagnoses.descripcion like' => '%'. $key. '%']);
-        }else{
-               $query = $this->Diagnoses;
-
-        }
-
-        $diagnoses = $this->paginate($query);
-
-        $this->set(compact('diagnoses'), $diagnoses);
-
+        $this->set(compact('diagnoses'));
     }
 
     /**
@@ -128,6 +109,10 @@ class DiagnosesController extends AppController
     }
     public function receive()
     {
+        $this->request->allowMethod(['ajax', 'post']);
+
+        
+        
         $diagnosis = $this->Diagnoses->newEmptyEntity();
         $data = $this->request->getData();
         $data = $this->Diagnoses->patchEntity($diagnosis, $data);
@@ -140,42 +125,6 @@ class DiagnosesController extends AppController
             return $response;
 
     }
-
-
-
-    public function loadEmployees()
-    {
-
-        if ($this->request->is("ajax")) {
-                // get per page data
-                $data = $this->Diagnoses->find('all'); //$this->db->execute("SELECT * from diagnoses")->fetchAll('assoc');
-            }
-
-           $data = Hash::map($data->toArray(),'{n}', function($row){
-
-                $row['acciones'] = '
-
-                                <a href="'.Router::url(['controller' => 'Diagnoses', 'action' => 'edit', $row['id']]).'" class="fas fa-edit btn btn-warning"></a>
-                                <a href="'.Router::url(['controller' => 'Diagnoses', 'action' => 'delete', $row['id']]).'" class="fas fa-trash btn btn-warning elimi_diagnoses"></a>
-
-                        ';
-                return $row;
-           });   // total data array
-
-           //debug($data);exit;
-
-            $json_data = array(
-                //"draw" => intval($params['draw']),
-                //"recordsTotal" => count($total_count),
-                //"recordsFiltered" => count($total_count),
-                "data" => $data   // total data array
-            );
-
-            echo json_encode($json_data);
-            die;
-        }
-
-
 
 
 

@@ -12,7 +12,7 @@ $session = $this->request->getAttribute('session');
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
-<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
 <div class="quotes index content">
 <br>
     <h3 class="text-uppercase font-weight-bold ml-2"><i class="fas fa-notes-medical"></i>  <?= __('Consultas') ?></h3>
@@ -95,13 +95,13 @@ $session = $this->request->getAttribute('session');
 
                          <?php else: ?>
                             <td class="pagination text-center">
-                             <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
-                             <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning']) ?>
+                             <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id, $quote->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
+                             <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id, $quote->id], ['class' => 'fas fa-file btn btn-warning']) ?>
                         <?php endif; ?>
 
-
+                            <!-- EDITAR -->
                             <?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'fas fa-edit btn btn-warning']) ?>
-
+                            <!-- EDITAR -->
 
                         <?php if ($session->read('Auth.User.role_id') == 1): ?>
                              <?= $this->Form->postLink(__(''), ['action' => 'delete', $quote->id], ['confirm' => __('¿Quiere eliminar la consulta medica?', $quote->id),  'class' => 'fas fa-trash-alt btn btn-warning elimi_consulta']) ?>
@@ -113,11 +113,11 @@ $session = $this->request->getAttribute('session');
                     <?php if (empty($quote->person->nombre)): ?>
 
                         <td class="pagination text-center">
-                        <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
+                        <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id, $quote->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
                         <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
                     <?php else: ?>
                         <td class="pagination text-center">
-                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
+                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id, $quote->id], ['class' => 'fas fa-file-medical btn btn-warning disabled']) ?>
                        <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
                     <?php endif; ?>
 
@@ -132,8 +132,8 @@ $session = $this->request->getAttribute('session');
                         <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
                     <?php else: ?>
                         <td class="pagination text-center">
-                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?>
-                       <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
+                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id, $quote->id], ['class' => 'fas fa-file-medical btn btn-warning']) ?>
+                       <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id, $quote->id, $quote->clinic_history_id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
                     <?php endif; ?>
 
                 <?php endif; ?>
@@ -176,6 +176,7 @@ $session = $this->request->getAttribute('session');
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 <script>
 $(".elimi_consulta").attr("onclick", "").unbind("click"); //remove function onclick button
 
@@ -217,6 +218,7 @@ $('#consulta').DataTable({
     "language": {
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
+    "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
         scrollY:        "200px",
         scrollX:        false,
         scrollCollapse: true,

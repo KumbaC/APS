@@ -13,7 +13,7 @@
   <?= $this->Html->image('covid.jpg', ['fullBase' => true]) ?>
   <div class="card-body">
     <h3 class="card-title"></h3>
-    <p class="h3 font-weight-bold text-center">AREA MEDICA  <i class="fas fa-laptop-medical"></i>  </p>
+    <p class="h3 font-weight-bold text-center">AREA MEDICA | APOYO ADMINISTRATIVO  <i class="fas fa-laptop-medical"></i>  </p>
     <!-- <p class="card-text"><small class="text-muted">..</small></p> -->
    </div>
   </div>

@@ -19,13 +19,23 @@ class LaboratoriesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['ClinicalHistories'=>['Persons', 'Beneficiary', 'Doctors'], 'Hematologies', 'Immunology', 'Parasitologies', 'Biochemistry', 'Specials', 'Urinalysis'],
-        ];
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
 
-        $laboratories = $this->paginate($this->Laboratories);
+            $this->paginate = [
+                'contain' => ['ClinicalHistories' => ['Persons', 'Beneficiary', 'Doctors'], 'Hematologies', 'Immunology', 'Parasitologies', 'Biochemistry', 'Specials', 'Urinalysis'],
+                'conditions' => ['Doctors.user_doctor_id' => $this->Auth->user('id')]
+            ];
 
-        $this->set(compact('laboratories'));
+            $laboratories = $this->paginate($this->Laboratories);
+
+            $this->set(compact('laboratories'));
+
+        } else {
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -45,13 +55,13 @@ class LaboratoriesController extends AppController
             'pdfConfig',
             [
                 'orientation' => 'landscape',
-                'title' => 'Laboratorio',
+                'title' => 'Paraclinicos',
                 'filename' => 'Solicitud de Laboratorio_' . $id,
                 'margin' => [
                     'bottom' => 0,
-                    'left' => 50,
+                    'left' => 0,
                     'right' => 0,
-                    'top' => 4
+                    'top' => 2
                 ],
             ]
         );
@@ -66,6 +76,10 @@ class LaboratoriesController extends AppController
      */
     public function add($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
+
         $laboratory = $this->Laboratories->newEmptyEntity();
         if ($this->request->is('post')) {
             $laboratory = $this->Laboratories->patchEntity($laboratory, $this->request->getData());
@@ -87,6 +101,10 @@ class LaboratoriesController extends AppController
         $clinicalHistories = $this->Laboratories->ClinicalHistories->find('list');
         $this->set(compact('laboratory', 'urinalysis', 'specials', 'parasitologies', 'hematologies', 'immunology', 'biochemistry', 'clinicalHistories'));
 
+        } else {
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
     }
 
     /**
@@ -98,6 +116,10 @@ class LaboratoriesController extends AppController
      */
     public function edit($id = null)
     {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
+
         $laboratory = $this->Laboratories->get($id, [
             'contain' => ['ClinicalHistories', 'Hematologies', 'Immunology', 'Parasitologies', 'Biochemistry', 'Specials', 'Urinalysis'],
         ]);
@@ -119,6 +141,11 @@ class LaboratoriesController extends AppController
         $clinicalHistories = $this->Laboratories->ClinicalHistories->find('list');
         $this->set(compact('laboratory', 'urinalysis', 'specials', 'parasitologies', 'hematologies', 'immunology', 'biochemistry', 'clinicalHistories'));
 
+        } else {
+            $this->Flash->error(__('No tienes acceso para entrar.'));
+            $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
+
     }
 
     /**
@@ -133,9 +160,9 @@ class LaboratoriesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $laboratory = $this->Laboratories->get($id);
         if ($this->Laboratories->delete($laboratory)) {
-            $this->Flash->success(__('The laboratory has been deleted.'));
+            $this->Flash->success(__('Solicitud de Examenes Paraclinicos eliminados.'));
         } else {
-            $this->Flash->error(__('The laboratory could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La solicitud de examenes paraclinicos, no pudo ser eliminada.'));
         }
 
         return $this->redirect(['action' => 'index']);

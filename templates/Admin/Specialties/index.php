@@ -8,7 +8,7 @@
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
-<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
+<?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/all.css') ?>
 
 <div class="specialties index content">
     <?= $this->Html->link(__(''), ['action' => 'add'], ['class' => 'fas fa-plus button float-right btn btn-primary', 'style' => 'border-radius: 25px;']) ?>
@@ -52,11 +52,13 @@
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>
+<?= $this->Html->script('CakeLte./AdminLTE/plugins/sweetalert2/sweetalert2.all.js') ?>
 <script>
     $('#especialidad').DataTable({
     "language": {
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-    }
+    },
+    "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
 });
 
 $(".eliminar_especialidad").attr("onclick", "").unbind("click"); //remove function onclick button

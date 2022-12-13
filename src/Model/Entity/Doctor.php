@@ -27,7 +27,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\ClinicalHistory[] $clinical_histories
  * @property \App\Model\Entity\Prescription[] $prescriptions
  * @property \App\Model\Entity\Quote[] $quotes
- * @property \App\Model\Entity\User[] $users
+ * @property \App\Model\Entity\UsersDoctor[] $usersdoctor
  */
 class Doctor extends Entity
 {
@@ -58,6 +58,6 @@ class Doctor extends Entity
         'clinical_histories' => true,
         'prescriptions' => true,
         'quotes' => true,
-        'users' => true,
+        
     ];
 }

@@ -26,15 +26,15 @@ $this->assign('breadcrumb',
   <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap">
         <tr>
-            <th><?= __('Person') ?></th>
-            <td><?= $clinicalHistory->has('person') ? $this->Html->link($clinicalHistory->person->id, ['controller' => 'Persons', 'action' => 'view', $clinicalHistory->person->id]) : '' ?></td>
+            <th><?= __('Paciente') ?></th>
+            <?php if(!empty($clinicalHistory->person)): ?>
+            <td><?= $clinicalHistory->person->nombre, ' ', $clinicalHistory->person->apellido ?></td>
+            <?php else: ?>
+              <td><?= $clinicalHistory->beneficiary->nombre, ' ', $clinicalHistory->beneficiary->apellido ?></td>
+            <?php endif; ?>
         </tr>
         <tr>
-            <th><?= __('Beneficiary') ?></th>
-            <td><?= $clinicalHistory->has('beneficiary') ? $this->Html->link($clinicalHistory->beneficiary->id, ['controller' => 'Beneficiary', 'action' => 'view', $clinicalHistory->beneficiary->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Blood Type') ?></th>
+            <th><?= __('Grupo Sanguineo') ?></th>
             <td><?= $clinicalHistory->has('blood_type') ? $this->Html->link($clinicalHistory->blood_type->descripcion, ['controller' => 'BloodTypes', 'action' => 'view', $clinicalHistory->blood_type->id]) : '' ?></td>
         </tr>
         <tr>
@@ -42,8 +42,8 @@ $this->assign('breadcrumb',
             <td><?= $clinicalHistory->has('doctor') ? $this->Html->link($clinicalHistory->doctor->id, ['controller' => 'Doctors', 'action' => 'view', $clinicalHistory->doctor->id]) : '' ?></td>
         </tr>
         <tr>
-            <th><?= __('Type Of Diagnosis') ?></th>
-            <td><?= h($clinicalHistory->type_of_diagnosis) ?></td>
+            <th><?= __('Plan de trabajo') ?></th>
+            <td><?= ($clinicalHistory->workplan) ?></td>
         </tr>
         <tr>
             <th><?= __('Altura') ?></th>
@@ -61,78 +61,129 @@ $this->assign('breadcrumb',
             <th><?= __('Imc') ?></th>
             <td><?= h($clinicalHistory->imc) ?></td>
         </tr>
-        <tr>
-            <th><?= __('Piel') ?></th>
-            <td><?= h($clinicalHistory->piel) ?></td>
+        <!-- <tr>
+            <th>< ?= __('Piel') ?></th>
+            <td>< ?= h($clinicalHistory->piel) ?></td>
         </tr>
         <tr>
-            <th><?= __('Cabeza') ?></th>
-            <td><?= h($clinicalHistory->cabeza) ?></td>
+            <th>< ?= __('Cabeza') ?></th>
+            <td>< ?= h($clinicalHistory->cabeza) ?></td>
         </tr>
         <tr>
-            <th><?= __('Cuello') ?></th>
-            <td><?= h($clinicalHistory->cuello) ?></td>
+            <th>< ?= __('Cuello') ?></th>
+            <td>< ?= h($clinicalHistory->cuello) ?></td>
         </tr>
         <tr>
-            <th><?= __('Cardiopulmonar') ?></th>
-            <td><?= h($clinicalHistory->cardiopulmonar) ?></td>
+            <th>< ?= __('Cardiopulmonar') ?></th>
+            <td>< ?= h($clinicalHistory->cardiopulmonar) ?></td>
+        </tr> -->
+        <!-- <tr>
+            <th>< ?= __('Mamas') ?></th>
+            <td>< ?= h($clinicalHistory->mamas) ?></td>
         </tr>
         <tr>
-            <th><?= __('Mamas') ?></th>
-            <td><?= h($clinicalHistory->mamas) ?></td>
+            <th>< ?= __('Eco Transvaginal') ?></th>
+            <td>< ?= h($clinicalHistory->eco_transvaginal) ?></td>
         </tr>
         <tr>
-            <th><?= __('Eco Transvaginal') ?></th>
-            <td><?= h($clinicalHistory->eco_transvaginal) ?></td>
+            <th>< ?= __('Longitudinal') ?></th>
+            <td><<tr>
+            <th>< ?= __('Mamas') ?></th>
+            <td>< ?= h($clinicalHistory->mamas) ?></td>
         </tr>
         <tr>
-            <th><?= __('Longitudinal') ?></th>
-            <td><?= h($clinicalHistory->longitudinal) ?></td>
+            <th>< ?= __('Eco Transvaginal') ?></th>
+            <td>< ?= h($clinicalHistory->eco_transvaginal) ?></td>
         </tr>
         <tr>
-            <th><?= __('Anteroposterior') ?></th>
-            <td><?= h($clinicalHistory->anteroposterior) ?></td>
+            <th>< ?= __('Longitudinal') ?></th>
+            <td>< ?= h($clinicalHistory->longitudinal) ?></td>
         </tr>
         <tr>
-            <th><?= __('Transverso') ?></th>
-            <td><?= h($clinicalHistory->transverso) ?></td>
+            <th>< ?= __('Anteroposterior') ?></th>
+            <td>< ?= h($clinicalHistory->anteroposterior) ?></td>
         </tr>
         <tr>
-            <th><?= __('Endometrio') ?></th>
-            <td><?= h($clinicalHistory->endometrio) ?></td>
+            <th>< ?= __('Transverso') ?></th>
+            <td>< ?= h($clinicalHistory->transverso) ?></td>
         </tr>
         <tr>
-            <th><?= __('Longitud Cuello Uterio') ?></th>
-            <td><?= h($clinicalHistory->longitud_cuello_uterio) ?></td>
+            <th>< ?= __('Endometrio') ?></th>
+            <td>< ?= h($clinicalHistory->endometrio) ?></td>
         </tr>
         <tr>
-            <th><?= __('Ovario Derecho') ?></th>
-            <td><?= h($clinicalHistory->ovario_derecho) ?></td>
+            <th>< ?= __('Longitud Cuello Uterio') ?></th>
+            <td>< ?= h($clinicalHistory->longitud_cuello_uterio) ?></td>
         </tr>
         <tr>
-            <th><?= __('Ovario Izquierdo') ?></th>
-            <td><?= h($clinicalHistory->ovario_izquierdo) ?></td>
+            <th>< ?= __('Ovario Derecho') ?></th>
+            <td>< ?= h($clinicalHistory->ovario_derecho) ?></td>
         </tr>
         <tr>
-            <th><?= __('Ovoides Aplanadas') ?></th>
-            <td><?= h($clinicalHistory->ovoides_aplanadas) ?></td>
+            <th>< ?= __('Ovario Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->ovario_izquierdo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Ovoides Aplanadas Izquierda') ?></th>
-            <td><?= h($clinicalHistory->ovoides_aplanadas_izquierda) ?></td>
+            <th>< ?= __('Ovoides Aplanadas') ?></th>
+            <td>< ?= h($clinicalHistory->ovoides_aplanadas) ?></td>
         </tr>
         <tr>
-            <th><?= __('Transverso Izquierdo') ?></th>
-            <td><?= h($clinicalHistory->transverso_izquierdo) ?></td>
+            <th>< ?= __('Ovoides Aplanadas Izquierda') ?></th>
+            <td>< ?= h($clinicalHistory->ovoides_aplanadas_izquierda) ?></td>
         </tr>
         <tr>
-            <th><?= __('Logitudinal Izquierdo') ?></th>
-            <td><?= h($clinicalHistory->logitudinal_izquierdo) ?></td>
+            <th>< ?= __('Transverso Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->transverso_izquierdo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($clinicalHistory->id) ?></td>
+            <th>< ?= __('Logitudinal Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->logitudinal_izquierdo) ?></td>
+        </tr>?= h($clinicalHistory->longitudinal) ?></td>
         </tr>
+        <tr>
+            <th>< ?= __('Anteroposterior') ?></th>
+            <td>< ?= h($clinicalHistory->anteroposterior) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Transverso') ?></th>
+            <td>< ?= h($clinicalHistory->transverso) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Endometrio') ?></th>
+            <td>< ?= h($clinicalHistory->endometrio) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Longitud Cuello Uterio') ?></th>
+            <td>< ?= h($clinicalHistory->longitud_cuello_uterio) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Ovario Derecho') ?></th>
+            <td>< ?= h($clinicalHistory->ovario_derecho) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Ovario Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->ovario_izquierdo) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Ovoides Aplanadas') ?></th>
+            <td>< ?= h($clinicalHistory->ovoides_aplanadas) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Ovoides Aplanadas Izquierda') ?></th>
+            <td>< ?= h($clinicalHistory->ovoides_aplanadas_izquierda) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Transverso Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->transverso_izquierdo) ?></td>
+        </tr>
+        <tr>
+            <th>< ?= __('Logitudinal Izquierdo') ?></th>
+            <td>< ?= h($clinicalHistory->logitudinal_izquierdo) ?></td>
+        </tr> -->
+       <!--  <tr>
+            <th>< ?= __('Id') ?></th>
+            <td>< ?= $this->Number->format($clinicalHistory->id) ?></td>
+        </tr> -->
         <tr>
             <th><?= __('Peso') ?></th>
             <td><?= $this->Number->format($clinicalHistory->peso) ?></td>
@@ -145,10 +196,10 @@ $this->assign('breadcrumb',
             <th><?= __('Fc') ?></th>
             <td><?= $this->Number->format($clinicalHistory->fc) ?></td>
         </tr>
-        <tr>
-            <th><?= __('Expediente') ?></th>
-            <td><?= $this->Number->format($clinicalHistory->expediente) ?></td>
-        </tr>
+       <!--  <tr>
+            <th>< ?= __('Expediente') ?></th>
+            <td>< ?= $this->Number->format($clinicalHistory->expediente) ?></td>
+        </tr> -->
     </table>
   </div>
   <div class="card-footer d-flex">

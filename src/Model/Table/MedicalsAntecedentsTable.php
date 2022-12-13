@@ -7,6 +7,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Routing\Router;
+
 
 /**
  * MedicalsAntecedents Model
@@ -17,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\MedicalsAntecedent newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\MedicalsAntecedent[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\MedicalsAntecedent get($primaryKey, $options = [])
- * @method \App\Model\Entity\MedicalsAntecedent findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Mediuse Cake\Routing\Router;calsAntecedent findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\MedicalsAntecedent patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\MedicalsAntecedent[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\MedicalsAntecedent|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
@@ -48,7 +50,27 @@ class MedicalsAntecedentsTable extends Table
             'targetForeignKey' => 'clinic_history_id',
             'joinTable' => 'clinical_histories_medicals_antecedents',
         ]);
+
+        $this->addBehavior('AuditLog.Auditable', [
+            //'ignore' => ['created'],
+            //'habtm' => ['Tags'],
+        ]);
     }
+
+    public function currentUser(): array
+{
+    $session = Router::getRequest()->getSession();
+    $session = Router::getRequest()->getAttribute('session');
+    
+    return [
+        'id' => $session->read('Auth.User.role_id'),
+        'ip' => Router::getRequest()->clientIp(),
+        'url' => Router::url(null, true),
+        'description' => $session->read('Auth.User.full_name')
+        
+    ];
+
+}
 
     /**
      * Default validation rules.

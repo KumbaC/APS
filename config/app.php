@@ -62,7 +62,7 @@ return [
         'webroot' => 'webroot',
         'wwwRoot' => WWW_ROOT,
         //'baseUrl' => env('SCRIPT_NAME'),
-        'fullBaseUrl' => 'http://172.16.205.54',
+        'fullBaseUrl' => false,
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
@@ -89,10 +89,10 @@ return [
             'data 532' => 'Some error for Flash',
         ],
         'logErrors' => true,
-        'options' => [
+       /*   'options' => [
             LDAP_OPT_NETWORK_TIMEOUT => 5,
             LDAP_OPT_PROTOCOL_VERSION => 3
-        ]
+        ]  */
     ],
 
 

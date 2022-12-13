@@ -15,10 +15,10 @@
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/jquery-ui/jquery-ui.css') ?>
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
 <div class="quotes index content">
-<br>
+
     
-
-
+<h3 class="text-uppercase font-weight-bold"> <i class="fas fa-notes-medical"></i> <?= __('Citas Medicas') ?></h3>
+<br>
   <!-- /.card-header -->
   <div class="card bg-dark table-responsive">
         <table class="table table-bordered table-dark display responsive nowrap" id="consulta" style="border-radius: 15px 15px 15px 15px !important;">
@@ -134,23 +134,7 @@
     </table>
   
   </div>
-  <!-- /.card-body -->
-
-<!--   <div class="card-footer d-md-flex paginator">
-    <div class="mr-auto" style="font-size:.8rem">
-      < ?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-    </div>
-
-    <ul class="pagination pagination-sm">
-      < ?= $this->Paginator->first('<i class="fas fa-angle-double-left"></i>', ['escape'=>false]) ?>
-      < ?= $this->Paginator->prev('<i class="fas fa-angle-left"></i>', ['escape'=>false]) ?>
-      < ?= $this->Paginator->numbers() ?>
-      < ?= $this->Paginator->next('<i class="fas fa-angle-right"></i>', ['escape'=>false]) ?>
-      < ?= $this->Paginator->last('<i class="fas fa-angle-double-right"></i>', ['escape'=>false]) ?>
-    </ul>
-
-  </div> -->
-  <!-- /.card-footer -->
+ 
 </div>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/jquery/jquery.js') ?>
 <?= $this->Html->script('CakeLte./AdminLTE/plugins/datatables/jquery.dataTables.js') ?>
@@ -196,13 +180,30 @@ $(document).on('click', '.elimi_consulta', function () {
 
 $('#consulta').DataTable({
     "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+       // "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ resultados",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ninguna información disponible en esta tabla",
+      "sInfo": "Mostrando resultados _START_-_END_ de  _TOTAL_",
+      "sInfoEmpty": "Mostrando resultados del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sSearch": "Buscar ",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Ultimo",
+        "sNext": "Siguiente",
+        "sPrevious": "Anterior"
     },
+  },
+    "lengthMenu": [ [5, 10, 50, 100, -1], [5, 10, 25,  50, 100] ],
         scrollY:        "200px",
         scrollX:        false,
         scrollCollapse: true,
         paging:         true,
         fixedColumns:   true
+        
 });
 
 </script>

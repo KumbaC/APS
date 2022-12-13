@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  */
 class MedicalsAntecedent extends Entity
 {
+   
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
