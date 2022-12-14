@@ -189,7 +189,7 @@
 
 <li class=<?= $c_name == 'Persons' ? 'bg-warning' : 'nav-item' ?>>
 
-<a href=<?= $this->Url->build(['controller' => 'persons', 'action' => 'index'])?> class='nav-link' >
+<a href=<?= $this->Url->build(['controller' => 'persons', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-users-cog"></i>
   <p>
    Titulares

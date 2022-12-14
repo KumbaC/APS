@@ -316,6 +316,16 @@ $routes->prefix('doctor', function (RouteBuilder $routes) {
 
     });
 
+        // TITULARES
+    $routes->scope('/titulares', function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->setExtensions('pdf');
+        $routes->connect('/', ['controller' => 'Persons', 'action' => 'index']);
+        $routes->connect('/agregar', ['controller' => 'Persons', 'action' => 'add']);
+        $routes->connect('/modificar/*', ['controller' => 'Persons', 'action' => 'edit']);
+        
+        $routes->fallbacks('InflectedRoute');
+    });
+
 
 
 

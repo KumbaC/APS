@@ -30,7 +30,7 @@ class QuotesController extends AppController
     if ($session->read('Auth.User.role_id') == 3) {
         $this->paginate = [
             'contain' => ['Specialties','Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
-            'order' => ['Quotes.fecha' => 'ASC'],
+            'order' => ['Quotes.created' => 'DESC'],
             'conditions' => [
                 'Doctors.user_doctor_id' => $this->Auth->user('id'),
                 'StatusQuotes.id in' => [1, 3],
@@ -45,7 +45,7 @@ class QuotesController extends AppController
        }elseif($session->read('Auth.User.role_id') == 4){
            $this->paginate = [
             'contain' => ['Specialties', 'Doctors', 'Beneficiary', 'Persons', 'StatusQuotes'],
-            'order' => ['Quotes.fecha' => 'DESC'],
+            'order' => ['Quotes.created' => 'DESC'],
             'conditions' => [
                 'StatusQuotes.id' => 2,
             ],

@@ -44,7 +44,7 @@ foreach($departments as $department) {
         <div class="card-body">
             <?= $this->Form->create($person, ['id' => 'form_person']) ?>
             <fieldset>
-                <legend class="text-uppercase font-weight-bold text-center"><?= __('Modificar titular') ?></legend>
+                <legend class="text-uppercase font-weight-bold text-center"><?= __('Modificar a') ?> <h7><?= h($person->nombre), ' ', h($person->apellido)   ?> </h7> </legend>
                 
                 
                

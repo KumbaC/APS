@@ -25,17 +25,18 @@
             <thead class="thead thead-light">
           <tr>
               <th><?= h('Paciente') ?></th>
-              <th><?= h('Asunto') ?></th>
+              <th><?= h('Cedula') ?></th>
               
               <th><?= h('Especialidad') ?></th>
               <th><?= h('Doctor(a)') ?></th>
-              <th><?= h('Fecha') ?></th>
-              <th><?= h('Hora') ?></th>
-<!--               <th>< ?= $this->Paginator->sort('created') ?></th>
-              <th>< ?= $this->Paginator->sort('modified') ?></th> -->
+              
+              <th><?= h('Fecha de creación') ?></th>
+              <th><?= h('Fecha Tentativa') ?></th>
+              <th><?= h('Hora Tentativa') ?></th>
+              <!-- <th>< ?= $this->Paginator->sort('modified') ?></th> -->
               
               <th><?= h('Estatus') ?></th>
-              <th class="actions"><?= __('Opciones') ?></th>
+              <th><?= __('Editar fecha') ?></th>
           </tr>
         </thead>
         <tbody>
@@ -43,16 +44,18 @@
           <tr>
             <?php if(!empty($quote->person)): ?>
             <td><?= $quote->person->nombre, ' ', $quote->person->apellido ?></td>
-            <?php else: ?>
-            <td><?= $quote->beneficiary->nombre, ' ', $quote->beneficiary->apellido ?></td> 
+           <!--  < ?php else: ?> -->
+            <!-- <td>< ?= $quote->beneficiary->nombre, ' ', $quote->beneficiary->apellido ?></td> --> 
             <?php endif; ?>
-            <td><?= ($quote->asunto) ?></td>
+            <td class="font-weight-bold"><?= ($quote->person->cedula) ?></td>
             <td><?= h($quote->specialty->descripcion) ?></td>
             <td><?= h($quote->doctor->nombre), ' ', h($quote->doctor->apellido)?></td>
+            <td><?= h($quote->created) ?></td>
+
             <td><?= h($quote->fecha) ?></td>
             <td><?= h($quote->hora) ?></td>
-            <!-- <td>< ?= h($quote->created) ?></td>
-            <td>< ?= h($quote->modified) ?></td> -->
+            
+           <!--  <td>< ?= h($quote->modified) ?></td> -->
            
             
                 <!-- BOTONES DE ESTATUS -->
@@ -65,69 +68,13 @@
                     <?php else: ?>
                         <td class="text-center"> <?= $this->Html->link(__('EN ESPERA'), ['action' => 'status', $quote->id], ['class' => 'badge badge-danger'] )  ?> </td>
                     <?php endif; ?>
-
-                        <!-- BENEFICIARIOS -->
-                    <?php if ($quote->status_quote->descripcion == 'Finalizada'): ?>
-                        <?php if (empty($quote->person->nombre)): ?>
-
-                            <td class="pagination text-center">
-                             <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-success disabled']) ?>
-                             <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-success']) ?>
-
-
-                         <?php else: ?>
-                            <td class="pagination text-center">
-                             <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-success disabled']) ?>
-                             <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-success']) ?>
-                        <?php endif; ?>
-
-
-                            <!-- < ?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'fas fa-edit btn btn-warning']) ?> -->
-
-
+                <!-- BOTONES DE ESTATUS -->
                         
 
-                        </td>
-                    <?php else: ?>
-                <?php if ($quote->status_quote->descripcion == 'En espera'): ?>
-                    <?php if (empty($quote->person->nombre)): ?>
-
-                        <td class="pagination text-center">
-                        <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-danger disabled']) ?>
-                        <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
-                    <?php else: ?>
-                        <td class="pagination text-center">
-                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-danger disabled']) ?>
-                       <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-danger disabled']) ?>
-                    <?php endif; ?>
-
-                <?php endif; ?>
-
-
-                <?php if ($quote->status_quote->descripcion == 'En proceso'): ?>
-                    <?php if (empty($quote->person->nombre)): ?>
-
-                        <td class="pagination text-center">
-                        <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-primary']) ?>
-                        <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'addb', $quote->beneficiary->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-warning disabled']) ?>
-                    <?php else: ?>
-                        <td class="pagination text-center">
-                       <?= $this->Html->link(__('+'), ['controller' => 'ClinicalHistories','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file-medical btn btn-primary']) ?>
-                       <?= $this->Html->link(__('+'), ['controller' => 'Prescriptions','action' => 'add', $quote->person->id, $quote->doctor->id], ['class' => 'fas fa-file btn btn-primary disabled']) ?>
-                    <?php endif; ?>
-
-                <?php endif; ?>
-              <?php endif; ?>
-
-
-
-
-
-           <!--  <td class="actions">
-              < ?= $this->Html->link(__('View'), ['action' => 'view', $quote->id], ['class'=>'btn btn-xs btn-outline-primary', 'escape'=>false]) ?>
-              < ?= $this->Html->link(__('Edit'), ['action' => 'edit', $quote->id], ['class'=>'btn btn-xs btn-outline-primary', 'escape'=>false]) ?>
-              < ?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $quote->id], ['class'=>'btn btn-xs btn-outline-danger', 'escape'=>false, 'confirm' => __('Are you sure you want to delete # {0}?', $quote->id)]) ?>
-            </td> -->
+                <!-- BOTON DE CAMBIAR FECHA -->
+                <td><?= $this->Html->link(__(''), ['action' => 'edit', $quote->id], ['class' => 'btn btn-warning fas fa-calendar text-center'] )  ?></td>
+                <!-- BOTON DE CAMBIAR FECHA -->
+           
           </tr>
           <?php endforeach; ?>
         </tbody>
@@ -197,12 +144,14 @@ $('#consulta').DataTable({
         "sPrevious": "Anterior"
     },
   },
+  "order": [[ 4, "asc" ]],
     "lengthMenu": [ [5, 10, 50, 100, -1], [5, 10, 25,  50, 100] ],
         scrollY:        "200px",
         scrollX:        false,
         scrollCollapse: true,
         paging:         true,
         fixedColumns:   true
+
         
 });
 
