@@ -120,7 +120,7 @@ class QuotesController extends AppController
             $quote->person_id = $id;
 
             if ($this->Quotes->save($quote)) {
-                $this->Flash->success(__('Consulta medica guardada con exito. '));
+                $this->Flash->success(__('La recepción del servicio médico se estará comunicando muy pronto con usted para indicarle fecha y hora de la consulta solicitada.'));
 
                 return $this->redirect(['action' => 'indexmi']);
             }

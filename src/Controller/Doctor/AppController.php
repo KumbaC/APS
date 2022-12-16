@@ -52,7 +52,7 @@ class AppController extends Controller
 //        if ($this->request->getParam('prefix')) {
   //          if ($this->request->getParam('prefix') == 'doctor') {
                 $this->viewBuilder()->setLayout('doctor');
-           //     $this->loadComponent('Csrf');
+                //$this->loadComponent('Csrf');
                 $this->loadComponent('Auth', [
 
 		        'authenticate' => [

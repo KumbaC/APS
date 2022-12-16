@@ -26,7 +26,7 @@
           <tr>
               <th><?= h('Paciente') ?></th>
               <th><?= h('Cedula') ?></th>
-              
+              <th><?= h('Telefono|Extension') ?></th>
               <th><?= h('Especialidad') ?></th>
               <th><?= h('Doctor(a)') ?></th>
               
@@ -48,6 +48,11 @@
             <!-- <td>< ?= $quote->beneficiary->nombre, ' ', $quote->beneficiary->apellido ?></td> --> 
             <?php endif; ?>
             <td class="font-weight-bold"><?= ($quote->person->cedula) ?></td>
+            <?php if(!empty($quote->person->phone)): ?>
+            <td class="font-weight-bold"><?= ($quote->person->phone) ?></td>
+            <?php else: ?>
+            <td class="font-weight-bold">SIN TELEFONO CARGADO</td>
+            <?php endif; ?>
             <td><?= h($quote->specialty->descripcion) ?></td>
             <td><?= h($quote->doctor->nombre), ' ', h($quote->doctor->apellido)?></td>
             <td><?= h($quote->created) ?></td>

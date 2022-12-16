@@ -107,7 +107,7 @@
 </li>
 <?php elseif($session->read('Auth.User.role_id') == 3): ?>
 
-<li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Quotes' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-laptop-medical"></i>
@@ -119,7 +119,7 @@
 
 </li>
 
-<li class=<?= $c_name == 'Prescriptions' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Prescriptions' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'prescriptions', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-file-medical-alt"></i>
@@ -132,7 +132,7 @@
 </li>
 
 
-<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'ClinicalHistories', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-file-medical"></i>
@@ -145,7 +145,7 @@
 </li>
 
 
-<li class=<?= $c_name == 'Laboratories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Laboratories' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'Laboratories', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-microscope"></i>
@@ -173,7 +173,7 @@
 
 <?php if ($session->read('Auth.User.role_id') == 4):?>
 
-  <li class=<?= $c_name == 'Quotes' ? 'bg-warning' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'Quotes' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
   <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
   <i class="fas fa-notes-medical"></i>
@@ -187,7 +187,7 @@
 </li>
 
 
-<li class=<?= $c_name == 'Persons' ? 'bg-warning' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Persons' ? 'bg-light' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'persons', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-users-cog"></i>

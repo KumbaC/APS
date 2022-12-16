@@ -58,7 +58,7 @@ foreach($persons as $person) {
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading font-weight-bold text-uppercase text-center"> <i class="fas fa-tools"></i>  <?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista de Consultas'), ['action' => 'index'], ['class' => 'btn btn-danger font-weight-bold text-uppercase side-nav-item']) ?>
+            <?= $this->Html->link(__('Lista de Consultas'), ['action' => 'indexmi'], ['class' => 'btn btn-danger font-weight-bold text-uppercase side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80 card mx-auto">
@@ -89,7 +89,7 @@ foreach($persons as $person) {
                   </div>
 
                    <div class="col">
-                   <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'placeholder' => 'Ejemplo: 00:00']); ?>
+                   <?php  echo $this->Form->control('hora', ['type'=> 'text', 'empty' => true, 'readonly' => true,'title' => 'Por favor seleccione la hora', 'placeholder' => 'Ingrese la hora tentativa']); ?>
                   </div> 
                 </div>
 
@@ -99,7 +99,7 @@ foreach($persons as $person) {
                   <br><br>
 
             </fieldset>
-            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block', 'type' => 'submit']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold', 'type' => 'submit']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
@@ -188,16 +188,17 @@ $.each(beneficiaryObject, function(key,value) {
       orientation: 'bottom',
       todayHighlight: true,
       clearBtn: true,
-      //setEndDate: true,
+      setEndDate: true,
+      autoclose: true,
 
 
     }),
     $('[name="hora"]').datetimepicker({
           datepicker: false,
           format: 'H:i',
+          step: 30,
           allowTimes:[
-            '08:00', '08:30','09:00','9:30','10:00','10:30','11:00','11:30', '12:00', '13:00','14:00', '15:00',
-            '16:00',
+            '08:00', '08:30','09:00','9:30','10:00','10:30','11:00','11:30', '12:00', '01:00','02:00', '02:30','03:00'
         ]
         });
 

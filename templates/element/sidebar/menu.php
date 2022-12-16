@@ -57,7 +57,7 @@ $session = $this->request->getAttribute('session');
   </li>
   <?php if ($session->read('Auth.User.role_id') == 1 or $session->read('Auth.User.role_id') == 2):?>
     
-    <li class=<?= $c_name == 'Persons' ? 'bg-danger' : 'nav-item' ?>>
+    <li class=<?= $c_name == 'Persons' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'persons', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-id-card-alt"></i>
@@ -69,7 +69,7 @@ $session = $this->request->getAttribute('session');
 <?php endif; ?>
 </li>
 <?php if ($session->read('Auth.User.role_id') == 2):?>
-<li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'indexmi'])?> class='nav-link' >
 <i class="fas fa-file-medical-alt"></i>
@@ -85,7 +85,7 @@ $session = $this->request->getAttribute('session');
 
 <?php if ($prefix == 'Admin'): ?>
   <?php if ($session->read('Auth.User.role_id') == 1):?>
-<li class=<?= $c_name == 'Doctors' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Doctors' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'doctors', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-user-md"></i>
@@ -121,7 +121,7 @@ $session = $this->request->getAttribute('session');
 
   <ul class="nav nav-treeview">
   
-  <li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;"> 
 
 <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-laptop-medical"></i>
@@ -132,7 +132,7 @@ $session = $this->request->getAttribute('session');
 
 </li>
 
-<li class=<?= $c_name == 'Prescriptions' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Prescriptions' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'Prescriptions', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-file-medical-alt"></i>
@@ -144,7 +144,7 @@ $session = $this->request->getAttribute('session');
 </li>
 
 
-<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'ClinicalHistories', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-file-medical"></i>
@@ -156,7 +156,7 @@ $session = $this->request->getAttribute('session');
 </li>
 
 
-<li class=<?= $c_name == 'Laboratories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Laboratories' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'Laboratories', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-microscope"></i>
@@ -172,7 +172,7 @@ $session = $this->request->getAttribute('session');
 </ul>
 <?php elseif($session->read('Auth.User.role_id') == 3): ?>
 
-<li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Quotes' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'quotes', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-laptop-medical"></i>
@@ -184,7 +184,7 @@ $session = $this->request->getAttribute('session');
 
 </li>
 
-<li class=<?= $c_name == 'Prescriptions' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Prescriptions' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'prescriptions', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-file-medical-alt"></i>
@@ -197,7 +197,7 @@ $session = $this->request->getAttribute('session');
 </li>
 
 
-<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'ClinicalHistories' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'ClinicalHistories', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-file-medical"></i>
@@ -210,7 +210,7 @@ $session = $this->request->getAttribute('session');
 </li>
 
 
-<li class=<?= $c_name == 'Laboratories' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'Laboratories' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'Laboratories', 'action' => 'index', 'prefix' => 'Doctor'])?> class='nav-link' >
 <i class="fas fa-microscope"></i>
@@ -287,7 +287,7 @@ $session = $this->request->getAttribute('session');
 
   <ul class="nav nav-treeview">
 
-  <li class=<?= $c_name == 'Specialties' ? 'bg-danger' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'Specialties' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'Specialties', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-heartbeat"></i>
@@ -304,7 +304,7 @@ $session = $this->request->getAttribute('session');
 
 
 
-  <li class=<?= $c_name == 'Diagnoses' ? 'bg-danger' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'Diagnoses' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
   <a href=<?= $this->Url->build(['controller' => 'diagnoses', 'action' => 'index'])?> class='nav-link' >
   <i class="fas fa-diagnoses"></i>
@@ -317,7 +317,7 @@ $session = $this->request->getAttribute('session');
   </li>
 
 
-  <li class=<?= $c_name == 'Habits' ? 'bg-danger' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'Habits' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
   <a href=<?= $this->Url->build(['controller' => 'habits', 'action' => 'index'])?> class='nav-link' >
   <i class="fas fa-smoking"></i>
@@ -329,7 +329,7 @@ $session = $this->request->getAttribute('session');
 
   </li>
 
-  <li class=<?= $c_name == 'MedicalsAntecedents' ? 'bg-danger' : 'nav-item' ?>>
+  <li class=<?= $c_name == 'MedicalsAntecedents' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'MedicalsAntecedents', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-head-side-cough"></i>
@@ -342,7 +342,7 @@ $session = $this->request->getAttribute('session');
 </li>
 
 
-<li class=<?= $c_name == 'SurgicalsAntecedents' ? 'bg-danger' : 'nav-item' ?>>
+<li class=<?= $c_name == 'SurgicalsAntecedents' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
 
 <a href=<?= $this->Url->build(['controller' => 'SurgicalsAntecedents', 'action' => 'index'])?> class='nav-link' >
 <i class="fas fa-procedures"></i>

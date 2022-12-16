@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Doctor;
 
-use App\Controller\AppController;
+use App\Controller\Doctor\AppController;
 
 /**
  * Persons Controller

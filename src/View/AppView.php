@@ -41,22 +41,26 @@ class AppView extends View
           'dark-mode' => false,
           'layout-boxed' => false,
           'header.fixed' => true,
-          'header.border' => true,
+          'header.border' => false,
           'header.style' => \CakeLte\View\Styles\Header::STYLE_WHITE,
           'header.dropdown-legacy' => false,
           'sidebar.fixed' => true,
           'sidebar.collapsed' => false,
-          'sidebar.mini' => true,
+          'sidebar.mini' => false,
           'sidebar.mini-md' => false,
           'sidebar.mini-xs' => false,
           'sidebar.style' => \CakeLte\View\Styles\Sidebar::STYLE_DARK_PRIMARY,
           'sidebar.flat-style' => false,
           'sidebar.legacy-style' => false,
-          'sidebar.compact' => false,
+          'sidebar.compact' => true,
           'sidebar.child-indent' => false,
           'sidebar.child-hide-collapse' => false,
           'sidebar.disabled-auto-expand' => false,
-          'footer.fixed' => true]);
+          'footer.fixed' => true,
+          
+        
+         ]);
+        
 
   }
 

@@ -35,6 +35,8 @@ $session = $this->request->getAttribute('session');
             <i class="fas fa-expand-arrows-alt"></i>
         </a>
     </li>
+
+    
     <?php if($prefix == 'doctor' || $prefix == 'Doctor'): ?>
     <li class="nav-item">
         <a class="nav-link"  href='<?php echo $this->Url->Build(['controller' => 'UsersDoctors', 'action' => 'logout', 'prefix' => 'doctor']) ?>' role="button" data-tooltip="Salir del sistema">
