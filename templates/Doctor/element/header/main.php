@@ -16,11 +16,11 @@ $session = $this->request->getAttribute('session');
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
 
-    <li class="nav-item">
+   <!--  <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li> -->
 
     <?= $this->element('header/menu') ?>
 </ul>
@@ -31,10 +31,10 @@ $session = $this->request->getAttribute('session');
    <!--  < ?= $this->element('header/search-block') ?> -->
 
     <!-- Messages Dropdown Menu -->
-   <!--  < ?= $this->element('header/messages') ?> -->
+  <!--  < ?= $this->element('header/messages') ?> --> 
 
     <!-- Notifications Dropdown Menu -->
-   <!--  < ?= $this->element('header/notifications') ?> -->
+    <!-- < ?= $this->element('header/notifications') ?>  -->
 
     <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" data-tooltip="Expandir pantalla" href="#" role="button">

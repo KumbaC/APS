@@ -23,12 +23,12 @@
         
             <?= $this->Form->create($specialty, ['id' => 'form_especialidades']) ?>
             <fieldset class="card-body">
-                <legend class="font-weight-bold text-uppercase"><?= __('Actualizar Especialidad') ?></legend>
+                <legend class="font-weight-bold text-uppercase"><?= __('Agregar Especialidad') ?></legend>
                 <?php
                     echo $this->Form->control('descripcion', ['id' => 'descripcion', 'class' => 'form-control']);
                 ?>
 
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold']) ?>
+            <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-primary btn-block text-uppercase font-weight-bold']) ?>
             </fieldset>
             <?= $this->Form->end() ?>
         </div>

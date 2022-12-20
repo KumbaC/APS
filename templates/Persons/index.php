@@ -80,10 +80,6 @@ $('#titular').DataTable({
         paging:         true,
         fixedColumns:   true,
         searching: false,
-        lengthChange:false
-        
-        
-       
-    
+        lengthChange:false    
 });
 </script>
