@@ -98,6 +98,25 @@ $session = $this->request->getAttribute('session');
 </li>
 
   <?php endif; ?>
+
+  <?php if ($session->read('Auth.User.role_id') == 1):?>
+<li class=<?= $c_name == 'UsersDoctors' ? 'bg-danger' : 'nav-item' ?> style="border-radius: 8px;">
+
+<a href=<?= $this->Url->build(['controller' => 'UsersDoctors', 'action' => 'index'])?> class='nav-link' >
+<i class="fas fa-users"></i>
+  <p>
+   Usuarios
+
+  </p>
+</a>
+
+</li>
+
+  <?php endif; ?>
+
+
+
+
 <?php endif; ?>
 
 </li>

@@ -36,7 +36,7 @@
                 
                 ?>
             
-            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-block btn-primary']) ?>
+            <?= $this->Form->button(__('Actualizar'), ['class' => 'btn btn-block btn-primary text-uppercase font-weight-bold']) ?>
             <?= $this->Form->end() ?>
             </fieldset>
         </div>

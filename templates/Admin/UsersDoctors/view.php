@@ -4,44 +4,41 @@
  * @var \App\Model\Entity\UsersDoctor $usersDoctor
  */
 ?>
-<div class="row">
+    <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Users Doctor'), ['action' => 'edit', $usersDoctor->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Users Doctor'), ['action' => 'delete', $usersDoctor->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usersDoctor->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Users Doctors'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Users Doctor'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <h4 class="heading text-uppercase font-weight-bold text-center"><?= __('Opciones') ?></h4>
+            <?= $this->Html->link(__('Lista usuarios'), ['action' => 'index'], ['class' => 'side-nav-item text-uppercase font-weight-bold btn btn-danger']) ?>
+            
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    </div>
+
+    <div class="row d-flex justify-content-center card">
+    <div class="column-responsive column-80 card-body">
         <div class="usersDoctors view content">
             <h3><?= h($usersDoctor->id) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Username') ?></th>
+                    <th><?= __('Usuario') ?></th>
                     <td><?= h($usersDoctor->username) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Password') ?></th>
-                    <td><?= h($usersDoctor->password) ?></td>
+                    <th><?= __('Perfil') ?></th>
+                    <td><?= h($usersDoctor->role->descripcion) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= $usersDoctor->has('role') ? $this->Html->link($usersDoctor->role->id, ['controller' => 'Roles', 'action' => 'view', $usersDoctor->role->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($usersDoctor->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
+                    <th><?= __('Fecha de creacion') ?></th>
                     <td><?= h($usersDoctor->created) ?></td>
                 </tr>
+                
                 <tr>
-                    <th><?= __('Modified') ?></th>
+                    <th><?= __('Fecha de Modificación') ?></th>
                     <td><?= h($usersDoctor->modified) ?></td>
                 </tr>
+
+
+
             </table>
         </div>
     </div>

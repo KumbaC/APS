@@ -22,25 +22,25 @@
             
                 <tr>
                     <!-- <th>< ?= h('id') ?></th> -->
-                    <th><?= h('Usuario') ?></th>
+                    <th class="text-uppercase"><?= h('Usuario') ?></th>
                     <!-- <th>< ?= h('Contraseña') ?></th> -->
-                    <th><?= h('Rol del usuario') ?></th>
+                    <th class="text-uppercase"><?= h('Rol del usuario') ?></th>
                    
-                    <th class="actions"><?= __('Opciones') ?></th>
+                    <th class="actions text-uppercase font-weight-bold"><?= __('Opciones') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($usersDoctors as $usersDoctor): ?>
                 <tr>
                     <!-- <td>< ?= $this->Number->format($usersDoctor->id) ?></td> -->
-                    <td><?= h($usersDoctor->username) ?></td>
+                    <td class="text-uppercase font-weight-bold"><?= h($usersDoctor->username) ?></td>
                     <!-- <td>< ?= h($usersDoctor->password) ?></td> -->
-                    <td class="text-uppercase"><?= h($usersDoctor->role->descripcion) ?></td>
+                    <td class="text-uppercase font-weight-bold"><?= h($usersDoctor->role->descripcion) ?></td>
                    
                     <td class="actions">
-                        <?= $this->Html->link(__(''), ['action' => 'view', $usersDoctor->id],['class' => 'fas fa-eye btn btn-warning', 'title' => 'Ver información del usuario']) ?>
+                        <!-- < ?= $this->Html->link(__(''), ['action' => 'view', $usersDoctor->id],['class' => 'fas fa-eye btn btn-warning', 'title' => 'Ver información del usuario']) ?> -->
                         <?= $this->Html->link(__(''), ['action' => 'changePassword', $usersDoctor->id], ['class' => 'fas fa-lock btn btn-warning', 'title' => 'Cambiar contraseña']) ?>
-                        <?= $this->Html->link(__(''), ['action' => 'edit', $usersDoctor->id], ['class' => 'fas fa-edit btn btn-warning', 'title' => 'Editar información del usuario']) ?>
+                        <!-- < ?= $this->Html->link(__(''), ['action' => 'edit', $usersDoctor->id], ['class' => 'fas fa-edit btn btn-warning', 'title' => 'Editar información del usuario']) ?> -->
                         <?= $this->Form->postLink(__(''), ['action' => 'delete', $usersDoctor->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usersDoctor->id), 'class' => 'fas fa-trash btn btn-warning elimi_user', 'title' => 'Eliminar al usuario']) ?>
                     </td>
                 </tr>
