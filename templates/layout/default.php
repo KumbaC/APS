@@ -4,7 +4,7 @@
  * @var \App\View\AppView $this
  * @var \CakeLte\View\Helper\CakeLteHelper $this->CakeLte
  */
-
+$role = $this->request->getAttribute('session')->read('Auth.User.role_id');
 ?>
 
 <!DOCTYPE html>
@@ -41,11 +41,17 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>">
             <!-- Brand Logo -->
-            
-            <a href="<?= $this->Url->build('/') ?>" class="brand-link">
+            <?php if($role == 1): ?>
+            <a href="<?= $this->Url->build('/admin') ?>" class="brand-link">
                 <?= $this->Html->image($this->CakeLte->getConfig('app-logo'), ['alt' => $this->CakeLte->getConfig('app-name') . ' logo', 'class' => 'brand-image']) ?>
                 <span class="brand-text font-weight-light"><?= $this->CakeLte->getConfig('app-name') ?></span>
             </a>
+            <?php elseif($role == 2): ?>
+                <a href="<?= $this->Url->build('/') ?>" class="brand-link">
+                <?= $this->Html->image($this->CakeLte->getConfig('app-logo'), ['alt' => $this->CakeLte->getConfig('app-name') . ' logo', 'class' => 'brand-image']) ?>
+                <span class="brand-text font-weight-light"><?= $this->CakeLte->getConfig('app-name') ?></span>
+            </a>
+            <?php endif; ?>
             <!-- Sidebar -->
             <div class="sidebar">
                 <?= $this->element('sidebar/main') ?>
