@@ -49,8 +49,8 @@ class LaboratoriesController extends AppController
                 'filename' => 'Solicitud de Laboratorio_' . $id,
                 'margin' => [
                     'bottom' => 0,
-                    'left' => 0,
-                    'right' => 0,
+                    'left' => 8,
+                    'right' => 5,
                     'top' => 2
                 ],
             ]

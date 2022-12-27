@@ -34,7 +34,9 @@
 
 
                     <?php  echo $this->Form->control('descripcion', ['id' => 'descripcion', 'type' => 'textarea', 'label' => 'Examenes Paraclinicos']); ?>
-
+                    
+                    <?php  echo $this->Form->control('sonographic_exams', ['id' => 'ecograficos', 'type' => 'textarea', 'label' => 'Examenes Ecograficos']); ?>
+                    
                     <h6 id="maxContentPost" style="text-align:right"></h6>
                    <!--  <div class="row justify-content-center">
                     <div class="col-5">
@@ -476,6 +478,60 @@ $(function () {
         });
 
   });
+
+  $(function () {
+    // Summernote
+    $('#ecograficos').summernote({ lang: 'es-ES', 
+    
+        toolbar: [
+                  ['style', ['bold', 'italic', 'underline', 'clear', 'list']], 
+                  ['para', ['ul', 'ol', 'paragraph']], 
+                  ['height', ['height']],
+                  ['fontsize', ['fontsize']],
+                  
+                
+
+            ],
+                
+                placeholder: 'Escriba lo necesario para los exámenes ecograficos ...',
+                callbacks: {
+                    onKeydown: function (e) { 
+                        var t = e.currentTarget.innerText; 
+                        if (t.trim().length >= 400) {
+                            //delete keys, arrow keys, copy, cut, select all
+                            if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
+                            e.preventDefault(); 
+                        } 
+                    },
+                    onKeyup: function (e) {
+                        var t = e.currentTarget.innerText;
+                        $('#maxContentPost').text(400 - t.trim().length);
+                    },
+                    onPaste: function (e) {
+                        var t = e.currentTarget.innerText;
+                        var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                        e.preventDefault();
+                        var maxPaste = bufferText.length;
+                        if(t.length + bufferText.length > 400){
+                            maxPaste = 400 - t.length;
+                        }
+                        if(maxPaste > 0){
+                            document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+                        }
+                        $('#maxContentPost').text(400 - t.length);
+                    }
+                }
+            });
+        
+    })
+
+  $(document).ready(function() {
+        $('#ecograficos').summernote({
+
+        });
+
+  });
+  
 
 
 /* $('#form_laboratorios').validate({

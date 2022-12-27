@@ -9,6 +9,7 @@
  * @var string[]|\Cake\Collection\CollectionInterface $statusQuotes
  *
  */
+
 ?>
 <div class="row">
     <aside class="column">
@@ -28,7 +29,15 @@
                 <div class="form-row">
                     <div class="col">
                         <div class="form-control-inline">
-                            <?php echo $this->Form->control('status_quote_id', ['options' => $statusQuotes, 'label' => '']); ?>
+                            <?php if($this->request->getSession()->read('Auth.User.role_id') == 4): ?>
+                            
+                                <?php echo $this->Form->control('status_quote_id', ['options' => $statusApoyo, 'label' => '']); ?>
+
+                            <?php elseif($this->request->getSession()->read('Auth.User.role_id') == 3): ?>
+                            
+                                <?php echo $this->Form->control('status_quote_id', ['options' => $statusQuotes, 'label' => '']); ?>
+                            
+                            <?php endif; ?>
                       </div>
                     </div>
                 </div>

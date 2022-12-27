@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Quote[]|\Cake\Collection\CollectionInterface $quotes
  */
 ?>
-
+<!-- TABLA DEL APOYO ADMINISTRATIVO -->
 <?php if($this->request->getSession()->read('Auth.User.role_id') == 4): ?>
 
 <?php $this->assign('title', __('Consultas') ); ?>
@@ -151,7 +151,7 @@ $('#consulta').DataTable({
         "sPrevious": "Anterior"
     },
   },
-  "order": [[ 4, "asc" ]],
+  "order": [[ 5, "asc" ]],
     "lengthMenu": [ [5, 10, 50, 100, -1], [5, 10, 25,  50, 100] ],
         scrollY:        "200px",
         scrollX:        false,
@@ -211,8 +211,10 @@ $session = $this->request->getAttribute('session');
                     <th class="text-center"><?= h('Paciente') ?></th>
                     <th class="text-center"><?= h('Especialidad') ?></th>
                     <th class="text-center"><?= h('Doctor') ?></th>
-                    <th class="text-center"><?= h('Fecha') ?></th>
+                    
                     <!-- <th class="text-center"><?//= h('Turno') ?></th> -->
+                    <th class="text-center"><?= h('Fecha de creación') ?></th>
+                    <th class="text-center"><?= h('Fecha tentativa') ?></th>
                     <th class="text-center"><?= h('Estatus') ?></th>
 
 
@@ -238,8 +240,9 @@ $session = $this->request->getAttribute('session');
 
                     <td class="text-center font-weight-bold"><?= h($quote->specialty->descripcion) ?></td>
                     <td class="text-center font-weight-bold">Dr. <?= h($quote->doctor->nombre), '  ', h($quote->doctor->apellido)?></td>
+                    
+                    <td class="text-center font-weight-bold"><?= h($quote->created) ?></td>
                     <td class="text-center font-weight-bold"><?= h($quote->fecha) ?></td>
-
 
                    <!--  <td class="text-center font-weight-bold"><?//= h($quote->doctor->turn->descripcion) ?></td> -->
 
@@ -390,6 +393,7 @@ $('#consulta').DataTable({
         "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
     "lengthMenu": [ [5, 50, 100, -1], [5, 25,  50, 100] ],
+    "order": [[ 4, "asc" ]],
         scrollY:        "200px",
         scrollX:        false,
         scrollCollapse: true,

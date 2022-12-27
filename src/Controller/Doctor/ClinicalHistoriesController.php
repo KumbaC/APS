@@ -62,13 +62,15 @@ class ClinicalHistoriesController extends AppController
             'contain' => ['Specialties'],
         ]);
 
+        $cedula = $clinicalHistory->person->cedula;
+        $especialidad = $clinical->specialty->descripcion;
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
 
                 'orientation' => 'portrait',
                 'pageSize' => 'A5',
-                'filename' => 'Informe Medico_'. $id .'.pdf',
+                'filename' => $especialidad. ' V-'. $cedula .'.pdf',
                 'title' => 'Informe Medico',
                 'margin' => [
                     'bottom' => 0,
@@ -136,6 +138,26 @@ class ClinicalHistoriesController extends AppController
             return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
         }
    
+    }
+
+    public function historyOdontologies()
+    {
+        $session = $this->request->getSession();
+        $session = $this->request->getAttribute('session');
+        if ($session->read('Auth.User.role_id') == 3) {
+            $clinicalHistory = $this->paginate = [
+                'contain' => ['Persons', 'Beneficiary', 'BloodTypes', 'Doctors' => ['Specialties']],
+                'conditions' => ['Doctors.user_doctor_id' => $this->Auth->user('id')]
+            ];
+
+            $clinicalHistories = $this->paginate($this->ClinicalHistories->find('all'));
+
+            $this->set(compact('clinicalHistories'));
+        } else { 
+            $this->Flash->error(__('No tiene permisos para acceder a esta sección.'));
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display']);
+        }
+
     }
 /* INFORMES PARA BENEFICIARIOS */
 

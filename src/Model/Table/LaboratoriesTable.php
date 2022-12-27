@@ -126,6 +126,12 @@ class LaboratoriesTable extends Table
             ->maxLength('descripcion', 424, 'La información no puede ser mayor a 400 caracteres')
             ->minLength('descripcion', 10, 'La información debe tener como minimo 10 caracteres');
 
+        $validator
+            ->scalar('sonographic_exams')
+            ->allowEmpty('sonographic_exams')
+            ->maxLength('sonographic_exams', 424, 'La información no puede ser mayor a 400 caracteres');
+            
+
         return $validator;
     }
 

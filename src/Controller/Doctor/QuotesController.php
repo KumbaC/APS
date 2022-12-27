@@ -210,9 +210,13 @@ class QuotesController extends AppController
             $this->Flash->error(__('El estatus de la consulta no pudo ser actualizado..'));
         }
 
-        $statusQuotes = $this->Quotes->StatusQuotes->find('list', ['limit' => 200]);
+        $statusQuotes = $this->Quotes->StatusQuotes->find('list');
+        $statusApoyo = $this->Quotes->StatusQuotes->find('list', ['joinType' => 'INNER', 'conditions' => [
+            'StatusQuotes.id !=' => 1
+        ]]);
+        
 
-        $this->set(compact('quote','statusQuotes'));
+        $this->set(compact('quote','statusQuotes', 'statusApoyo'));
     }
 
     /**

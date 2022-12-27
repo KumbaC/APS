@@ -85,6 +85,7 @@ foreach($departments as $department) {
                  <div class="col">
                  <?php   echo $this->Form->control('edad', ['placeholder' => 'Por favor ingrese su edad']); ?>
                  </div></div>
+                 <?php   echo $this->Form->control('user_id', ['id'=>'users','label' => 'Usuario', 'options' => $users, 'empty' => 'NO EXISTE USUARIO CREADO.', '']); ?>
 
 
 
@@ -143,6 +144,11 @@ $('#unidad').select2({
     
 });
 $('#cargo').select2({
+    language: "es",
+    theme: 'bootstrap4',
+    
+});
+$('#users').select2({
     language: "es",
     theme: 'bootstrap4',
     

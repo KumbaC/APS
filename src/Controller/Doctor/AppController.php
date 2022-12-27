@@ -82,7 +82,12 @@ class AppController extends Controller
                     'controller' => 'UsersDoctors',
                     'action' => 'login'
                 ],
-                'authError' => 'No tienes permiso para entrar a esta seccion',
+                'authError' => '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Sesion expirada,</strong>  por favor inicie sesion nuevamente.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div> ',
 
                 'flash' => [
                     'element' => 'Flash/error',

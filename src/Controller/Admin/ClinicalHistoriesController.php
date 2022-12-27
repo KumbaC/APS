@@ -48,13 +48,16 @@ class ClinicalHistoriesController extends AppController
             'contain' => ['Specialties'],
         ]);
 
+        $cedula = $clinicalHistory->person->cedula;
+        $especialidad = $clinical->specialty->descripcion;
+
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
 
                 'orientation' => 'portrait',
                 'pageSize' => 'A5',
-                'filename' => 'Informe Medico_'. $id .'.pdf',
+                'filename' => $especialidad. ' V-'. $cedula .'.pdf',
                 'title' => 'Informe Medico',
                 'margin' => [
                     'bottom' => 0,

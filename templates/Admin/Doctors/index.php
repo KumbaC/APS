@@ -17,7 +17,7 @@
 
     <div class="card bg-dark table-responsive">
         <table class="table table-bordered table-dark display responsive nowrap" id="doctor" style="border-radius: 15px 15px 15px 15px !important;">
-            <thead class="thead thead-light">
+            <thead class="thead thead-light responsive">
                 <tr>
                     <!-- <th>< ?= $this->Paginator->sort('ID') ?></th> -->
                     <th class="text-center font-weight-bold"><?= h('Cedula') ?></th>

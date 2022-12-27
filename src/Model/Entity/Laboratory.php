@@ -36,6 +36,7 @@ class Laboratory extends Entity
     protected $_accessible = [
         'clinical_history_id' => true,
         'descripcion' => true,
+        'sonographic_exams' => true,
         'created' => true,
         'modified' => true,
         'clinical_history' => true,

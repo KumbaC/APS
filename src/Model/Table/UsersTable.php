@@ -43,7 +43,7 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('identification_card');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('PublicWorkers', [

@@ -60,8 +60,8 @@ class PersonsController extends AppController
         }
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
-        $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $users = $this->Persons->Users->find('list', ['limit' => 200]);
+        $cargos = $this->Persons->Cargos->find('list');
+        $users = $this->Persons->Users->find('list');
         $units = $this->Persons->Units->find('list', ['limit' => 200]);
         $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
         $this->set(compact('person', 'departments', 'status', 'cargos', 'users', 'units', 'genders'));
@@ -90,9 +90,9 @@ class PersonsController extends AppController
         }
         $departments = $this->Persons->Departments->find('all')->contain(['Units']);
         $status = $this->Persons->Status->find('list', ['limit' => 200]);
-        $cargos = $this->Persons->Cargos->find('list', ['limit' => 200]);
-        $users = $this->Persons->Users->find('list', ['limit' => 200]);
-        $units = $this->Persons->Units->find('list', ['limit' => 200]);
+        $cargos = $this->Persons->Cargos->find('list');
+        $users = $this->Persons->Users->find('list');
+        $units = $this->Persons->Units->find('list');
         $genders = $this->Persons->Genders->find('list', ['limit' => 200]);
         $this->set(compact('person', 'departments', 'status', 'cargos', 'users', 'units', 'genders'));
     }

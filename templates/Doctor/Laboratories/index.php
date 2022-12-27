@@ -12,7 +12,7 @@
 <?= $this->Html->css('CakeLte./AdminLTE/plugins/fontawesome-free/css/fontawesome.css') ?>
 <div class="laboratories index content">
     <!-- <?//= $this->Html->link(__('New Laboratory'), ['action' => 'add'], ['class' => 'button float-right']) ?> -->
-    <br></br>
+    
     <h3 class="text-uppercase font-weight-bold"><?= __('Examenes Paraclinicios') ?> <i class="fas fa-microscope"></i> </h3>
     <br><br>
     <div class="card bg-dark table-responsive">

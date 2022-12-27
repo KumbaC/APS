@@ -50,17 +50,18 @@ class LaboratoriesController extends AppController
         $laboratories = $this->Laboratories->get($id, [
             'contain' => ['ClinicalHistories'=>['Persons' => 'Genders', 'Beneficiary' => 'Genders', 'Doctors'], 'Hematologies', 'Immunology', 'Parasitologies', 'Biochemistry', 'Specials', 'Urinalysis'],
         ]);
+        $cedula = $laboratories->clinical_history->person->cedula;
 
         $this->viewBuilder()->setOption(
             'pdfConfig',
             [
                 'orientation' => 'landscape',
                 'title' => 'Paraclinicos',
-                'filename' => 'Solicitud de Laboratorio_' . $id,
+                'filename' => 'Laboratorios V-' . $cedula. '.pdf',
                 'margin' => [
                     'bottom' => 0,
-                    'left' => 0,
-                    'right' => 0,
+                    'left' => 8,
+                    'right' => 5,
                     'top' => 2
                 ],
             ]

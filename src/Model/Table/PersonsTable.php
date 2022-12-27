@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 use Cake\Routing\Router;
 
 
+
 /**
  * Persons Model
  *
@@ -132,7 +133,8 @@ class PersonsTable extends Table
         $validator
             ->scalar('cedula')
             ->requirePresence('cedula', 'create')
-            ->notEmptyString('cedula');
+            ->notEmptyString('cedula')
+            ->add('cedula', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Ya hay una cedula registrada con este numero']);
 
         $validator
             ->scalar('nombre')
@@ -145,9 +147,10 @@ class PersonsTable extends Table
             ->notEmptyString('apellido');
 
         $validator
-            ->email('email')
+            ->email('email', false, 'Correo electrónico tiene un formato incorrecto')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+            ->notEmptyString('email')
+            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Ya existe un titular con este correo']);
 
         $validator
             ->integer('phone')
@@ -157,6 +160,13 @@ class PersonsTable extends Table
             ->integer('edad')
             ->requirePresence('edad', 'create')
             ->notEmptyString('edad');
+
+        $validator
+            ->scalar('user_id')
+            ->allowEmptyString('user_id')
+            ->add('user_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Ya hay un titular con este usuario']);
+
+       
 
         return $validator;
     }
