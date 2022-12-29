@@ -36,7 +36,7 @@ input[type=number] { -moz-appearance:textfield; }
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading text-center text-uppercase font-weight-bold"><?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Lista Doctores'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item']) ?>
+            <?= $this->Html->link(__('Lista Doctores'), ['action' => 'index'], ['class' => 'btn btn-danger side-nav-item text-uppercase font-weight-bold']) ?>
         </div>
     </aside>
 

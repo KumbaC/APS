@@ -18,8 +18,8 @@ $session = $this->request->getAttribute('session');
 
     <h3 class="text-uppercase font-weight-bold ml-2"><i class="fas fa-notes-medical"></i>  <?= __('Consultas') ?></h3>
     <br>
-   
-    <!-- < ?= $this->html->link('Consulta Familiares', ['action' => 'index'], ['class' => 'btn btn-outline-primary btn-sm']) ?> -->
+    
+    <!-- < ?= $this->Html->link('Pedir cita +', ['action' => 'index'], ['class' => 'btn btn-danger btn-lg text-uppercase font-weight-bold float-right']) ?> -->
     <div class="card bg-dark table-responsive">
         <table class="table table-bordered table-dark" id="consultas_titulares">
             <thead class="thead thead-light">
